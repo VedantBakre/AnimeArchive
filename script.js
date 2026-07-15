@@ -819,15 +819,6 @@ document.addEventListener('DOMContentLoaded', () => {
           document.documentElement.style.setProperty('--accent-color', atmos.themeColor);
           document.documentElement.style.setProperty('--accent-hover', adjustColorBrightness(atmos.themeColor, -20));
         }
-
-        // Trigger suggested ambient sound track if lofi/sound is enabled
-        if (atmos.suggestedSound) {
-          const soundIdx = ambiencePlaylist.findIndex(s => s.title === atmos.suggestedSound);
-          if (soundIdx !== -1) {
-            DOM.ambienceSelect.value = soundIdx;
-            DOM.ambienceSelect.dispatchEvent(new Event('change'));
-          }
-        }
       })
       .catch(err => {
         console.log("Could not autoplay atmosphere video background.", err);

@@ -1688,3 +1688,17 @@ input:checked + .slider::before {
     justify-content: center;
   }
 }
+
+/* --- Responsive Layout for High-Resolution Monitors --- */
+@media (min-width: 1600px) {
+  .app-container {
+    max-width: 1560px; /* Fits exactly 5 columns of cards nicely */
+  }
+}
+
+@media (min-width: 1920px) {
+  .app-container {
+    max-width: 1880px; /* Fits exactly 6 columns of cards nicely */
+  }
+}
+

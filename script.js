@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     isLoop: false,
     isShuffle: false,
     isPlayingMusic: false,
-    isPlayingSound: false
+    isPlayingSound: false,
+    sortBy: 'default'
   };
 
   // Keep a reference to the active filtered anime list for detail modal navigation
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Search & Filters
     searchBox: document.getElementById('search-box'),
     filterTabs: document.querySelectorAll('.filter-tab'),
+    sortSelect: document.getElementById('sort-select'),
     animeGrid: document.getElementById('anime-grid'),
     noResults: document.getElementById('no-results'),
     
@@ -295,6 +297,32 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
     });
 
+    // --- Apply Sorting ---
+    if (state.sortBy === 'my-rating') {
+      filteredAnimeList.sort((a, b) => {
+        const scoreA = a.myRating ? parseFloat(a.myRating) : 0;
+        const scoreB = b.myRating ? parseFloat(b.myRating) : 0;
+        const hasA = !isNaN(scoreA) && scoreA > 0;
+        const hasB = !isNaN(scoreB) && scoreB > 0;
+        if (hasA && !hasB) return -1;
+        if (!hasA && hasB) return 1;
+        if (!hasA && !hasB) return 0;
+        return scoreB - scoreA;
+      });
+    } else if (state.sortBy === 'official-rating') {
+      filteredAnimeList.sort((a, b) => {
+        const scoreA = typeof a.rating === 'number' ? a.rating : 0;
+        const scoreB = typeof b.rating === 'number' ? b.rating : 0;
+        return scoreB - scoreA;
+      });
+    } else if (state.sortBy === 'year') {
+      filteredAnimeList.sort((a, b) => {
+        const yearA = typeof a.year === 'number' ? a.year : 0;
+        const yearB = typeof b.year === 'number' ? b.year : 0;
+        return yearB - yearA;
+      });
+    }
+
     renderGrid();
   }
 
@@ -303,6 +331,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 100ms Debounce
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(filterAndSearch, 100);
+  });
+
+  DOM.sortSelect.addEventListener('change', (e) => {
+    state.sortBy = e.target.value;
+    filterAndSearch();
   });
 
   DOM.filterTabs.forEach(tab => {

@@ -10,11 +10,11 @@ ambience_dir = 'assets/music/ambience'
 atmosphere_dir = 'assets/atmosphere'
 output_path = 'data.js'
 
-print("🔄 Compiling project assets and excel sheets into data.js...")
+print("[Info] Compiling project assets and excel sheets into data.js...")
 
 # 1. Parse Anime Excel Sheet
 if not os.path.exists(xlsx_path):
-    print(f"❌ Error: Could not find {xlsx_path}!")
+    print(f"[Error] Could not find {xlsx_path}!")
     exit(1)
 
 wb = openpyxl.load_workbook(xlsx_path)
@@ -159,4 +159,4 @@ const atmospheres = {json.dumps(atmospheres, indent=2, ensure_ascii=False)};
 with open(output_path, 'w', encoding='utf-8') as f:
     f.write(data_js_content)
 
-print(f"✅ Compile complete! Generated {len(anime_entries)} anime entries, {len(lofi_tracks)} lofi tracks, {len(ambience_tracks)} ambient sounds, and {len(atmospheres)} atmospheres.")
+print(f"[Success] Compile complete! Generated {len(anime_entries)} anime entries, {len(lofi_tracks)} lofi tracks, {len(ambience_tracks)} ambient sounds, and {len(atmospheres)} atmospheres.")

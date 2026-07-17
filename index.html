@@ -88,13 +88,25 @@
 
     <!-- Search & Filters -->
     <section class="controls-section">
-      <div class="search-wrapper">
-        <div class="search-input-container">
-          <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" id="search-box" placeholder="Search by title, genre, studio, year..." autocomplete="off">
+      <div class="controls-bar-row">
+        <div class="search-wrapper">
+          <div class="search-input-container">
+            <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="search-box" placeholder="Search by title, genre, studio, year..." autocomplete="off">
+          </div>
+        </div>
+
+        <div class="sort-wrapper">
+          <label for="sort-select" class="sort-label">Sort by</label>
+          <select id="sort-select" class="sort-select">
+            <option value="default">Personal Journey (Default)</option>
+            <option value="my-rating">My Rating (High to Low)</option>
+            <option value="official-rating">Official Score (High to Low)</option>
+            <option value="year">Released Year (Newest First)</option>
+          </select>
         </div>
       </div>
 

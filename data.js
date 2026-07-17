@@ -440,7 +440,7 @@ const animeList = [
     "japaneseName": "僕が愛したすべての君へ (Boku ga Aishita Subete no Kimi e)",
     "type": "Movie",
     "rating": 7.1,
-    "myRating": "10/10",
+    "myRating": "N/A",
     "feedback": "Parallel Worlds Sci-Fi",
     "seasons": 1,
     "episodes": 1,
@@ -465,7 +465,7 @@ const animeList = [
     "japaneseName": "君を愛したひとりの僕へ (Kimi wo Aishita Hitori no Boku e)",
     "type": "Movie",
     "rating": 7.25,
-    "myRating": "10/10",
+    "myRating": "N/A",
     "feedback": "Interconnected Story",
     "seasons": 1,
     "episodes": 1,
@@ -539,6 +539,135 @@ const animeList = [
       "assets/posters/arcane/2.webp"
     ],
     "status": "Watched",
+    "fav": false
+  },
+  {
+    "id": 21,
+    "name": "A Silent Voice",
+    "japaneseName": "聲の形 (Koe no Katachi)",
+    "type": "Movie",
+    "rating": 8.94,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 2016,
+    "runtime": 130,
+    "studio": "Kyoto Animation",
+    "director": "Naoko Yamada",
+    "genres": [
+      "Drama",
+      "Award Winning"
+    ],
+    "folderName": "silent-voice",
+    "posters": [
+      "assets/posters/silent-voice/1.webp",
+      "assets/posters/silent-voice/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 22,
+    "name": "Grave of the Fireflies",
+    "japaneseName": "火垂るの墓 (Hotaru no Haka)",
+    "type": "Movie",
+    "rating": 8.5,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 1988,
+    "runtime": 88,
+    "studio": "Studio Ghibli",
+    "director": "Isao Takahata",
+    "genres": [
+      "Drama"
+    ],
+    "folderName": "graves-of-the-fireflies",
+    "posters": [
+      "assets/posters/graves-of-the-fireflies/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 23,
+    "name": "The Anthem of the Heart",
+    "japaneseName": "心が叫びたがってるんだ。 (Kokoro ga Sakebitagatterunda.)",
+    "type": "Movie",
+    "rating": 8.02,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 2015,
+    "runtime": 119,
+    "studio": "A-1 Pictures",
+    "director": "Tatsuyuki Nagai",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "folderName": "anthem-of-the-heart",
+    "posters": [
+      "assets/posters/anthem-of-the-heart/1.webp",
+      "assets/posters/anthem-of-the-heart/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 24,
+    "name": "Attack on Titan",
+    "japaneseName": "進撃の巨人 (Shingeki no Kyojin)",
+    "type": "Series",
+    "rating": 8.78,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 4,
+    "episodes": 22,
+    "year": 2013,
+    "runtime": 24,
+    "studio": "Wit Studio / MAPPA",
+    "director": "Tetsuro Araki / Yuichiro Hayashi",
+    "genres": [
+      "Action",
+      "Drama",
+      "Suspense",
+      "Fantasy"
+    ],
+    "folderName": "attack-on-titan",
+    "posters": [
+      "assets/posters/attack-on-titan/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 25,
+    "name": "A Lull in the Sea",
+    "japaneseName": "凪のあすから (Nagi no Asukara)",
+    "type": "Series",
+    "rating": 8.06,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 26,
+    "year": 2013,
+    "runtime": 23,
+    "studio": "P.A. Works",
+    "director": "Toshiya Shinohara",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Fantasy"
+    ],
+    "folderName": "lull-in-the-sea",
+    "posters": [
+      "assets/posters/lull-in-the-sea/1.webp"
+    ],
+    "status": "Pending",
     "fav": false
   }
 ];

@@ -278,10 +278,72 @@ body {
   margin-bottom: 48px;
 }
 
-.search-wrapper {
-  max-width: 600px;
+.controls-bar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  max-width: 900px;
   width: 100%;
   margin: 0 auto;
+}
+
+.search-wrapper {
+  flex-grow: 1;
+  max-width: 600px;
+}
+
+.sort-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.sort-label {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.sort-select {
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--glass-border);
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: border-color var(--transition-fast), background-color var(--transition-medium), box-shadow var(--transition-fast);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236B625C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.dark-theme .sort-select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23B1A497' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+}
+
+.sort-select:focus {
+  border-color: var(--accent-color);
+  background-color: var(--card-color);
+  box-shadow: 0 0 0 4px var(--accent-light);
+}
+
+.sort-select:hover {
+  background-color: var(--card-color);
 }
 
 .search-input-container {
@@ -1594,6 +1656,25 @@ input:checked + .slider::before {
   .filter-tab {
     padding: 8px 14px;
     font-size: 0.8rem;
+  }
+  
+  .controls-bar-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .search-wrapper {
+    max-width: none;
+  }
+  
+  .sort-wrapper {
+    justify-content: space-between;
+  }
+  
+  .sort-select {
+    flex-grow: 1;
+    max-width: none;
   }
   
   .footer-links {

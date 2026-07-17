@@ -669,6 +669,803 @@ const animeList = [
     ],
     "status": "Pending",
     "fav": false
+  },
+  {
+    "id": 26,
+    "name": "Hyouka",
+    "japaneseName": "氷菓 (Hyouka)",
+    "type": "Series",
+    "rating": 8.08,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 22,
+    "year": 2012,
+    "runtime": 25,
+    "studio": "Kyoto Animation",
+    "director": "Yasuhiro Takemoto",
+    "genres": [
+      "Mystery",
+      "Slice of Life"
+    ],
+    "folderName": "hyouka",
+    "posters": [
+      "assets/posters/hyouka/1.webp",
+      "assets/posters/hyouka/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 27,
+    "name": "Darling in the Franxx",
+    "japaneseName": "ダーリン・イン・ザ・フランキス (Dārin In Za Furankisu)",
+    "type": "Series",
+    "rating": 7.2,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 24,
+    "year": 2018,
+    "runtime": 24,
+    "studio": "A-1 Pictures / Trigger / CloverWorks",
+    "director": "Atsushi Nishigori",
+    "genres": [
+      "Action",
+      "Drama",
+      "Sci-Fi",
+      "Romance"
+    ],
+    "folderName": "darling-in-the-franxx",
+    "posters": [
+      "assets/posters/darling-in-the-franxx/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 28,
+    "name": "Re:Zero",
+    "japaneseName": "Re:ゼロから始める異世界生活 (Re:Zero kara Hajimeru Isekai Seikatsu)",
+    "type": "Series",
+    "rating": 8.24,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 3,
+    "episodes": 25,
+    "year": 2016,
+    "runtime": 25,
+    "studio": "White Fox",
+    "director": "Masaharu Watanabe",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Suspense"
+    ],
+    "folderName": "re-zero",
+    "posters": [
+      "assets/posters/re-zero/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 29,
+    "name": "Fireworks",
+    "japaneseName": "打ち上げ花火、下から見るか？横から見るか？ (Uchiage Hanabi)",
+    "type": "Movie",
+    "rating": 6.6,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 2017,
+    "runtime": 90,
+    "studio": "Shaft",
+    "director": "Akiyuki Shinbo / Nobuyuki Takeuchi",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Supernatural"
+    ],
+    "folderName": "fireworks",
+    "posters": [
+      "assets/posters/fireworks/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 30,
+    "name": "Hello World",
+    "japaneseName": "HELLO WORLD",
+    "type": "Movie",
+    "rating": 7.55,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 2019,
+    "runtime": 98,
+    "studio": "Graphinica",
+    "director": "Tomohiko Itou",
+    "genres": [
+      "Sci-Fi",
+      "Drama",
+      "Romance"
+    ],
+    "folderName": "hello-world",
+    "posters": [
+      "assets/posters/hello-world/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 31,
+    "name": "Summer Ghost",
+    "japaneseName": "サマーゴースト (Summer Ghost)",
+    "type": "Movie",
+    "rating": 7.42,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 2021,
+    "runtime": 40,
+    "studio": "Flat Studio",
+    "director": "loundraw",
+    "genres": [
+      "Drama",
+      "Supernatural"
+    ],
+    "folderName": "summer-ghost",
+    "posters": [
+      "assets/posters/summer-ghost/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 32,
+    "name": "Look Back",
+    "japaneseName": "ルックバック (Look Back)",
+    "type": "Movie",
+    "rating": 8.75,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 2024,
+    "runtime": 58,
+    "studio": "Studio Durian",
+    "director": "Kiyotaka Oshiyama",
+    "genres": [
+      "Drama",
+      "Avant Garde"
+    ],
+    "folderName": "look-back",
+    "posters": [
+      "assets/posters/look-back/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 33,
+    "name": "Vinland Saga",
+    "japaneseName": "ヴィンランド・サガ (Vinland Saga)",
+    "type": "Series",
+    "rating": 8.75,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 24,
+    "year": 2019,
+    "runtime": 24,
+    "studio": "WIT Studio / MAPPA",
+    "director": "Shuhei Yabuta",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "folderName": "vinland-saga",
+    "posters": [
+      "assets/posters/vinland-saga/1.webp",
+      "assets/posters/vinland-saga/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 34,
+    "name": "Death Note",
+    "japaneseName": "デスノート (Death Note)",
+    "type": "Series",
+    "rating": 8.62,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 37,
+    "year": 2006,
+    "runtime": 23,
+    "studio": "Madhouse",
+    "director": "Tetsuro Araki",
+    "genres": [
+      "Supernatural",
+      "Suspense"
+    ],
+    "folderName": "death-note",
+    "posters": [
+      "assets/posters/death-note/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 35,
+    "name": "Clannad",
+    "japaneseName": "クラナド (Clannad)",
+    "type": "Series",
+    "rating": 8.01,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 23,
+    "year": 2007,
+    "runtime": 24,
+    "studio": "Kyoto Animation",
+    "director": "Tatsuya Ishihara",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Supernatural"
+    ],
+    "folderName": "clannad",
+    "posters": [
+      "assets/posters/clannad/1.webp",
+      "assets/posters/clannad/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 36,
+    "name": "Insomniacs After School",
+    "japaneseName": "君は放課後インソムニア (Kimi wa Houkago Insomnia)",
+    "type": "Series",
+    "rating": 8.02,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 13,
+    "year": 2023,
+    "runtime": 24,
+    "studio": "LIDENFILMS",
+    "director": "Yuki Ikeda",
+    "genres": [
+      "Romance",
+      "Slice of Life"
+    ],
+    "folderName": "insomniacs-after-school",
+    "posters": [
+      "assets/posters/insomniacs-after-school/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 37,
+    "name": "The Apothecary Diaries",
+    "japaneseName": "薬屋のひとりごと (Kusuriya no Hitorigoto)",
+    "type": "Series",
+    "rating": 8.9,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 24,
+    "year": 2023,
+    "runtime": 24,
+    "studio": "OLM / TOHO animation",
+    "director": "Norihiro Naganuma",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Medical"
+    ],
+    "folderName": "the-apothecary-diaries",
+    "posters": [
+      "assets/posters/the-apothecary-diaries/1.webp",
+      "assets/posters/the-apothecary-diaries/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 38,
+    "name": "Jujutsu Kaisen",
+    "japaneseName": "呪術廻戦 (Jujutsu Kaisen)",
+    "type": "Series",
+    "rating": 8.65,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 24,
+    "year": 2020,
+    "runtime": 24,
+    "studio": "MAPPA",
+    "director": "Sunghoo Park / Shota Goshozono",
+    "genres": [
+      "Action",
+      "Fantasy"
+    ],
+    "folderName": "jujutsu-kaisen",
+    "posters": [
+      "assets/posters/jujutsu-kaisen/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 39,
+    "name": "Anohana",
+    "japaneseName": "あの日見た花の名前を僕達はまだ知らない。 (Anohana)",
+    "type": "Series",
+    "rating": 8.31,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 11,
+    "year": 2011,
+    "runtime": 22,
+    "studio": "A-1 Pictures",
+    "director": "Tatsuyuki Nagai",
+    "genres": [
+      "Drama",
+      "Supernatural"
+    ],
+    "folderName": "anohana",
+    "posters": [
+      "assets/posters/anohana/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 40,
+    "name": "365 Days to the Wedding",
+    "japaneseName": "結婚するって、本当ですか (Kekkon Surutte,  Honto desu ka?)",
+    "type": "Series",
+    "rating": 7.22,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2024,
+    "runtime": 24,
+    "studio": "Ashi Productions",
+    "director": "Hiroshi Ikehata",
+    "genres": [
+      "Romance",
+      "Slice of Life"
+    ],
+    "folderName": "days-to-the-wedding",
+    "posters": [
+      "assets/posters/days-to-the-wedding/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 41,
+    "name": "Blue Box",
+    "japaneseName": "アオのハコ (Ao no Hako)",
+    "type": "Series",
+    "rating": 8.35,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 25,
+    "year": 2024,
+    "runtime": 24,
+    "studio": "Telecom Animation Film",
+    "director": "Yūichirō Yano",
+    "genres": [
+      "Romance",
+      "Sports"
+    ],
+    "folderName": "blue-box",
+    "posters": [
+      "assets/posters/blue-box/1.webp",
+      "assets/posters/blue-box/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 42,
+    "name": "The Angel Next Door Spoils Me Rotten",
+    "japaneseName": "お隣の天使様にいつの間にか駄目人間にされていた件 (Otonari no Tenshi-sama)",
+    "type": "Series",
+    "rating": 7.85,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 12,
+    "year": 2023,
+    "runtime": 24,
+    "studio": "Project No.9",
+    "director": "Lihua Wang / Chihiro Kumano",
+    "genres": [
+      "Romance",
+      "Slice of Life"
+    ],
+    "folderName": "the-angel-next-door-spoils-me-rotten",
+    "posters": [
+      "assets/posters/the-angel-next-door-spoils-me-rotten/1.webp",
+      "assets/posters/the-angel-next-door-spoils-me-rotten/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 43,
+    "name": "The Dangers in My Heart",
+    "japaneseName": "僕の心のヤバイやつ (Boku no Kokoro no Yabai Yatsu)",
+    "type": "Series",
+    "rating": 8.7,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 12,
+    "year": 2023,
+    "runtime": 24,
+    "studio": "Shin-Ei Animation",
+    "director": "Hiroaki Akagi",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "folderName": "the-dangers-in-my-heart",
+    "posters": [
+      "assets/posters/the-dangers-in-my-heart/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 44,
+    "name": "More Than a Married Couple,  But Not Lovers",
+    "japaneseName": "夫婦以上、恋人未満。 (Fuufu Ijou Koibito Miman.)",
+    "type": "Series",
+    "rating": 7.51,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2022,
+    "runtime": 24,
+    "studio": "Studio Mother",
+    "director": "Junichi Yamamoto / Takao Kato",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "folderName": "more-than-a-married-couple-but-not-lovers",
+    "posters": [
+      "assets/posters/more-than-a-married-couple-but-not-lovers/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 45,
+    "name": "Kaguya-sama: Love Is War",
+    "japaneseName": "かぐや様は告らせたい ～天才たちの恋愛頭脳戦～ (Kaguya-sama wa Kokurasetai)",
+    "type": "Series",
+    "rating": 8.75,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 3,
+    "episodes": 12,
+    "year": 2019,
+    "runtime": 24,
+    "studio": "A-1 Pictures",
+    "director": "Shinichi Omata",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "folderName": "kaguya-sama-love-is-war",
+    "posters": [
+      "assets/posters/kaguya-sama-love-is-war/1.webp",
+      "assets/posters/kaguya-sama-love-is-war/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 46,
+    "name": "Toradora!",
+    "japaneseName": "とらドラ！ (Toradora!)",
+    "type": "Series",
+    "rating": 8.1,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 25,
+    "year": 2008,
+    "runtime": 24,
+    "studio": "J.C.Staff",
+    "director": "Tatsuyuki Nagai",
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "folderName": "toradora",
+    "posters": [
+      "assets/posters/toradora/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 47,
+    "name": "Erased",
+    "japaneseName": "僕だけがいない街 (Boku dake ga Inai Machi)",
+    "type": "Series",
+    "rating": 8.31,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2016,
+    "runtime": 23,
+    "studio": "A-1 Pictures",
+    "director": "Tomohiko Itou",
+    "genres": [
+      "Mystery",
+      "Supernatural",
+      "Suspense"
+    ],
+    "folderName": "erased",
+    "posters": [
+      "assets/posters/erased/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 48,
+    "name": "Classroom of the Elite",
+    "japaneseName": "ようこそ実力至上主義の教室へ (Youkoso Jitsuryoku Shijou Shugi no Kyrosshitsu e)",
+    "type": "Series",
+    "rating": 7.86,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 4,
+    "episodes": 13,
+    "year": 2017,
+    "runtime": 24,
+    "studio": "Lerche",
+    "director": "Seiji Kishi / Hiroyuki Hashimoto / Noriyuki Nomata",
+    "genres": [
+      "Drama",
+      "Suspense"
+    ],
+    "folderName": "classroom-of-the-elite",
+    "posters": [
+      "assets/posters/classroom-of-the-elite/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 49,
+    "name": "Spy × Family",
+    "japaneseName": "SPY×FAMILY (Spy × Family)",
+    "type": "Series",
+    "rating": 8.5,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 3,
+    "episodes": 12,
+    "year": 2022,
+    "runtime": 24,
+    "studio": "Wit Studio / CloverWorks",
+    "director": "Kazuhiro Furuhashi",
+    "genres": [
+      "Action",
+      "Comedy"
+    ],
+    "folderName": "spy-family",
+    "posters": [
+      "assets/posters/spy-family/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 50,
+    "name": "Alya Sometimes Hides Her Feelings in Russian",
+    "japaneseName": "時々ボソッとロシア語でデレる隣のアーlyaさん (Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san)",
+    "type": "Series",
+    "rating": 7.62,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 12,
+    "year": 2024,
+    "runtime": 24,
+    "studio": "Doga Kobo",
+    "director": "Ryota Itoh",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "folderName": "alya-sometimes-hides-her-feelings-in-russian",
+    "posters": [
+      "assets/posters/alya-sometimes-hides-her-feelings-in-russian/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 51,
+    "name": "The Fragrant Flower Blooms with Dignity",
+    "japaneseName": "薫る花は凛と咲く (Kaoru Hana wa Rin to Saku)",
+    "type": "Series",
+    "rating": 8.42,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2026,
+    "runtime": 24,
+    "studio": "CloverWorks",
+    "director": "Miho Tan Tanaka",
+    "genres": [
+      "Romance",
+      "Slice of Life"
+    ],
+    "folderName": "the-fragrant-flower-blooms-with-dignity",
+    "posters": [
+      "assets/posters/the-fragrant-flower-blooms-with-dignity/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 52,
+    "name": "Howl's Moving Castle",
+    "japaneseName": "ハウルの動く城 (Hauru no Ugoku Shiro)",
+    "type": "Movie",
+    "rating": 8.66,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 2004,
+    "runtime": 119,
+    "studio": "Studio Ghibli",
+    "director": "Hayao Miyazaki",
+    "genres": [
+      "Adventure",
+      "Fantasy",
+      "Romance"
+    ],
+    "folderName": "howl's-moving-castle",
+    "posters": [
+      "assets/posters/howl's-moving-castle/1.webp",
+      "assets/posters/howl's-moving-castle/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 53,
+    "name": "Chainsaw Man",
+    "japaneseName": "チェンソーマン (Chainsaw Man)",
+    "type": "Series",
+    "rating": 8.51,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 2,
+    "episodes": 12,
+    "year": 2022,
+    "runtime": 24,
+    "studio": "MAPPA",
+    "director": "Ryu Nakayama / Tatsuya Yoshihara",
+    "genres": [
+      "Action",
+      "Dark Fantasy",
+      "Gore"
+    ],
+    "folderName": "chainsaw-man",
+    "posters": [
+      "assets/posters/chainsaw-man/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 54,
+    "name": "Too Many Losing Heroines!",
+    "japaneseName": "負けヒロインが多すぎる！ (Make Heroine ga Oosugiru!)",
+    "type": "Series",
+    "rating": 8.25,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2024,
+    "runtime": 24,
+    "studio": "A-1 Pictures",
+    "director": "Shotaro Kitamura",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "folderName": "too-many-losing-heroines",
+    "posters": [
+      "assets/posters/too-many-losing-heroines/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 55,
+    "name": "Josee,  the Tiger and the Fish",
+    "japaneseName": "ジョゼと虎と魚たち (Joze to Tora to Sakana-tachi)",
+    "type": "Movie",
+    "rating": 8.41,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 1,
+    "year": 2020,
+    "runtime": 98,
+    "studio": "Bones",
+    "director": "Kotaro Tamura",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "folderName": "josee-the-tiger-and-the-fish",
+    "posters": [
+      "assets/posters/josee-the-tiger-and-the-fish/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 56,
+    "name": "Takopi's Original Sin",
+    "japaneseName": "タコピーの原罪 (Takopi no Genzai)",
+    "type": "Series",
+    "rating": 7.94,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 8,
+    "year": 2026,
+    "runtime": 24,
+    "studio": "CloverWorks",
+    "director": "Shinpei Tomooka",
+    "genres": [
+      "Drama",
+      "Psychological",
+      "Sci-Fi"
+    ],
+    "folderName": "takopi's-original-sin",
+    "posters": [
+      "assets/posters/takopi's-original-sin/1.webp",
+      "assets/posters/takopi's-original-sin/2.webp"
+    ],
+    "status": "Pending",
+    "fav": false
   }
 ];
 

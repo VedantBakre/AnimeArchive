@@ -1467,6 +1467,133 @@ const animeList = [
     ],
     "status": "Pending",
     "fav": false
+  },
+  {
+    "id": 57,
+    "name": "Love Unseen Beneath the Clear Night Sky",
+    "japaneseName": "見えない恋は晴れた夜空のもとで (Mietenaishi Koi wa Hareta Yozora no Moto de)",
+    "type": "Series",
+    "rating": 7.68,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2026,
+    "runtime": 24,
+    "studio": "Project No.9",
+    "director": "Kei Oikawa",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "folderName": "love-unseen-beneath-the-clear-night-sky",
+    "posters": [
+      "assets/posters/love-unseen-beneath-the-clear-night-sky/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 58,
+    "name": "Oh Boy,  Was I Wrong About Her",
+    "japaneseName": "僕は彼女を勘違いしてる (Boku wa Kanojo wo Kanchigai Shiteru)",
+    "type": "Series",
+    "rating": 7.42,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2026,
+    "runtime": 24,
+    "studio": "Pine Jam",
+    "director": "Kazuhiro Yoneda",
+    "genres": [
+      "Comedy",
+      "Romance",
+      "Slice of Life"
+    ],
+    "folderName": "oh-boy-was-i-wrong-about-her",
+    "posters": [
+      "assets/posters/oh-boy-was-i-wrong-about-her/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 59,
+    "name": "I Want to Love You Till Your Dying Day",
+    "japaneseName": "きみが死ぬまで恋をしたい (Kimi ga Shinu made Koi wo Shitai)",
+    "type": "Series",
+    "rating": 7.82,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2026,
+    "runtime": 24,
+    "studio": "ROLL2",
+    "director": "Yasushi Tomoda",
+    "genres": [
+      "Drama",
+      "Dark Fantasy",
+      "Yuri"
+    ],
+    "folderName": "i-want-to-love-you-till-your-dying-day",
+    "posters": [
+      "assets/posters/i-want-to-love-you-till-your-dying-day/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 60,
+    "name": "I Want to End This Love Game",
+    "japaneseName": "愛してるゲームを終わらせたい (Aishiteiru Game wo Owarasetai)",
+    "type": "Series",
+    "rating": 7.95,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 12,
+    "year": 2026,
+    "runtime": 24,
+    "studio": "Doga Kobo",
+    "director": "Shota Umehara",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "folderName": "i-want-to-end-this-love-game",
+    "posters": [
+      "assets/posters/i-want-to-end-this-love-game/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
+  },
+  {
+    "id": 61,
+    "name": "Lycoris Recoil",
+    "japaneseName": "リコリス・リコイル (Rikoris Rikoiru)",
+    "type": "Series",
+    "rating": 8.23,
+    "myRating": "N/A",
+    "feedback": null,
+    "seasons": 1,
+    "episodes": 13,
+    "year": 2022,
+    "runtime": 24,
+    "studio": "A-1 Pictures",
+    "director": "Shingo Adachi",
+    "genres": [
+      "Action",
+      "Sci-Fi"
+    ],
+    "folderName": "lycoris-recoil",
+    "posters": [
+      "assets/posters/lycoris-recoil/1.webp"
+    ],
+    "status": "Pending",
+    "fav": false
   }
 ];
 

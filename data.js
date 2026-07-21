@@ -548,8 +548,8 @@ const animeList = [
     "japaneseName": "聲の形 (Koe no Katachi)",
     "type": "Movie",
     "rating": 8.94,
-    "myRating": "N/A",
-    "feedback": null,
+    "myRating": "11/10",
+    "feedback": "If you ever feel like giving up on life, watch this !",
     "seasons": 1,
     "episodes": 1,
     "year": 2016,
@@ -566,7 +566,7 @@ const animeList = [
       "assets/posters/silent-voice/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": true
   },
   {
     "id": 22,

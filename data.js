@@ -565,7 +565,7 @@ const animeList = [
       "assets/posters/silent-voice/1.webp",
       "assets/posters/silent-voice/2.webp"
     ],
-    "status": "Pending",
+    "status": "Watched",
     "fav": true
   },
   {

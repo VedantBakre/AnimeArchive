@@ -1637,11 +1637,25 @@ const ambiencePlaylist = [
 
 const atmospheres = [
   {
+    "id": "floasting-car",
+    "name": "Floasting Car",
+    "video": "assets/atmosphere/floasting-car.mp4",
+    "suggestedSound": null,
+    "themeColor": "#B08968"
+  },
+  {
     "id": "gaming-room",
     "name": "Gaming Room",
-    "video": "assets/atmosphere/Gaming Room.mp4",
+    "video": "assets/atmosphere/gaming-room.mp4",
     "suggestedSound": "Rain & Thunderstorm",
     "themeColor": "#8C6A5C"
+  },
+  {
+    "id": "goku",
+    "name": "Goku",
+    "video": "assets/atmosphere/goku.mp4",
+    "suggestedSound": null,
+    "themeColor": "#B08968"
   },
   {
     "id": "rainy-night",
@@ -1658,10 +1672,17 @@ const atmospheres = [
     "themeColor": "#394E68"
   },
   {
-    "id": "starlit-ocean",
-    "name": "Starlit Ocean",
-    "video": "assets/atmosphere/starlit-ocean.mp4",
-    "suggestedSound": "Ocean Waves",
-    "themeColor": "#4D6B82"
+    "id": "spider-man",
+    "name": "Spider Man",
+    "video": "assets/atmosphere/spider-man.mp4",
+    "suggestedSound": null,
+    "themeColor": "#B08968"
+  },
+  {
+    "id": "vageta-ego",
+    "name": "Vageta Ego",
+    "video": "assets/atmosphere/vageta-ego.mp4",
+    "suggestedSound": null,
+    "themeColor": "#B08968"
   }
 ];

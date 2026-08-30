@@ -466,11 +466,29 @@ body {
   box-shadow: var(--shadow-card-hover);
 }
 
+/* Card poster skeleton shimmer loader */
+@keyframes posterShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 .card-poster-wrapper {
   position: relative;
   width: 100%;
   padding-top: 145%; /* ~2:3 Aspect Ratio */
   overflow: hidden;
+  background: linear-gradient(90deg, var(--surface-color) 0%, var(--card-color) 50%, var(--surface-color) 100%);
+  background-size: 200% 100%;
+  animation: posterShimmer 2.2s infinite ease-in-out;
+}
+
+.dark-theme .card-poster-wrapper {
+  background: linear-gradient(90deg, #2B2622 0%, #3d3630 50%, #2B2622 100%);
+  background-size: 200% 100%;
 }
 
 .card-poster-img {
@@ -480,7 +498,13 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-medium);
+  opacity: 0;
+  transition: opacity 0.35s ease-out, transform var(--transition-medium);
+  will-change: opacity, transform;
+}
+
+.card-poster-img.loaded {
+  opacity: 1;
 }
 
 .anime-card:hover .card-poster-img {
@@ -650,6 +674,38 @@ body {
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 32px;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out;
+  will-change: transform, opacity;
+}
+
+/* Directional transitions for switching anime entries */
+.modal-body-layout.slide-out-left {
+  transform: translateX(-36px) scale(0.97);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-body-layout.slide-out-right {
+  transform: translateX(36px) scale(0.97);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-body-layout.slide-in-from-right {
+  transform: translateX(36px) scale(0.97);
+  opacity: 0;
+  transition: none !important;
+}
+
+.modal-body-layout.slide-in-from-left {
+  transform: translateX(-36px) scale(0.97);
+  opacity: 0;
+  transition: none !important;
+}
+
+.modal-body-layout.slide-idle {
+  transform: translateX(0) scale(1);
+  opacity: 1;
 }
 
 /* Left Column: Poster display & switchers */
@@ -667,7 +723,14 @@ body {
   border-radius: var(--border-radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-soft);
-  background-color: var(--surface-color);
+  background: linear-gradient(90deg, var(--surface-color) 0%, var(--card-color) 50%, var(--surface-color) 100%);
+  background-size: 200% 100%;
+  animation: posterShimmer 2.2s infinite ease-in-out;
+}
+
+.dark-theme .poster-viewer {
+  background: linear-gradient(90deg, #2B2622 0%, #3d3630 50%, #2B2622 100%);
+  background-size: 200% 100%;
 }
 
 .modal-poster-img {
@@ -675,6 +738,44 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease-out, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.modal-poster-img.loaded {
+  opacity: 1;
+}
+
+/* Alternate poster slide animations */
+.modal-poster-img.slide-poster-left {
+  animation: posterSlideLeft 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-poster-img.slide-poster-right {
+  animation: posterSlideRight 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes posterSlideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(24px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes posterSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-24px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 
 /* Alternate Poster arrow buttons */
@@ -682,20 +783,21 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(58, 46, 37, 0.7);
-  backdrop-filter: blur(4px);
+  background-color: rgba(58, 46, 37, 0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: #fff;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   z-index: 3;
   opacity: 0;
-  transition: opacity var(--transition-fast), background-color var(--transition-fast);
+  transition: opacity var(--transition-fast), background-color var(--transition-fast), transform 0.15s ease;
 }
 
 .poster-viewer:hover .poster-nav-btn {
@@ -704,6 +806,11 @@ body {
 
 .poster-nav-btn:hover {
   background-color: var(--accent-color);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.poster-nav-btn:active {
+  transform: translateY(-50%) scale(0.92);
 }
 
 .poster-nav-btn.prev { left: 12px; }
@@ -886,33 +993,41 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(239, 230, 218, 0.4);
+  background-color: rgba(239, 230, 218, 0.55);
   border: 1px solid var(--glass-border);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--text-primary);
-  width: 60px;
-  height: 60px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 102;
-  transition: all var(--transition-fast);
+  box-shadow: 0 6px 20px rgba(58, 46, 37, 0.12);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .dark-theme .edge-nav-btn {
-  background-color: rgba(43, 38, 34, 0.4);
+  background-color: rgba(43, 38, 34, 0.6);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
 }
 
 .edge-nav-btn:hover {
   background-color: var(--accent-color);
-  color: var(--bg-color);
-  transform: translateY(-50%) scale(1.1);
+  color: #fff;
+  transform: translateY(-50%) scale(1.14);
+  box-shadow: 0 10px 28px rgba(176, 137, 104, 0.45);
 }
 
-.edge-nav-btn.prev-btn { left: 40px; }
-.edge-nav-btn.next-btn { right: 40px; }
+.edge-nav-btn:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.edge-nav-btn.prev-btn { left: 32px; }
+.edge-nav-btn.next-btn { right: 32px; }
 
 /* --- Settings Dropdown Drawer --- */
 .settings-panel {

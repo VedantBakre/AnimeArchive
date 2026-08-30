@@ -159,9 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
       ? (ratedAnimes.reduce((sum, a) => sum + a.rating, 0) / ratedAnimes.length).toFixed(1) 
       : '-';
     
-    // Hours Watched calculation
+    // Filter for Watched anime entries
+    const watchedAnimes = animeList.filter(a => (a.status || '').toLowerCase() === 'watched');
+
+    // Hours Watched calculation (Watched entries only)
     // Movies = runtime mins. Series = seasons * episodes * runtime mins
-    const totalMinutes = animeList.reduce((acc, a) => {
+    const totalMinutes = watchedAnimes.reduce((acc, a) => {
       if (a.type === 'Movie') {
         return acc + (a.runtime || 0);
       } else {
@@ -173,9 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 0);
     const hours = Math.round(totalMinutes / 60);
     
-    // Top Genre calculation
+    // Top Genre calculation (Watched entries only)
     const genreCounts = {};
-    animeList.forEach(a => {
+    watchedAnimes.forEach(a => {
       if (a.genres && Array.isArray(a.genres)) {
         a.genres.forEach(g => {
           genreCounts[g] = (genreCounts[g] || 0) + 1;
@@ -201,12 +204,54 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   calculateStatistics();
 
+  // --- 4.5. Intelligent Predictive Image Preloader System ---
+  const preloadedImageCache = new Map();
+
+  function preloadImage(url) {
+    if (!url || preloadedImageCache.has(url)) return;
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = url;
+    preloadedImageCache.set(url, img);
+  }
+
+  function preloadAnimePosters(anime) {
+    if (!anime || !anime.posters || anime.posters.length === 0) return;
+    anime.posters.forEach(posterPath => preloadImage(posterPath));
+  }
+
+  function preloadNearbyEntries(currentIndex) {
+    if (!filteredAnimeList || filteredAnimeList.length === 0) return;
+    const total = filteredAnimeList.length;
+    // Proactively preload surrounding entries for instantaneous navigation
+    const offsets = [1, 2, 3, -1, -2];
+    offsets.forEach(offset => {
+      const targetIndex = (currentIndex + offset + total) % total;
+      preloadAnimePosters(filteredAnimeList[targetIndex]);
+    });
+  }
+
+  // Grid cards viewport intersection observer
+  let gridObserver = null;
+  if ('IntersectionObserver' in window) {
+    gridObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const animeId = parseInt(entry.target.dataset.id, 10);
+          const anime = animeList.find(a => a.id === animeId);
+          if (anime) preloadAnimePosters(anime);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '350px 0px' });
+  }
+
   // --- 5. Grid Rendering & Dynamic Cards ---
   function createAnimeCard(anime, index) {
     const card = document.createElement('div');
     card.className = 'anime-card';
     card.dataset.id = anime.id;
-    card.style.animationDelay = `${index * 0.05}s`; // Stagger cards transition entrance
+    card.style.animationDelay = `${Math.min(index * 0.03, 0.45)}s`; // Stagger cards entrance smoothly
     
     // Main Poster
     const posterSrc = anime.posters && anime.posters.length > 0 
@@ -223,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     card.innerHTML = `
       <div class="card-poster-wrapper">
-        <img class="card-poster-img" src="${posterSrc}" alt="${anime.name}" loading="lazy">
+        <img class="card-poster-img" src="${posterSrc}" alt="${anime.name}" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
         <div class="card-tags">
           <span class="tag-badge">${anime.type}</span>
           ${anime.fav ? '<span class="tag-badge fav-badge">❤</span>' : ''}
@@ -249,6 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
+    // Fast Hover & Touch Preload: Warm memory cache when user interacts with card
+    card.addEventListener('mouseenter', () => preloadAnimePosters(anime), { once: true });
+    card.addEventListener('touchstart', () => preloadAnimePosters(anime), { passive: true, once: true });
+
     card.addEventListener('click', () => openDetailModal(anime.id));
     return card;
   }
@@ -262,8 +311,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     DOM.noResults.classList.add('hidden');
+
+    // Preload first 16 cards immediately on render for instant visual pop
+    filteredAnimeList.slice(0, 16).forEach(a => preloadAnimePosters(a));
+
     filteredAnimeList.forEach((anime, idx) => {
-      DOM.animeGrid.appendChild(createAnimeCard(anime, idx));
+      const card = createAnimeCard(anime, idx);
+      DOM.animeGrid.appendChild(card);
+      if (gridObserver) gridObserver.observe(card);
     });
   }
 
@@ -347,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- 7. Detail Popup Modal with Navigation ---
+  // --- 7. Detail Popup Modal with Smooth Navigation ---
   function openDetailModal(animeId) {
     const index = filteredAnimeList.findIndex(a => a.id === animeId);
     if (index === -1) return;
@@ -355,7 +410,14 @@ document.addEventListener('DOMContentLoaded', () => {
     state.selectedAnimeIndex = index;
     state.selectedPosterIndex = 0; // Reset poster sub-index when changing anime
     
+    const modalBody = DOM.detailModal.querySelector('.modal-body-layout');
+    if (modalBody) {
+      modalBody.classList.remove('slide-out-left', 'slide-out-right', 'slide-in-from-left', 'slide-in-from-right');
+      modalBody.classList.add('slide-idle');
+    }
+
     updateDetailModal();
+    preloadNearbyEntries(index);
     DOM.detailModal.classList.add('active');
     DOM.body.style.overflow = 'hidden'; // freeze backdrop scrolling
   }
@@ -409,10 +471,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePosterGallery();
   }
 
-  function updatePosterGallery() {
+  function updatePosterGallery(direction = null) {
     const anime = filteredAnimeList[state.selectedAnimeIndex];
     if (!anime || !anime.posters || anime.posters.length === 0) {
       DOM.modalPosterImg.src = 'assets/posters/placeholder.jpg';
+      DOM.modalPosterImg.classList.add('loaded');
       DOM.posterPrevBtn.classList.add('hidden');
       DOM.posterNextBtn.classList.add('hidden');
       DOM.posterDots.innerHTML = '';
@@ -421,7 +484,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load active poster
     const posterPath = anime.posters[state.selectedPosterIndex];
-    DOM.modalPosterImg.src = posterPath;
+    
+    DOM.modalPosterImg.classList.remove('loaded', 'slide-poster-left', 'slide-poster-right');
+    
+    if (direction === 'next') {
+      DOM.modalPosterImg.classList.add('slide-poster-left');
+    } else if (direction === 'prev') {
+      DOM.modalPosterImg.classList.add('slide-poster-right');
+    }
+
+    const tempImg = new Image();
+    tempImg.decoding = 'async';
+    tempImg.src = posterPath;
+    tempImg.onload = () => {
+      DOM.modalPosterImg.src = posterPath;
+      DOM.modalPosterImg.classList.add('loaded');
+    };
+    tempImg.onerror = () => {
+      DOM.modalPosterImg.src = posterPath;
+      DOM.modalPosterImg.classList.add('loaded');
+    };
+
+    if (tempImg.complete) {
+      DOM.modalPosterImg.src = posterPath;
+      DOM.modalPosterImg.classList.add('loaded');
+    }
 
     // Handle button arrows visibility (only if more than 1 poster)
     if (anime.posters.length > 1) {
@@ -438,8 +525,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const dot = document.createElement('div');
       dot.className = `poster-dot ${idx === state.selectedPosterIndex ? 'active' : ''}`;
       dot.addEventListener('click', () => {
+        if (state.selectedPosterIndex === idx) return;
+        const dir = idx > state.selectedPosterIndex ? 'next' : 'prev';
         state.selectedPosterIndex = idx;
-        updatePosterGallery();
+        updatePosterGallery(dir);
       });
       DOM.posterDots.appendChild(dot);
     });
@@ -452,7 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!anime || !anime.posters || anime.posters.length <= 1) return;
     
     state.selectedPosterIndex = (state.selectedPosterIndex - 1 + anime.posters.length) % anime.posters.length;
-    updatePosterGallery();
+    updatePosterGallery('prev');
   }
 
   function nextPoster(e) {
@@ -461,22 +550,65 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!anime || !anime.posters || anime.posters.length <= 1) return;
     
     state.selectedPosterIndex = (state.selectedPosterIndex + 1) % anime.posters.length;
-    updatePosterGallery();
+    updatePosterGallery('next');
   }
 
-  // Global details flip navigation (between entries)
+  // --- Smooth Directional Entry Flipping Logic ---
+  let isSwitchingAnime = false;
+
+  function switchAnimeEntry(direction) {
+    if (filteredAnimeList.length <= 1 || isSwitchingAnime) return;
+    isSwitchingAnime = true;
+
+    const modalBody = DOM.detailModal.querySelector('.modal-body-layout');
+    const exitClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
+    const enterClass = direction === 'next' ? 'slide-in-from-right' : 'slide-in-from-left';
+
+    if (modalBody) {
+      modalBody.classList.remove('slide-idle', 'slide-in-from-right', 'slide-in-from-left', 'slide-out-left', 'slide-out-right');
+      modalBody.classList.add(exitClass);
+    }
+
+    setTimeout(() => {
+      // Calculate new index
+      if (direction === 'next') {
+        state.selectedAnimeIndex = (state.selectedAnimeIndex + 1) % filteredAnimeList.length;
+      } else {
+        state.selectedAnimeIndex = (state.selectedAnimeIndex - 1 + filteredAnimeList.length) % filteredAnimeList.length;
+      }
+      state.selectedPosterIndex = 0;
+
+      // Update content
+      updateDetailModal();
+
+      if (modalBody) {
+        // Position entering element
+        modalBody.classList.remove(exitClass);
+        modalBody.classList.add(enterClass);
+
+        // Force browser layout reflow
+        void modalBody.offsetWidth;
+
+        // Slide into active position
+        modalBody.classList.remove(enterClass);
+        modalBody.classList.add('slide-idle');
+      }
+
+      // Preload next upcoming batch
+      preloadNearbyEntries(state.selectedAnimeIndex);
+
+      setTimeout(() => {
+        isSwitchingAnime = false;
+      }, 220);
+    }, 140);
+  }
+
   function prevAnimeEntry() {
-    if (filteredAnimeList.length <= 1) return;
-    state.selectedAnimeIndex = (state.selectedAnimeIndex - 1 + filteredAnimeList.length) % filteredAnimeList.length;
-    state.selectedPosterIndex = 0;
-    updateDetailModal();
+    switchAnimeEntry('prev');
   }
 
   function nextAnimeEntry() {
-    if (filteredAnimeList.length <= 1) return;
-    state.selectedAnimeIndex = (state.selectedAnimeIndex + 1) % filteredAnimeList.length;
-    state.selectedPosterIndex = 0;
-    updateDetailModal();
+    switchAnimeEntry('next');
   }
 
   // Bind detail popup events
@@ -486,6 +618,33 @@ document.addEventListener('DOMContentLoaded', () => {
   DOM.posterNextBtn.addEventListener('click', nextPoster);
   DOM.modalPrevBtn.addEventListener('click', prevAnimeEntry);
   DOM.modalNextBtn.addEventListener('click', nextAnimeEntry);
+
+  // Mobile / Touch Swipe Navigation on Modal
+  let touchStartX = 0;
+  let touchStartY = 0;
+  DOM.detailModal.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  DOM.detailModal.addEventListener('touchend', (e) => {
+    if (!DOM.detailModal.classList.contains('active')) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+
+    // Minimum horizontal swipe distance of 45px and mostly horizontal
+    if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.4) {
+      if (diffX < 0) {
+        nextAnimeEntry();
+      } else {
+        prevAnimeEntry();
+      }
+    }
+  }, { passive: true });
 
   // --- 8. Settings Panel Control ---
   DOM.settingsBtn.addEventListener('click', (e) => {

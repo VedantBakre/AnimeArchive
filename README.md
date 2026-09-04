@@ -4,7 +4,7 @@
 
 **Anime Archive** is a warm, personal, and minimalist digital gallery designed to display a curated collection of watched anime and movies. Rather than functioning as an information-dense database, it is styled like a peaceful personal journal—cozy, relaxing, and aesthetic.
 
-Live Demo hosted on GitHub Pages: **[Deploy yours today!]**
+Live Demo hosted on GitHub Pages: **[vedantbakre.github.io/AnimeArchive](https://vedantbakre.github.io/AnimeArchive/)**
 
 ---
 
@@ -40,12 +40,13 @@ Live Demo hosted on GitHub Pages: **[Deploy yours today!]**
 ## 📂 Project Structure
 
 ```text
-AnimeVault/
+AnimeArchive/
 ├── index.html          # Core structure & DOM containers
 ├── style.css           # Styling styles & dark/light theme variables
 ├── script.js          # Interactive player engine & state management
 ├── data.js             # Recompiled list of data (movies, tracks, atmosphere metadata)
 ├── compile_data.py     # Python script to compile excel updates
+├── LICENSE             # MIT Open Source License
 └── assets/
     ├── data/           # Location of anime.xlsx spreadsheet
     ├── posters/        # Folders with numbered posters (e.g. 1.webp, 2.jpg)
@@ -54,6 +55,8 @@ AnimeVault/
     ├── fonts/          # Fonts folder
     └── icons/          # Vector icons
 ```
+
+> **Note on Media Assets:** Media files (posters, compressed audio, and loop videos) are kept directly within `assets/` to ensure zero-configuration compatibility with standard GitHub Pages static hosting. If scaling the media library beyond GitHub's repository limits, assets can be migrated to an external CDN or Git LFS.
 
 ---
 
@@ -105,6 +108,12 @@ pip install openpyxl
    python compile_data.py
    ```
    *The script will automatically detect and clean up the filenames into formatted playlist titles.*
+
+---
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
 
 ---
 

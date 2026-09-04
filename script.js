@@ -239,7 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (entry.isIntersecting) {
           const animeId = parseInt(entry.target.dataset.id, 10);
           const anime = animeList.find(a => a.id === animeId);
-          if (anime) preloadAnimePosters(anime);
+          if (anime && anime.posters && anime.posters.length > 0) {
+            preloadImage(anime.posters[0]);
+          }
           observer.unobserve(entry.target);
         }
       });
@@ -266,9 +268,13 @@ document.addEventListener('DOMContentLoaded', () => {
       displayRating = `${anime.rating}/10`;
     }
 
+    // Eager load first 12 cards (initial viewport), lazy load remainder
+    const isInitialViewport = index < 12;
+    const loadingAttr = isInitialViewport ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
+
     card.innerHTML = `
       <div class="card-poster-wrapper">
-        <img class="card-poster-img" src="${posterSrc}" alt="${anime.name}" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
+        <img class="card-poster-img" src="${posterSrc}" alt="${anime.name}" ${loadingAttr}>
         <div class="card-tags">
           <span class="tag-badge">${anime.type}</span>
           ${anime.fav ? '<span class="tag-badge fav-badge">❤</span>' : ''}
@@ -294,6 +300,20 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
+    // Ensure cached or fast-loading images fade in immediately and don't get stuck with opacity: 0
+    const img = card.querySelector('.card-poster-img');
+    if (img) {
+      if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
+        img.addEventListener('error', () => {
+          img.src = 'assets/posters/placeholder.jpg';
+          img.classList.add('loaded');
+        }, { once: true });
+      }
+    }
+
     // Fast Hover & Touch Preload: Warm memory cache when user interacts with card
     card.addEventListener('mouseenter', () => preloadAnimePosters(anime), { once: true });
     card.addEventListener('touchstart', () => preloadAnimePosters(anime), { passive: true, once: true });
@@ -312,8 +332,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     DOM.noResults.classList.add('hidden');
 
-    // Preload first 16 cards immediately on render for instant visual pop
-    filteredAnimeList.slice(0, 16).forEach(a => preloadAnimePosters(a));
+    // Preload primary cover posters for first 16 cards for instant pop without bandwidth congestion
+    filteredAnimeList.slice(0, 16).forEach(a => {
+      if (a.posters && a.posters.length > 0) preloadImage(a.posters[0]);
+    });
 
     filteredAnimeList.forEach((anime, idx) => {
       const card = createAnimeCard(anime, idx);

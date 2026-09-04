@@ -4,6 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anime Archive — Stories that stayed with me</title>
+  <meta name="description" content="A warm, personal, and minimalist digital anime archive and media journal with curated ratings, lo-fi beats, ambient soundscapes, and full atmosphere mode.">
+  <meta name="author" content="Vedant Bakre">
+  <meta name="theme-color" content="#F6F1EB" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1F1B18" media="(prefers-color-scheme: dark)">
+
+  <!-- Open Graph / Facebook / LinkedIn / Discord -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vedantbakre.github.io/AnimeArchive/">
+  <meta property="og:title" content="Anime Archive — Stories that stayed with me">
+  <meta property="og:description" content="A cozy personal digital anime journal featuring curated reviews, lo-fi audio, ambient soundscapes, and visual atmosphere modes.">
+  <meta property="og:image" content="https://vedantbakre.github.io/AnimeArchive/assets/posters/your-name/1.webp">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://vedantbakre.github.io/AnimeArchive/">
+  <meta name="twitter:title" content="Anime Archive — Stories that stayed with me">
+  <meta name="twitter:description" content="A cozy personal digital anime journal featuring curated reviews, lo-fi audio, ambient soundscapes, and visual atmosphere modes.">
+  <meta name="twitter:image" content="https://vedantbakre.github.io/AnimeArchive/assets/posters/your-name/1.webp">
+
+  <!-- Favicon: Cherry Blossom SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+
   <!-- Google Fonts: Poppins (UI), Nunito (Body), Caveat (Handwritten titles) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,8 +145,22 @@
     <!-- Anime Grid -->
     <main class="grid-section">
       <div id="anime-grid" class="anime-grid">
-        <!-- Cards injected dynamically via JS -->
+        <!-- Initial Skeleton Loading Cards (replaced seamlessly when JS renders) -->
+        <div class="skeleton-card" aria-hidden="true"><div class="skeleton-poster"></div><div class="skeleton-info"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-meta"></div><div class="skeleton-line skeleton-genre"></div></div></div>
+        <div class="skeleton-card" aria-hidden="true"><div class="skeleton-poster"></div><div class="skeleton-info"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-meta"></div><div class="skeleton-line skeleton-genre"></div></div></div>
+        <div class="skeleton-card" aria-hidden="true"><div class="skeleton-poster"></div><div class="skeleton-info"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-meta"></div><div class="skeleton-line skeleton-genre"></div></div></div>
+        <div class="skeleton-card" aria-hidden="true"><div class="skeleton-poster"></div><div class="skeleton-info"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-meta"></div><div class="skeleton-line skeleton-genre"></div></div></div>
+        <div class="skeleton-card" aria-hidden="true"><div class="skeleton-poster"></div><div class="skeleton-info"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-meta"></div><div class="skeleton-line skeleton-genre"></div></div></div>
+        <div class="skeleton-card" aria-hidden="true"><div class="skeleton-poster"></div><div class="skeleton-info"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-meta"></div><div class="skeleton-line skeleton-genre"></div></div></div>
+        <div class="skeleton-card" aria-hidden="true"><div class="skeleton-poster"></div><div class="skeleton-info"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-meta"></div><div class="skeleton-line skeleton-genre"></div></div></div>
+        <div class="skeleton-card" aria-hidden="true"><div class="skeleton-poster"></div><div class="skeleton-info"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-meta"></div><div class="skeleton-line skeleton-genre"></div></div></div>
       </div>
+      <noscript>
+        <div class="noscript-banner">
+          <p><strong>JavaScript is required</strong> to explore the interactive anime archive, search collections, play lo-fi audio, and switch atmospheres.</p>
+          <p>Explore the full source code and metadata on <a href="https://github.com/VedantBakre/AnimeArchive" target="_blank" rel="noopener">GitHub</a>.</p>
+        </div>
+      </noscript>
       <div id="no-results" class="no-results hidden">
         <p>No stories found matching your search.</p>
       </div>

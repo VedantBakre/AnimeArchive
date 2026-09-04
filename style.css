@@ -15,12 +15,12 @@
   --secondary-accent: #7C8DB5;
   --secondary-accent-light: rgba(124, 141, 181, 0.15);
   --text-primary: #3A2E25;
-  --text-secondary: #6B625C;
+  --text-secondary: #4E443C;
   --shadow-color: rgba(58, 46, 37, 0.08);
   --shadow-soft: 0 8px 30px var(--shadow-color);
   --shadow-card-hover: 0 16px 40px rgba(58, 46, 37, 0.14);
-  --glass-bg: rgba(239, 230, 218, 0.75);
-  --glass-border: rgba(176, 137, 104, 0.2);
+  --glass-bg: rgba(248, 244, 238, 0.95);
+  --glass-border: rgba(176, 137, 104, 0.25);
   --tint-color: rgba(246, 241, 235, 0.1);
 
   /* Functional Layout Tokens */
@@ -605,6 +605,88 @@ body {
   text-overflow: ellipsis;
 }
 
+/* --- Initial Skeleton Placeholder Cards (Pre-hydration) --- */
+.skeleton-card {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-poster {
+  width: 100%;
+  padding-top: 145%;
+  background: linear-gradient(90deg, var(--surface-color) 0%, var(--card-color) 50%, var(--surface-color) 100%);
+  background-size: 200% 100%;
+  animation: posterShimmer 2s infinite ease-in-out;
+}
+
+.dark-theme .skeleton-poster {
+  background: linear-gradient(90deg, #2B2622 0%, #3d3630 50%, #2B2622 100%);
+  background-size: 200% 100%;
+}
+
+.skeleton-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-line {
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--surface-color) 0%, var(--card-color) 50%, var(--surface-color) 100%);
+  background-size: 200% 100%;
+  animation: posterShimmer 2s infinite ease-in-out;
+}
+
+.dark-theme .skeleton-line {
+  background: linear-gradient(90deg, #2B2622 0%, #3d3630 50%, #2B2622 100%);
+  background-size: 200% 100%;
+}
+
+.skeleton-line.skeleton-title {
+  height: 20px;
+  width: 75%;
+}
+
+.skeleton-line.skeleton-meta {
+  height: 14px;
+  width: 50%;
+}
+
+.skeleton-line.skeleton-genre {
+  height: 12px;
+  width: 65%;
+}
+
+/* Noscript Fallback Notice */
+.noscript-banner {
+  grid-column: 1 / -1;
+  background-color: var(--surface-color);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  text-align: center;
+  margin: 32px 0;
+  box-shadow: var(--shadow-soft);
+}
+
+.noscript-banner p {
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.noscript-banner a {
+  color: var(--accent-color);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 /* --- Modals: General & Detail Modal --- */
 .modal {
   position: fixed;
@@ -644,9 +726,11 @@ body {
 /* Modal layout container */
 .modal-content {
   position: relative;
-  background-color: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-hover);
+  background-color: rgba(248, 244, 238, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(176, 137, 104, 0.28);
+  box-shadow: 0 20px 60px rgba(58, 46, 37, 0.22);
   border-radius: var(--border-radius-lg);
   max-width: 900px;
   width: 90%;
@@ -656,6 +740,12 @@ body {
   padding: 32px;
   transform: scale(0.9) translateY(20px);
   transition: transform var(--transition-medium);
+}
+
+.dark-theme .modal-content {
+  background-color: rgba(38, 33, 29, 0.96);
+  border: 1px solid rgba(197, 157, 111, 0.22);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
 .modal.active .modal-content {
@@ -895,17 +985,17 @@ body {
 
 .meta-label {
   font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   text-transform: uppercase;
   color: var(--text-secondary);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
 }
 
 .meta-value {
   font-family: var(--font-body);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
 }
 

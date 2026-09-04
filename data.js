@@ -1666,7 +1666,9 @@ const animeList = [
       "Sci-Fi"
     ],
     "folderName": "86-eighty-six",
-    "posters": [],
+    "posters": [
+      "assets/posters/86-eighty-six/1.webp"
+    ],
     "status": "Pending",
     "fav": false
   },

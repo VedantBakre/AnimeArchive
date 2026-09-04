@@ -44,8 +44,20 @@ for r in rows[1:]:
         # List and sort alphabetically (e.g. 1.webp, 2.jpg)
         files = sorted(os.listdir(folder_path))
         for f in files:
-            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif')):
+            file_full = os.path.join(folder_path, f)
+            if not os.path.isfile(file_full):
+                continue
+            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif')):
                 posters.append(f"assets/posters/{folder_name}/{f}")
+            else:
+                # Check magic bytes for images without standard extension
+                try:
+                    with open(file_full, 'rb') as img_f:
+                        head = img_f.read(16)
+                        if head.startswith(b'\xff\xd8\xff') or head.startswith(b'\x89PNG') or head.startswith(b'GIF8') or (head.startswith(b'RIFF') and b'WEBP' in head):
+                            posters.append(f"assets/posters/{folder_name}/{f}")
+                except Exception:
+                    pass
                 
     jp_name = entry.get('Japanese Name')
     if jp_name:

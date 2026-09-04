@@ -758,43 +758,27 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.miniPlayer.classList.remove('collapsed');
 
     // Trigger Play
-    DOM.lofiAudio.play()
-      .then(() => {
-        state.isPlayingMusic = true;
-        state.music = true;
-        DOM.toggleMusic.checked = true;
-        updatePlayerUI();
-        saveSettings();
-      })
-      .catch(err => {
-        console.log("Audio autoplay blocked by browser: click play manually.", err);
-        // Show paused state in UI
-        state.isPlayingMusic = false;
-        updatePlayerUI();
-      });
+    DOM.lofiAudio.play().catch(err => {
+      console.log("Audio autoplay blocked by browser: click play manually.", err);
+      updatePlayerUI();
+    });
   }
 
   function togglePlayPause() {
-    // If no source is loaded yet, load track 0
-    if (!DOM.lofiAudio.src) {
-      playTrack(0);
+    // If no source is loaded yet, load saved or current track
+    if (!DOM.lofiAudio.src || DOM.lofiAudio.src === window.location.href) {
+      playTrack(state.currentTrackIndex || 0);
       return;
     }
 
-    if (state.isPlayingMusic) {
-      DOM.lofiAudio.pause();
-      state.isPlayingMusic = false;
+    if (DOM.lofiAudio.paused) {
+      DOM.lofiAudio.play().catch(err => {
+        console.log("Audio play failed:", err);
+        updatePlayerUI();
+      });
     } else {
-      DOM.lofiAudio.play()
-        .then(() => {
-          state.isPlayingMusic = true;
-          state.music = true;
-          DOM.toggleMusic.checked = true;
-          saveSettings();
-        })
-        .catch(err => console.log(err));
+      DOM.lofiAudio.pause();
     }
-    updatePlayerUI();
   }
 
   function nextTrack() {
@@ -820,17 +804,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updatePlayerUI() {
-    if (state.isPlayingMusic) {
+    const isPlaying = DOM.lofiAudio && !DOM.lofiAudio.paused;
+    if (isPlaying) {
       DOM.playIcon.classList.add('hidden');
       DOM.pauseIcon.classList.remove('hidden');
+      DOM.btnPlayPause.setAttribute('aria-label', 'Pause');
+      DOM.playerTrackSource.textContent = "Lofi Playlist";
     } else {
       DOM.playIcon.classList.remove('hidden');
       DOM.pauseIcon.classList.add('hidden');
+      DOM.btnPlayPause.setAttribute('aria-label', 'Play');
+      DOM.playerTrackSource.textContent = "Paused";
     }
 
     DOM.btnLoop.classList.toggle('active', state.isLoop);
     DOM.btnShuffle.classList.toggle('active', state.isShuffle);
   }
+
+  // Audio Playback Events: Single Source of Truth for Player UI & State
+  DOM.lofiAudio.addEventListener('play', () => {
+    state.isPlayingMusic = true;
+    state.music = true;
+    DOM.toggleMusic.checked = true;
+    updatePlayerUI();
+    saveSettings();
+  });
+
+  DOM.lofiAudio.addEventListener('pause', () => {
+    state.isPlayingMusic = false;
+    updatePlayerUI();
+    saveSettings();
+  });
+
+  DOM.lofiAudio.addEventListener('ended', () => {
+    if (state.isLoop) {
+      DOM.lofiAudio.currentTime = 0;
+      DOM.lofiAudio.play().catch(e => console.log(e));
+    } else {
+      nextTrack();
+    }
+  });
+
+  DOM.lofiAudio.addEventListener('error', (e) => {
+    console.warn("Lofi audio player error:", e);
+    state.isPlayingMusic = false;
+    updatePlayerUI();
+  });
 
   // Track progress updating
   DOM.lofiAudio.addEventListener('timeupdate', () => {
@@ -847,15 +866,6 @@ document.addEventListener('DOMContentLoaded', () => {
   DOM.playerSeek.addEventListener('input', (e) => {
     if (DOM.lofiAudio.duration) {
       DOM.lofiAudio.currentTime = (e.target.value / 100) * DOM.lofiAudio.duration;
-    }
-  });
-
-  DOM.lofiAudio.addEventListener('ended', () => {
-    if (state.isLoop) {
-      DOM.lofiAudio.currentTime = 0;
-      DOM.lofiAudio.play().catch(e => console.log(e));
-    } else {
-      nextTrack();
     }
   });
 
@@ -941,21 +951,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 10. Ambient Sound System Toggles ---
   DOM.toggleMusic.addEventListener('change', (e) => {
-    state.music = e.target.checked;
-    if (state.music) {
-      if (!DOM.lofiAudio.src) {
-        playTrack(0);
+    if (e.target.checked) {
+      if (!DOM.lofiAudio.src || DOM.lofiAudio.src === window.location.href) {
+        playTrack(state.currentTrackIndex || 0);
       } else {
-        DOM.lofiAudio.play()
-          .then(() => { state.isPlayingMusic = true; updatePlayerUI(); })
-          .catch(e => console.log(e));
+        DOM.lofiAudio.play().catch(err => console.log(err));
       }
     } else {
       DOM.lofiAudio.pause();
-      state.isPlayingMusic = false;
-      updatePlayerUI();
     }
-    saveSettings();
   });
 
   DOM.volumeMusic.addEventListener('input', (e) => {

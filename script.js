@@ -153,10 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const movies = animeList.filter(a => a.type === 'Movie').length;
     const series = animeList.filter(a => a.type === 'Series').length;
     
-    // Average rating logic
-    const ratedAnimes = animeList.filter(a => typeof a.rating === 'number');
-    const avgRating = ratedAnimes.length > 0 
-      ? (ratedAnimes.reduce((sum, a) => sum + a.rating, 0) / ratedAnimes.length).toFixed(1) 
+    // Average personal rating (myRating) — only for entries that have one
+    const personallyRated = animeList.filter(a => a.myRating && parseFloat(a.myRating) > 0);
+    const avgRating = personallyRated.length > 0
+      ? (personallyRated.reduce((sum, a) => sum + parseFloat(a.myRating), 0) / personallyRated.length).toFixed(1)
       : '-';
     
     // Filter for Watched anime entries
@@ -504,8 +504,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Load active poster
-    const posterPath = anime.posters[state.selectedPosterIndex];
+    // Capture the intended path at call time to guard against race conditions
+    const targetPath = anime.posters[state.selectedPosterIndex];
     
     DOM.modalPosterImg.classList.remove('loaded', 'slide-poster-left', 'slide-poster-right');
     
@@ -517,18 +517,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const tempImg = new Image();
     tempImg.decoding = 'async';
-    tempImg.src = posterPath;
+    tempImg.src = targetPath;
     tempImg.onload = () => {
-      DOM.modalPosterImg.src = posterPath;
-      DOM.modalPosterImg.classList.add('loaded');
+      // Guard: only apply if the user hasn't navigated away to a different poster
+      if (anime.posters[state.selectedPosterIndex] === targetPath) {
+        DOM.modalPosterImg.src = targetPath;
+        DOM.modalPosterImg.classList.add('loaded');
+      }
     };
     tempImg.onerror = () => {
-      DOM.modalPosterImg.src = posterPath;
-      DOM.modalPosterImg.classList.add('loaded');
+      if (anime.posters[state.selectedPosterIndex] === targetPath) {
+        DOM.modalPosterImg.src = targetPath;
+        DOM.modalPosterImg.classList.add('loaded');
+      }
     };
 
+    // Fast path: image already in browser cache
     if (tempImg.complete) {
-      DOM.modalPosterImg.src = posterPath;
+      DOM.modalPosterImg.src = targetPath;
       DOM.modalPosterImg.classList.add('loaded');
     }
 
@@ -591,7 +597,10 @@ document.addEventListener('DOMContentLoaded', () => {
       modalBody.classList.add(exitClass);
     }
 
-    setTimeout(() => {
+    // Use transitionend to synchronize with the CSS animation rather than a fixed timer
+    function onExitTransitionEnd() {
+      if (modalBody) modalBody.removeEventListener('transitionend', onExitTransitionEnd);
+
       // Calculate new index
       if (direction === 'next') {
         state.selectedAnimeIndex = (state.selectedAnimeIndex + 1) % filteredAnimeList.length;
@@ -604,14 +613,14 @@ document.addEventListener('DOMContentLoaded', () => {
       updateDetailModal();
 
       if (modalBody) {
-        // Position entering element
+        // Position entering element off-screen
         modalBody.classList.remove(exitClass);
         modalBody.classList.add(enterClass);
 
-        // Force browser layout reflow
+        // Force browser layout reflow so the enter position is painted before animating
         void modalBody.offsetWidth;
 
-        // Slide into active position
+        // Slide into active (idle) position
         modalBody.classList.remove(enterClass);
         modalBody.classList.add('slide-idle');
       }
@@ -619,10 +628,24 @@ document.addEventListener('DOMContentLoaded', () => {
       // Preload next upcoming batch
       preloadNearbyEntries(state.selectedAnimeIndex);
 
-      setTimeout(() => {
+      // Release lock after the enter animation finishes
+      function onEnterTransitionEnd() {
+        if (modalBody) modalBody.removeEventListener('transitionend', onEnterTransitionEnd);
         isSwitchingAnime = false;
-      }, 220);
-    }, 140);
+      }
+      if (modalBody) {
+        modalBody.addEventListener('transitionend', onEnterTransitionEnd, { once: true });
+      } else {
+        isSwitchingAnime = false;
+      }
+    }
+
+    if (modalBody) {
+      modalBody.addEventListener('transitionend', onExitTransitionEnd, { once: true });
+    } else {
+      // Fallback if no modal body found
+      onExitTransitionEnd();
+    }
   }
 
   function prevAnimeEntry() {
@@ -1294,32 +1317,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Space: Play/Pause lofi background music (unless typing in search box)
-    if (e.key === ' ' && document.activeElement !== DOM.searchBox) {
+    // Space: Play/Pause lofi background music
+    // Guard: don't fire if the user is typing or interacting with a form element
+    const activeTag = document.activeElement ? document.activeElement.tagName : '';
+    if (e.key === ' ' && !['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(activeTag)) {
       e.preventDefault();
       togglePlayPause();
     }
 
-    // Modal navigation: Left/Right arrows
+    // Modal navigation:
+    //   ArrowLeft / ArrowRight  → navigate between anime entries
+    //   , (Comma) / . (Period)  → navigate alternate posters within current anime
     if (DOM.detailModal.classList.contains('active')) {
       if (e.key === 'ArrowLeft') {
-        const anime = filteredAnimeList[state.selectedAnimeIndex];
-        if (anime && anime.posters && anime.posters.length > 1) {
-          // Switch between alternate posters
-          prevPoster();
-        } else {
-          // Fallback: previous anime card
-          prevAnimeEntry();
-        }
+        prevAnimeEntry();
       } else if (e.key === 'ArrowRight') {
-        const anime = filteredAnimeList[state.selectedAnimeIndex];
-        if (anime && anime.posters && anime.posters.length > 1) {
-          // Switch between alternate posters
-          nextPoster();
-        } else {
-          // Fallback: next anime card
-          nextAnimeEntry();
-        }
+        nextAnimeEntry();
+      } else if (e.key === ',') {
+        prevPoster();
+      } else if (e.key === '.') {
+        nextPoster();
       }
     }
   });

@@ -23,7 +23,8 @@ Live Demo hosted on GitHub Pages: **[vedantbakre.github.io/AnimeArchive](https:/
 - **Keyboard Shortcuts:**
   - `Space`: Play/Pause lofi music.
   - `Escape`: Close detail popups or exit Atmosphere Mode.
-  - `ArrowLeft` / `ArrowRight`: Navigate alternate posters inside the detail popup, or flip between next/prev entries.
+  - `ArrowLeft` / `ArrowRight`: Navigate between previous/next anime entries inside the detail popup.
+  - `,` / `.` (Comma / Period): Cycle through alternate posters within the current anime entry.
 
 ---
 

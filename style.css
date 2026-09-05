@@ -18,10 +18,15 @@
   --text-secondary: #4E443C;
   --shadow-color: rgba(58, 46, 37, 0.08);
   --shadow-soft: 0 8px 30px var(--shadow-color);
+  --shadow-hover: 0 8px 32px rgba(58, 46, 37, 0.18);
   --shadow-card-hover: 0 16px 40px rgba(58, 46, 37, 0.14);
   --glass-bg: rgba(248, 244, 238, 0.95);
   --glass-border: rgba(176, 137, 104, 0.25);
   --tint-color: rgba(246, 241, 235, 0.1);
+
+  /* Shimmer animation gradient tokens (used in skeleton & poster loaders) */
+  --shimmer-start: var(--surface-color);
+  --shimmer-mid: var(--card-color);
 
   /* Functional Layout Tokens */
   --border-radius-lg: 20px;
@@ -54,10 +59,15 @@
   --text-secondary: #B1A497;
   --shadow-color: rgba(0, 0, 0, 0.3);
   --shadow-soft: 0 8px 30px var(--shadow-color);
+  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.45);
   --shadow-card-hover: 0 16px 45px rgba(0, 0, 0, 0.45);
   --glass-bg: rgba(43, 38, 34, 0.75);
   --glass-border: rgba(197, 157, 111, 0.15);
   --tint-color: rgba(31, 27, 24, 0.1);
+
+  /* Shimmer gradient tokens for dark mode */
+  --shimmer-start: #2B2622;
+  --shimmer-mid: #3d3630;
 }
 
 /* --- Base & Scrollbar Reset --- */
@@ -481,14 +491,9 @@ body {
   width: 100%;
   padding-top: 145%; /* ~2:3 Aspect Ratio */
   overflow: hidden;
-  background: linear-gradient(90deg, var(--surface-color) 0%, var(--card-color) 50%, var(--surface-color) 100%);
+  background: linear-gradient(90deg, var(--shimmer-start) 0%, var(--shimmer-mid) 50%, var(--shimmer-start) 100%);
   background-size: 200% 100%;
   animation: posterShimmer 2.2s infinite ease-in-out;
-}
-
-.dark-theme .card-poster-wrapper {
-  background: linear-gradient(90deg, #2B2622 0%, #3d3630 50%, #2B2622 100%);
-  background-size: 200% 100%;
 }
 
 .card-poster-img {
@@ -619,14 +624,9 @@ body {
 .skeleton-poster {
   width: 100%;
   padding-top: 145%;
-  background: linear-gradient(90deg, var(--surface-color) 0%, var(--card-color) 50%, var(--surface-color) 100%);
+  background: linear-gradient(90deg, var(--shimmer-start) 0%, var(--shimmer-mid) 50%, var(--shimmer-start) 100%);
   background-size: 200% 100%;
   animation: posterShimmer 2s infinite ease-in-out;
-}
-
-.dark-theme .skeleton-poster {
-  background: linear-gradient(90deg, #2B2622 0%, #3d3630 50%, #2B2622 100%);
-  background-size: 200% 100%;
 }
 
 .skeleton-info {
@@ -638,14 +638,9 @@ body {
 
 .skeleton-line {
   border-radius: 4px;
-  background: linear-gradient(90deg, var(--surface-color) 0%, var(--card-color) 50%, var(--surface-color) 100%);
+  background: linear-gradient(90deg, var(--shimmer-start) 0%, var(--shimmer-mid) 50%, var(--shimmer-start) 100%);
   background-size: 200% 100%;
   animation: posterShimmer 2s infinite ease-in-out;
-}
-
-.dark-theme .skeleton-line {
-  background: linear-gradient(90deg, #2B2622 0%, #3d3630 50%, #2B2622 100%);
-  background-size: 200% 100%;
 }
 
 .skeleton-line.skeleton-title {
@@ -813,14 +808,9 @@ body {
   border-radius: var(--border-radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-soft);
-  background: linear-gradient(90deg, var(--surface-color) 0%, var(--card-color) 50%, var(--surface-color) 100%);
+  background: linear-gradient(90deg, var(--shimmer-start) 0%, var(--shimmer-mid) 50%, var(--shimmer-start) 100%);
   background-size: 200% 100%;
   animation: posterShimmer 2.2s infinite ease-in-out;
-}
-
-.dark-theme .poster-viewer {
-  background: linear-gradient(90deg, #2B2622 0%, #3d3630 50%, #2B2622 100%);
-  background-size: 200% 100%;
 }
 
 .modal-poster-img {
@@ -1657,10 +1647,11 @@ input:checked + .slider::before {
 }
 
 .footer-divider {
-  color: var(--glass-border);
-  font-size: 0.95rem;
-  letter-spacing: -2px;
-  margin: 24px 0;
+  border: none;
+  border-top: 1px solid var(--glass-border);
+  margin: 24px auto;
+  width: 80%;
+  max-width: 480px;
   opacity: 0.6;
 }
 

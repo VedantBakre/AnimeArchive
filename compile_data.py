@@ -58,6 +58,8 @@ for r in rows[1:]:
                             posters.append(f"assets/posters/{folder_name}/{f}")
                 except Exception:
                     pass
+    else:
+        print(f"[Warning] Poster folder not found: '{folder_path}' — entry '{entry.get('Name')}' will have no posters.")
                 
     jp_name = entry.get('Japanese Name')
     if jp_name:

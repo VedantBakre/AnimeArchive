@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
     enableAdminMode();
   }
 
-  // Keyboard shortcut Ctrl+Shift+A
+  // Keyboard shortcut Ctrl+Alt+A
   document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+    if ((e.ctrlKey || e.metaKey) && e.altKey && e.key.toLowerCase() === 'a') {
       e.preventDefault();
       if (!isAdmin) {
         loginModal.classList.add('active');
@@ -165,13 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Reflect directly in UI
       document.getElementById('modal-meta-my-rating').textContent = newRating || '-';
-      document.getElementById('modal-thoughts-text').textContent = newFeedback ? \`"\${newFeedback}"\` : '"No thoughts recorded yet."';
+      document.getElementById('modal-thoughts-text').textContent = newFeedback ? `"${newFeedback}"` : '"No thoughts recorded yet."';
 
       // Construct file content
       const fileContent = constructDataJs();
 
       // Commit via GitHub API
-      await commitToGitHub(fileContent, \`Update rating and feedback for \${animeList[entryIndex].name}\`);
+      await commitToGitHub(fileContent, `Update rating and feedback for ${animeList[entryIndex].name}`);
 
       showToast('Changes saved and pushed to GitHub!', 'success');
     } catch (err) {
@@ -184,19 +184,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function constructDataJs() {
-    return \`const animeList = \${JSON.stringify(animeList, null, 2)};\\n\\n\` +
-           \`const lofiPlaylist = \${JSON.stringify(lofiPlaylist, null, 2)};\\n\\n\` +
-           \`const ambiencePlaylist = \${JSON.stringify(ambiencePlaylist, null, 2)};\\n\\n\` +
-           \`const atmospheres = \${JSON.stringify(atmospheres, null, 2)};\\n\`;
+    return `const animeList = ${JSON.stringify(animeList, null, 2)};\\n\\n` +
+      `const lofiPlaylist = ${JSON.stringify(lofiPlaylist, null, 2)};\\n\\n` +
+      `const ambiencePlaylist = ${JSON.stringify(ambiencePlaylist, null, 2)};\\n\\n` +
+      `const atmospheres = ${JSON.stringify(atmospheres, null, 2)};\\n`;
   }
 
   async function commitToGitHub(content, message) {
-    const url = \`https://api.github.com/repos/\${REPO_OWNER}/\${REPO_NAME}/contents/\${FILE_PATH}\`;
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`;
 
     // 1. Get current file SHA
     const getRes = await fetch(url, {
       headers: {
-        'Authorization': \`Bearer \${currentPat}\`,
+        'Authorization': `Bearer ${currentPat}`,
         'Accept': 'application/vnd.github.v3+json'
       }
     });
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const putRes = await fetch(url, {
       method: 'PUT',
       headers: {
-        'Authorization': \`Bearer \${currentPat}\`,
+        'Authorization': `Bearer ${currentPat}`,
         'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json'
       },
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function showToast(message, type = 'info') {
     const container = document.getElementById('admin-toast-container');
     const toast = document.createElement('div');
-    toast.className = \`admin-toast \${type}\`;
+    toast.className = `admin-toast ${type}`;
     toast.textContent = message;
     container.appendChild(toast);
 

@@ -2793,6 +2793,13 @@ const ambiencePlaylist = [
 
 const atmospheres = [
   {
+    "id": "serene-(anime)",
+    "name": "Serene (Anime)",
+    "video": "assets/atmosphere/Serene (Anime).mp4",
+    "suggestedSound": null,
+    "themeColor": "#B08968"
+  },
+  {
     "id": "floasting-car",
     "name": "Floasting Car",
     "video": "assets/atmosphere/floasting-car.mp4",

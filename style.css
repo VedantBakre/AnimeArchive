@@ -550,11 +550,18 @@ body {
   font-weight: bold;
 }
 
-/* Rating badge inside card */
-.card-rating-badge {
+/* Container for bottom-right badges */
+.card-badges-bottom-right {
   position: absolute;
   bottom: 12px;
   right: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+
+/* Rating badge inside card */
+.card-rating-badge {
   background-color: rgba(58, 46, 37, 0.8);
   backdrop-filter: blur(4px);
   color: #fff;
@@ -2047,25 +2054,26 @@ textarea.admin-input {
   line-height: 1.5;
 }
 
-/* --- Status Indicator on Card --- */
-.card-status-indicator {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  border: 2px solid var(--card-color);
-  z-index: 5;
+/* --- Status Label on Card --- */
+.card-status-label {
+  background-color: rgba(58, 46, 37, 0.8);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
 }
 
 .status-watched {
-  background-color: #4CAF50; /* Green */
+  border-left: 3px solid #4CAF50; /* Green */
 }
 
 .status-pending {
-  background-color: #FFC107; /* Amber */
+  border-left: 3px solid #FFC107; /* Amber */
 }
 
 /* --- Filter Count --- */
@@ -2149,15 +2157,7 @@ kbd {
 }
 
 /* --- Surprise Me Button --- */
-.surprise-me-btn {
-  background-color: var(--accent-light);
-  color: var(--accent-color);
-  border-color: var(--accent-color);
-}
-.surprise-me-btn:hover {
-  background-color: var(--accent-color);
-  color: var(--bg-color);
-}
+/* Uses .filter-tab styling completely */
 
 /* --- Genre Chips in Modal --- */
 .genre-chip {

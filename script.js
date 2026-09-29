@@ -316,20 +316,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     card.innerHTML = `
       <div class="card-poster-wrapper">
-        <div class="card-status-indicator ${statusClass}"></div>
         <img class="card-poster-img" src="${posterSrc}" alt="${anime.name}" ${loadingAttr}>
         <div class="card-tags">
           <span class="tag-badge">${anime.type}</span>
           ${anime.fav ? '<span class="tag-badge fav-badge">❤</span>' : ''}
         </div>
-        ${displayRating ? `
-          <div class="card-rating-badge">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
-              <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"></polygon>
-            </svg>
-            <span>${displayRating}</span>
+        <div class="card-badges-bottom-right">
+          <div class="card-status-label ${statusClass}">
+            ${(anime.status || 'Pending').toLowerCase() === 'watched' ? 'Watched' : 'Plan to Watch'}
           </div>
-        ` : ''}
+          ${displayRating ? `
+            <div class="card-rating-badge">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                <polygon points="12,2 15,9 22,9 17,14 19,21 12,17 5,21 7,14 2,9 9,9"></polygon>
+              </svg>
+              <span>${displayRating}</span>
+            </div>
+          ` : ''}
+        </div>
       </div>
       <div class="card-info">
         <h3 class="card-title-cursive">${anime.name}</h3>
@@ -385,6 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
       DOM.animeGrid.appendChild(card);
       if (gridObserver) gridObserver.observe(card);
     });
+
+    // Trigger scroll logic so initially visible cards reveal immediately without needing a manual scroll
+    setTimeout(() => {
+      window.dispatchEvent(new Event('scroll'));
+    }, 50);
   }
 
   // --- 6. Search & Filters with Debounce ---

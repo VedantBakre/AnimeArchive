@@ -460,7 +460,10 @@ body {
   transition: transform var(--transition-medium), box-shadow var(--transition-medium), background-color var(--transition-medium);
   opacity: 0;
   transform: translateY(20px);
-  animation: cardFadeIn 0.5s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.anime-card.revealed {
+  animation: cardFadeIn 0.6s forwards cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes cardFadeIn {
@@ -503,6 +506,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
   opacity: 0;
   transition: opacity 0.35s ease-out, transform var(--transition-medium);
   will-change: opacity, transform;
@@ -817,6 +821,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
   display: block;
   opacity: 0;
   transition: opacity 0.3s ease-out, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1644,6 +1649,9 @@ input:checked + .slider::before {
   margin-top: 80px;
   text-align: center;
   font-family: var(--font-ui);
+  padding: 40px 0 20px 0;
+  background: linear-gradient(to bottom, transparent, var(--glass-border));
+  border-radius: var(--border-radius-lg);
 }
 
 .footer-divider {
@@ -2015,3 +2023,151 @@ input:checked + .slider::before {
   margin-bottom: 8px;
   text-align: left;
 }
+
+/* Admin select dropdown matches text input style */
+select.admin-input {
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236B625C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.dark-theme select.admin-input {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23B1A497' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+}
+
+/* Admin textarea matches text input but allows resize */
+textarea.admin-input {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+/* --- Status Indicator on Card --- */
+.card-status-indicator {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  border: 2px solid var(--card-color);
+  z-index: 5;
+}
+
+.status-watched {
+  background-color: #4CAF50; /* Green */
+}
+
+.status-pending {
+  background-color: #FFC107; /* Amber */
+}
+
+/* --- Filter Count --- */
+.filter-count {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+}
+
+/* --- Back to Top Button --- */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border: none;
+  box-shadow: var(--shadow-hover);
+  cursor: pointer;
+  z-index: 75;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s, transform 0.3s, background-color 0.2s;
+}
+
+.back-to-top-btn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-4px);
+}
+
+.back-to-top-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+}
+
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    bottom: 80px; /* Above mini-player on mobile */
+  }
+}
+
+/* --- Shortcuts Modal --- */
+.shortcuts-title {
+  font-family: var(--font-ui);
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.shortcuts-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shortcuts-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+kbd {
+  background-color: var(--surface-color);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  box-shadow: 0 2px 0 var(--glass-border);
+}
+
+/* --- Surprise Me Button --- */
+.surprise-me-btn {
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+.surprise-me-btn:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+}
+
+/* --- Genre Chips in Modal --- */
+.genre-chip {
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.genre-chip:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border-color: var(--accent-color);
+}
+
+

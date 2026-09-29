@@ -1,6 +1,7 @@
 import openpyxl
 import json
 import os
+import re
 
 # Absolute or relative paths
 xlsx_path = 'assets/data/anime.xlsx'
@@ -11,6 +12,49 @@ atmosphere_dir = 'assets/atmosphere'
 output_path = 'data.js'
 
 print("[Info] Compiling project assets and excel sheets into data.js...")
+
+# --- Two-Way Sync: Load existing data.js to preserve Admin Mode edits ---
+# Admin Mode can edit myRating, status, and feedback directly on GitHub.
+# When recompiling from Excel, we preserve those fields if they were
+# changed via Admin Mode (i.e., differ from what Excel has).
+existing_admin_overrides = {}  # keyed by entry ID
+
+def load_existing_data_js():
+    """Parse the existing data.js and extract admin-editable fields per entry."""
+    global existing_admin_overrides
+    
+    if not os.path.exists(output_path):
+        print("[Info] No existing data.js found — fresh compile.")
+        return
+    
+    try:
+        with open(output_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Extract the animeList JSON array from the JS file
+        # Pattern: const animeList = [ ... ];
+        match = re.search(r'const\s+animeList\s*=\s*(\[[\s\S]*?\]);', content)
+        if not match:
+            print("[Warning] Could not parse existing data.js animeList — skipping two-way sync.")
+            return
+        
+        anime_json = match.group(1)
+        existing_entries = json.loads(anime_json)
+        
+        for entry in existing_entries:
+            entry_id = entry.get('id')
+            if entry_id is not None:
+                existing_admin_overrides[entry_id] = {
+                    'myRating': entry.get('myRating'),
+                    'status': entry.get('status'),
+                    'feedback': entry.get('feedback'),
+                }
+        
+        print(f"[Info] Loaded {len(existing_admin_overrides)} existing entries for two-way sync.")
+    except Exception as e:
+        print(f"[Warning] Failed to parse existing data.js for two-way sync: {e}")
+
+load_existing_data_js()
 
 # 1. Parse Anime Excel Sheet
 if not os.path.exists(xlsx_path):
@@ -73,15 +117,44 @@ for r in rows[1:]:
         my_rating = str(my_rating).replace('\\', '/')
         
     fav = True if entry.get('Fav') and str(entry.get('Fav')).lower() == 'yes' else False
-    
+
+    entry_id = entry.get('ID')
+    feedback_from_excel = entry.get('Feedback')
+    status_from_excel = entry.get('Status')
+
+    # --- Two-Way Sync Logic ---
+    # For myRating, status, and feedback: if the existing data.js has a
+    # different value than Excel, prefer the data.js value (admin edits).
+    # If data.js matches Excel or doesn't exist, use Excel's value.
+    if entry_id is not None and entry_id in existing_admin_overrides:
+        override = existing_admin_overrides[entry_id]
+        
+        # My Rating: prefer admin override if it exists and differs
+        admin_rating = override.get('myRating')
+        if admin_rating is not None and admin_rating != '' and admin_rating != my_rating:
+            print(f"  [Sync] '{entry.get('Name')}' — keeping admin myRating: '{admin_rating}' (Excel has: '{my_rating}')")
+            my_rating = admin_rating
+        
+        # Status: prefer admin override if it differs
+        admin_status = override.get('status')
+        if admin_status is not None and admin_status != '' and admin_status != status_from_excel:
+            print(f"  [Sync] '{entry.get('Name')}' — keeping admin status: '{admin_status}' (Excel has: '{status_from_excel}')")
+            status_from_excel = admin_status
+        
+        # Feedback: prefer admin override if it differs
+        admin_feedback = override.get('feedback')
+        if admin_feedback is not None and admin_feedback != '' and admin_feedback != feedback_from_excel:
+            print(f"  [Sync] '{entry.get('Name')}' — keeping admin feedback: '{admin_feedback}' (Excel has: '{feedback_from_excel}')")
+            feedback_from_excel = admin_feedback
+
     anime_entries.append({
-        "id": entry.get('ID'),
+        "id": entry_id,
         "name": entry.get('Name'),
         "japaneseName": jp_name,
         "type": entry.get('Type'),
         "rating": entry.get('Rating'),
         "myRating": my_rating,
-        "feedback": entry.get('Feedback'),
+        "feedback": feedback_from_excel,
         "seasons": entry.get('No. of Seasons'),
         "episodes": entry.get('Avg No. of Episodes'),
         "year": entry.get('Released Year'),
@@ -91,7 +164,7 @@ for r in rows[1:]:
         "genres": genres,
         "folderName": folder_name,
         "posters": posters,
-        "status": entry.get('Status'),
+        "status": status_from_excel,
         "fav": fav
     })
 

@@ -125,8 +125,36 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // HTML Audio objects
     lofiAudio: document.getElementById('lofi-audio-player'),
-    ambienceAudio: document.getElementById('ambience-audio-player')
+    ambienceAudio: document.getElementById('ambience-audio-player'),
+
+    // New UI Enhancements
+    heroQuote: document.getElementById('hero-quote-text'),
+    filterCount: document.getElementById('filter-count'),
+    surpriseMeBtn: document.getElementById('surprise-me-btn'),
+    backToTopBtn: document.getElementById('back-to-top-btn'),
+    shortcutsModal: document.getElementById('shortcuts-modal'),
+    shortcutsBackdrop: document.getElementById('shortcuts-backdrop'),
+    shortcutsCloseBtn: document.getElementById('shortcuts-close-btn')
   };
+
+  // Quotes Array for Hero Section
+  const quotes = [
+    "“A cozy room, a warm cup of coffee, and stories that will linger in the heart forever.”",
+    "“The only thing we're allowed to do is believe that we won't regret the choice we made.” — Levi Ackerman",
+    "“A lesson without pain is meaningless.” — Edward Elric",
+    "“Whatever you lose, you'll find it again. But what you throw away you'll never get back.” — Kenshin Himura",
+    "“People’s lives don’t end when they die. It ends when they lose faith.” — Itachi Uchiha"
+  ];
+  let currentQuoteIndex = 0;
+  setInterval(() => {
+    currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+    DOM.heroQuote.style.opacity = 0;
+    setTimeout(() => {
+      DOM.heroQuote.textContent = quotes[currentQuoteIndex];
+      DOM.heroQuote.style.opacity = 1;
+    }, 500);
+  }, 10000);
+  DOM.heroQuote.style.transition = 'opacity 0.5s ease';
 
   // --- 3. Live Clock Integration ---
   function updateClock() {
@@ -194,12 +222,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Set text in UI
-    DOM.statTotal.textContent = total;
-    DOM.statMovies.textContent = movies;
-    DOM.statSeries.textContent = series;
+    // Helper to animate numbers
+    const animateValue = (obj, start, end, duration) => {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.textContent = Math.floor(progress * (end - start) + start);
+        if (progress < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    // Set text in UI with animation
+    animateValue(DOM.statTotal, 0, total, 1500);
+    animateValue(DOM.statMovies, 0, movies, 1500);
+    animateValue(DOM.statSeries, 0, series, 1500);
+    animateValue(DOM.statHours, 0, hours, 1500);
     DOM.statRating.textContent = avgRating;
-    DOM.statHours.textContent = hours;
     DOM.statGenre.textContent = topGenre;
   }
   calculateStatistics();
@@ -253,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const card = document.createElement('div');
     card.className = 'anime-card';
     card.dataset.id = anime.id;
-    card.style.animationDelay = `${Math.min(index * 0.03, 0.45)}s`; // Stagger cards entrance smoothly
+    // Removed inline animation delay; we use IntersectionObserver for scroll-reveal now.
     
     // Main Poster
     const posterSrc = anime.posters && anime.posters.length > 0 
@@ -272,8 +312,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const isInitialViewport = index < 12;
     const loadingAttr = isInitialViewport ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
 
+    const statusClass = (anime.status || '').toLowerCase() === 'watched' ? 'status-watched' : 'status-pending';
+
     card.innerHTML = `
       <div class="card-poster-wrapper">
+        <div class="card-status-indicator ${statusClass}"></div>
         <img class="card-poster-img" src="${posterSrc}" alt="${anime.name}" ${loadingAttr}>
         <div class="card-tags">
           <span class="tag-badge">${anime.type}</span>
@@ -400,6 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // Update filter count indicator
+    DOM.filterCount.textContent = `Showing ${filteredAnimeList.length} of ${animeList.length} titles`;
+
     renderGrid();
   }
 
@@ -475,13 +521,21 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.modalMetaStudio.textContent = anime.studio || '-';
     DOM.modalMetaDirector.textContent = anime.director || '-';
 
-    // Genres
+    // Genres (Clickable chips)
     DOM.modalGenresContainer.innerHTML = '';
     if (anime.genres) {
       anime.genres.forEach(genre => {
         const tag = document.createElement('span');
-        tag.className = 'genre-tag';
+        tag.className = 'genre-tag genre-chip';
         tag.textContent = genre;
+        tag.addEventListener('click', () => {
+          closeModal();
+          DOM.searchBox.value = genre;
+          state.searchQuery = genre;
+          filterAndSearch();
+          // Scroll to grid
+          document.querySelector('.controls-section').scrollIntoView({ behavior: 'smooth' });
+        });
         DOM.modalGenresContainer.appendChild(tag);
       });
     }
@@ -1417,9 +1471,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // --- 15.5. Global UI Event Listeners ---
+  // Scroll reveal, Back to Top, and Parallax
+  window.addEventListener('scroll', () => {
+    // Reveal cards
+    const cards = document.querySelectorAll('.anime-card:not(.revealed)');
+    const triggerBottom = window.innerHeight * 0.9;
+    cards.forEach(card => {
+      const cardTop = card.getBoundingClientRect().top;
+      if (cardTop < triggerBottom) {
+        card.classList.add('revealed');
+      }
+    });
+
+    // Parallax hero quote
+    const scrollY = window.scrollY;
+    if (scrollY < 500) {
+      DOM.heroQuote.parentElement.style.transform = `translateY(${scrollY * 0.2}px)`;
+    }
+
+    // Back to top button visibility
+    if (scrollY > 600) {
+      DOM.backToTopBtn.classList.remove('hidden');
+    } else {
+      DOM.backToTopBtn.classList.add('hidden');
+    }
+  });
+
+  DOM.backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Surprise Me Button
+  DOM.surpriseMeBtn.addEventListener('click', () => {
+    if (filteredAnimeList.length === 0) return;
+    const randomIndex = Math.floor(Math.random() * filteredAnimeList.length);
+    openDetailModal(filteredAnimeList[randomIndex].id);
+  });
+
+  // Keyboard Shortcuts Modal Toggle
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '?' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      DOM.shortcutsModal.classList.toggle('active');
+    }
+    if (e.key === 'Escape') {
+      DOM.shortcutsModal.classList.remove('active');
+    }
+  });
+  DOM.shortcutsCloseBtn.addEventListener('click', () => {
+    DOM.shortcutsModal.classList.remove('active');
+  });
+  DOM.shortcutsBackdrop.addEventListener('click', () => {
+    DOM.shortcutsModal.classList.remove('active');
+  });
+
   // --- 16. Boot Initialization ---
   initPlayerLists();
   loadSettings();
   renderGrid();
+
+  // --- 17. Expose Public API for Admin Mode ---
+  // Admin.js (loaded separately) needs to re-render the grid and
+  // recalculate stats after saving changes to the data.
+  window.filterAndSearch = filterAndSearch;
+  window.renderGrid = renderGrid;
+  window.calculateStatistics = calculateStatistics;
   
 });

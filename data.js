@@ -2800,9 +2800,9 @@ const atmospheres = [
     "themeColor": "#B08968"
   },
   {
-    "id": "floasting-car",
-    "name": "Floasting Car",
-    "video": "assets/atmosphere/floasting-car.mp4",
+    "id": "floating-car",
+    "name": "Floating Car",
+    "video": "assets/atmosphere/floating-car.mp4",
     "suggestedSound": null,
     "themeColor": "#B08968"
   },
@@ -2842,9 +2842,9 @@ const atmospheres = [
     "themeColor": "#B08968"
   },
   {
-    "id": "vageta-ego",
-    "name": "Vageta Ego",
-    "video": "assets/atmosphere/vageta-ego.mp4",
+    "id": "vegeta-ego",
+    "name": "Vegeta Ego",
+    "video": "assets/atmosphere/vegeta-ego.mp4",
     "suggestedSound": null,
     "themeColor": "#B08968"
   }

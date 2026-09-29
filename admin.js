@@ -1,5 +1,7 @@
 /* ==========================================================================
    ANIME ARCHIVE — ADMIN MODE (Vanilla JS + GitHub API)
+   Two-way sync: edits from Admin Mode commit directly to GitHub.
+   Editable fields: My Rating, Status, and Feedback (My Thoughts).
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // State
   let isAdmin = sessionStorage.getItem('adminPAT') ? true : false;
   let currentPat = sessionStorage.getItem('adminPAT') || '';
+  // Track the currently displayed entry ID to avoid redundant input population
+  let lastPopulatedEntryId = null;
 
   if (isAdmin) {
     enableAdminMode();
@@ -86,6 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Allow Enter key to submit login
+  patInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') loginBtn.click();
+  });
+  pinInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') patInput.focus();
+  });
+
   function enableAdminMode() {
     // 1. Add Badge to header
     const headerLeft = document.querySelector('.header-left');
@@ -108,11 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
         <h3 class="thoughts-title">Admin Edit</h3>
         <div class="admin-edit-grid">
           <div class="admin-input-group">
-            <label>My Rating (Out of 10)</label>
-            <input type="text" id="edit-my-rating" class="admin-input" placeholder="e.g. 9.5" />
+            <label>My Rating (e.g. 9.5/10 or 11/10)</label>
+            <input type="text" id="edit-my-rating" class="admin-input" placeholder="e.g. 9.5/10" />
           </div>
           <div class="admin-input-group">
-            <label>My Thoughts</label>
+            <label>Status</label>
+            <select id="edit-status" class="admin-input">
+              <option value="Watched">Watched</option>
+              <option value="Pending">Plan to Watch</option>
+            </select>
+          </div>
+          <div class="admin-input-group">
+            <label>My Thoughts / Feedback</label>
             <textarea id="edit-feedback" class="admin-input" rows="4" placeholder="Write your thoughts..."></textarea>
           </div>
           <button id="admin-save-entry-btn" class="filter-tab active" style="width: 100%; margin-top: 8px;">Save Changes & Commit</button>
@@ -122,27 +141,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.getElementById('admin-save-entry-btn').addEventListener('click', saveAndCommitEntry);
     }
+
+    // 3. Set up event-driven input population (replaces the old 300ms polling)
+    setupModalObserver();
   }
 
-  // Polling for detail modal content change to populate inputs
-  setInterval(() => {
-    if (isAdmin && document.getElementById('detail-modal').classList.contains('active')) {
-      const title = document.getElementById('modal-anime-name').textContent;
-      const entry = animeList.find(a => a.name === title);
+  // --- Event-Driven Input Population ---
+  // Uses a MutationObserver on the modal title to detect when the displayed
+  // anime entry changes, instead of wasteful 300ms setInterval polling.
+  function setupModalObserver() {
+    const modalTitle = document.getElementById('modal-anime-name');
+    if (!modalTitle) return;
 
-      const inputRating = document.getElementById('edit-my-rating');
-      const inputFeedback = document.getElementById('edit-feedback');
+    // Populate inputs when the detail modal becomes active
+    const detailModal = document.getElementById('detail-modal');
 
-      if (entry && inputRating && inputFeedback && inputRating.dataset.currentId != entry.id) {
-        inputRating.value = entry.myRating || '';
-        inputFeedback.value = entry.feedback || '';
-        inputRating.dataset.currentId = entry.id;
+    // Use MutationObserver to watch for class changes on the detail modal
+    // and text changes on the title (which change when navigating entries)
+    const observer = new MutationObserver(() => {
+      if (isAdmin && detailModal.classList.contains('active')) {
+        populateAdminInputs();
+      } else {
+        lastPopulatedEntryId = null;
       }
-    } else if (isAdmin) {
-      const inputRating = document.getElementById('edit-my-rating');
-      if (inputRating) inputRating.dataset.currentId = '';
+    });
+
+    // Observe the modal for activation (class changes)
+    observer.observe(detailModal, { attributes: true, attributeFilter: ['class'] });
+
+    // Observe the title for text content changes (entry navigation)
+    observer.observe(modalTitle, { childList: true, characterData: true, subtree: true });
+  }
+
+  function populateAdminInputs() {
+    const title = document.getElementById('modal-anime-name').textContent;
+    const entry = animeList.find(a => a.name === title);
+
+    const inputRating = document.getElementById('edit-my-rating');
+    const inputStatus = document.getElementById('edit-status');
+    const inputFeedback = document.getElementById('edit-feedback');
+
+    if (entry && inputRating && inputFeedback && inputStatus && lastPopulatedEntryId !== entry.id) {
+      inputRating.value = entry.myRating || '';
+      inputStatus.value = entry.status || 'Pending';
+      inputFeedback.value = entry.feedback || '';
+      // Store the entry ID on the rating input for save reference
+      inputRating.dataset.currentId = entry.id;
+      lastPopulatedEntryId = entry.id;
     }
-  }, 300);
+  }
 
   async function saveAndCommitEntry() {
     const btn = document.getElementById('admin-save-entry-btn');
@@ -152,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const currentId = document.getElementById('edit-my-rating').dataset.currentId;
       const newRating = document.getElementById('edit-my-rating').value.trim();
+      const newStatus = document.getElementById('edit-status').value;
       const newFeedback = document.getElementById('edit-feedback').value.trim();
 
       if (!currentId) throw new Error("No active entry found.");
@@ -161,9 +209,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Update local array
       animeList[entryIndex].myRating = newRating;
+      animeList[entryIndex].status = newStatus;
       animeList[entryIndex].feedback = newFeedback;
 
-      // Reflect directly in UI
+      // Reflect directly in the open modal UI
       document.getElementById('modal-meta-my-rating').textContent = newRating || '-';
       document.getElementById('modal-thoughts-text').textContent = newFeedback ? `"${newFeedback}"` : '"No thoughts recorded yet."';
 
@@ -171,7 +220,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const fileContent = constructDataJs();
 
       // Commit via GitHub API
-      await commitToGitHub(fileContent, `Update rating and feedback for ${animeList[entryIndex].name}`);
+      await commitToGitHub(fileContent, `Update rating, status & feedback for ${animeList[entryIndex].name}`);
+
+      // Re-render the grid to reflect changes on cards (rating badges, etc.)
+      if (typeof filterAndSearch === 'function') {
+        filterAndSearch();
+      } else if (typeof renderGrid === 'function') {
+        renderGrid();
+      }
+
+      // Recalculate stats dashboard (watched count, avg rating, etc.)
+      if (typeof calculateStatistics === 'function') {
+        calculateStatistics();
+      }
 
       showToast('Changes saved and pushed to GitHub!', 'success');
     } catch (err) {
@@ -184,10 +245,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function constructDataJs() {
-    return `const animeList = ${JSON.stringify(animeList, null, 2)};\\n\\n` +
-      `const lofiPlaylist = ${JSON.stringify(lofiPlaylist, null, 2)};\\n\\n` +
-      `const ambiencePlaylist = ${JSON.stringify(ambiencePlaylist, null, 2)};\\n\\n` +
-      `const atmospheres = ${JSON.stringify(atmospheres, null, 2)};\\n`;
+    // Produce clean, readable JS matching the original compile_data.py format
+    const comment = '// Auto-generated data file from anime.xlsx and asset directories\n';
+    const animeBlock = `const animeList = ${JSON.stringify(animeList, null, 2)};\n`;
+    const lofiBlock = `\nconst lofiPlaylist = ${JSON.stringify(lofiPlaylist, null, 2)};\n`;
+    const ambienceBlock = `\nconst ambiencePlaylist = ${JSON.stringify(ambiencePlaylist, null, 2)};\n`;
+    const atmosBlock = `\nconst atmospheres = ${JSON.stringify(atmospheres, null, 2)};\n`;
+
+    return comment + animeBlock + lofiBlock + ambienceBlock + atmosBlock;
   }
 
   async function commitToGitHub(content, message) {
@@ -227,7 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (!putRes.ok) {
-      throw new Error("Failed to commit to GitHub.");
+      const errBody = await putRes.json().catch(() => ({}));
+      throw new Error(`Failed to commit to GitHub: ${errBody.message || putRes.statusText}`);
     }
   }
 

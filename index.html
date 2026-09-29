@@ -76,7 +76,7 @@
     <!-- Hero / Intro Section -->
     <section class="hero-section">
       <div class="hero-quote">
-        <p class="quote-text">“A cozy room, a warm cup of coffee, and stories that will linger in the heart forever.”</p>
+        <p class="quote-text" id="hero-quote-text">“A cozy room, a warm cup of coffee, and stories that will linger in the heart forever.”</p>
       </div>
       
       <!-- Stats Dashboard -->
@@ -139,7 +139,9 @@
         <button class="filter-tab" data-filter="watched">Watched</button>
         <button class="filter-tab" data-filter="pending">Plan to Watch</button>
         <button class="filter-tab" data-filter="fav">❤ Favorites</button>
+        <button class="filter-tab surprise-me-btn" id="surprise-me-btn">🎲 Surprise Me</button>
       </div>
+      <div id="filter-count" class="filter-count"></div>
     </section>
 
     <!-- Anime Grid -->
@@ -531,6 +533,35 @@
   <!-- Audio Elements -->
   <audio id="lofi-audio-player"></audio>
   <audio id="ambience-audio-player" loop></audio>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top-btn" class="back-to-top-btn hidden" aria-label="Back to Top">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <!-- Shortcuts Modal -->
+  <div id="shortcuts-modal" class="modal shortcuts-modal">
+    <div id="shortcuts-backdrop" class="modal-backdrop"></div>
+    <div class="modal-content shortcuts-content">
+      <button id="shortcuts-close-btn" class="icon-btn modal-close-btn" aria-label="Close Shortcuts">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <h2 class="shortcuts-title">Keyboard Shortcuts</h2>
+      <ul class="shortcuts-list">
+        <li><kbd>Space</kbd> <span>Play/Pause Lofi Music</span></li>
+        <li><kbd>Esc</kbd> <span>Close Modals / Exit Atmosphere</span></li>
+        <li><kbd>←</kbd> / <kbd>→</kbd> <span>Previous / Next Anime</span></li>
+        <li><kbd>,</kbd> / <kbd>.</kbd> <span>Previous / Next Poster</span></li>
+        <li><kbd>?</kbd> <span>Show / Hide Shortcuts</span></li>
+        <li><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>A</kbd> <span>Admin Mode</span></li>
+      </ul>
+    </div>
+  </div>
 
   <!-- Import JS Files -->
   <script src="data.js"></script>

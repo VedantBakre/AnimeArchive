@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Stats Dashboard
     statTotal: document.getElementById('stat-total'),
+    statPending: document.getElementById('stat-pending'),
     statMovies: document.getElementById('stat-movies'),
     statSeries: document.getElementById('stat-series'),
     statRating: document.getElementById('stat-rating'),
@@ -196,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateQuoteUI();
       DOM.heroQuote.style.opacity = 1;
     }, 500);
-  }, 10000);
+  }, 8000);
   DOM.heroQuote.style.transition = 'opacity 0.5s ease';
 
   // --- 3. Live Clock Integration ---
@@ -232,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Filter for Watched anime entries
     const watchedAnimes = animeList.filter(a => (a.status || '').toLowerCase() === 'watched');
+    const pendingAnimes = total - watchedAnimes.length;
 
     // Hours Watched calculation (Watched entries only)
     // Movies = runtime mins. Series = seasons * episodes * runtime mins
@@ -278,7 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Set text in UI with animation
-    animateValue(DOM.statTotal, 0, total, 1500);
+    animateValue(DOM.statTotal, 0, watchedAnimes.length, 1500);
+    animateValue(DOM.statPending, 0, pendingAnimes, 1500);
     animateValue(DOM.statMovies, 0, movies, 1500);
     animateValue(DOM.statSeries, 0, series, 1500);
     animateValue(DOM.statHours, 0, hours, 1500);
@@ -492,6 +495,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const yearA = typeof a.year === 'number' ? a.year : 0;
         const yearB = typeof b.year === 'number' ? b.year : 0;
         return yearB - yearA;
+      });
+    } else if (state.sortBy === 'alpha') {
+      filteredAnimeList.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+    } else if (state.sortBy === 'favorites') {
+      filteredAnimeList.sort((a, b) => {
+        if (a.fav && !b.fav) return -1;
+        if (!a.fav && b.fav) return 1;
+        return 0; // maintain original order for non-favorites
       });
     }
 

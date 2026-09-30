@@ -2123,6 +2123,10 @@ textarea.admin-input {
 }
 
 /* --- Shortcuts Modal --- */
+.shortcuts-content {
+  max-width: 500px;
+}
+
 .shortcuts-title {
   font-family: var(--font-ui);
   text-align: center;

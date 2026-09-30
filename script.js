@@ -1432,9 +1432,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 14. Keyboard Accessibility Navigation ---
   document.addEventListener('keydown', (e) => {
-    // ESC: close detail popup or exit full immersion mode
+    // ESC: close detail popup, shortcuts modal, or exit full immersion mode
     if (e.key === 'Escape') {
-      if (DOM.detailModal.classList.contains('active')) {
+      if (DOM.shortcutsModal.classList.contains('active')) {
+        DOM.shortcutsModal.classList.remove('active');
+      } else if (DOM.detailModal.classList.contains('active')) {
         closeDetailModal();
       } else if (state.activeAtmosphere !== 'none') {
         exitAtmosphere();
@@ -1462,6 +1464,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (e.key === '.') {
         nextPoster();
       }
+    }
+    
+    // Shortcuts Modal Toggle (? or Shift+/)
+    const isQuestionMark = e.key === '?' || (e.shiftKey && e.key === '/');
+    if (isQuestionMark && !['INPUT', 'TEXTAREA', 'SELECT'].includes(activeTag)) {
+      e.preventDefault();
+      DOM.shortcutsModal.classList.toggle('active');
     }
   });
 
@@ -1579,20 +1588,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openDetailModal(filteredAnimeList[randomIndex].id);
   });
 
-  // Keyboard Shortcuts Modal Toggle
-  document.addEventListener('keydown', (e) => {
-    const isQuestionMark = e.key === '?' || (e.shiftKey && e.key === '/');
-    const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName);
-    
-    if (isQuestionMark && !isInput) {
-      e.preventDefault(); // Prevent browser 'Quick Find' or similar default actions
-      DOM.shortcutsModal.classList.toggle('active');
-    }
-    
-    if (e.key === 'Escape') {
-      DOM.shortcutsModal.classList.remove('active');
-    }
-  });
+  // (Keydown listener for shortcuts merged into main accessibility listener above)
   DOM.shortcutsCloseBtn.addEventListener('click', () => {
     DOM.shortcutsModal.classList.remove('active');
   });

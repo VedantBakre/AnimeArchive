@@ -14,7 +14,6 @@ const animeList = [
     "runtime": 112,
     "studio": "CoMix Wave Films",
     "director": "Makoto Shinkai",
-    "description": "Two teenagers share a profound, magical connection upon discovering they are swapping bodies.",
     "genres": [
       "Drama",
       "Romance",
@@ -43,7 +42,6 @@ const animeList = [
     "runtime": 122,
     "studio": "CoMix Wave Films",
     "director": "Makoto Shinkai",
-    "description": "A young girl teams up with a mysterious young man to close magical doors causing disasters across Japan.",
     "genres": [
       "Action",
       "Adventure",
@@ -71,7 +69,6 @@ const animeList = [
     "runtime": 108,
     "studio": "Studio VOLN",
     "director": "Shin'ichirou Ushijima",
-    "description": "An aloof boy discovers his popular classmate is secretly suffering from a fatal pancreatic illness.",
     "genres": [
       "Drama",
       "Romance"
@@ -98,7 +95,6 @@ const animeList = [
     "runtime": 112,
     "studio": "CoMix Wave Films",
     "director": "Makoto Shinkai",
-    "description": "A runaway high school boy in Tokyo meets a girl who has the power to manipulate the weather.",
     "genres": [
       "Drama",
       "Romance",
@@ -126,7 +122,6 @@ const animeList = [
     "runtime": 46,
     "studio": "CoMix Wave Films",
     "director": "Makoto Shinkai",
-    "description": "A student aspiring to be a shoemaker and a mysterious older woman find solace in each other on rainy mornings.",
     "genres": [
       "Drama",
       "Romance"
@@ -152,7 +147,6 @@ const animeList = [
     "runtime": 24,
     "studio": "CloverWorks",
     "director": "Masashi Ishihama",
-    "description": "Two seemingly very different high schoolers discover each other's hidden sides and form a close bond.",
     "genres": [
       "Comedy",
       "Romance",
@@ -180,7 +174,6 @@ const animeList = [
     "runtime": 24,
     "studio": "ufotable",
     "director": "Haruo Sotozaki",
-    "description": "A kind-hearted boy becomes a demon slayer to avenge his family and cure his demon-turned sister.",
     "genres": [
       "Action",
       "Fantasy"
@@ -212,7 +205,6 @@ const animeList = [
     "runtime": 22,
     "studio": "A-1 Pictures",
     "director": "Kyouhei Ishiguro",
-    "description": "A piano prodigy who lost his ability to hear the piano meets a free-spirited violinist who brings color back to his life.",
     "genres": [
       "Drama",
       "Romance",
@@ -241,7 +233,6 @@ const animeList = [
     "runtime": 83,
     "studio": "CLAP",
     "director": "Tomohisa Taguchi",
-    "description": "Two teenagers investigate a mysterious tunnel that can grant wishes, but at a heavy cost of time.",
     "genres": [
       "Drama",
       "Romance",
@@ -269,7 +260,6 @@ const animeList = [
     "runtime": 96,
     "studio": "Science SARU",
     "director": "Masaaki Yuasa",
-    "description": "A surfer and a firefighter fall in love, but tragedy strikes, leading to supernatural encounters.",
     "genres": [
       "Drama",
       "Romance",
@@ -296,7 +286,6 @@ const animeList = [
     "runtime": 63,
     "studio": "CoMix Wave Films",
     "director": "Makoto Shinkai",
-    "description": "A poignant tale of two childhood friends drifting apart over time and distance.",
     "genres": [
       "Drama",
       "Romance"
@@ -322,7 +311,6 @@ const animeList = [
     "runtime": 24,
     "studio": "CloverWorks",
     "director": "Souichi Masui",
-    "description": "A high schooler helps girls suffering from \"Puberty Syndrome,\" starting with a forgotten teen actress.",
     "genres": [
       "Drama",
       "Romance",
@@ -353,7 +341,6 @@ const animeList = [
     "runtime": 24,
     "studio": "CloverWorks",
     "director": "Keisuke Shinohara",
-    "description": "A doll-artisan enthusiast helps his popular classmate create cosplay outfits, blossoming into a sweet romance.",
     "genres": [
       "Comedy",
       "Romance",
@@ -381,7 +368,6 @@ const animeList = [
     "runtime": 45,
     "studio": "Brain's Base",
     "director": "Takahiro Omori",
-    "description": "A young girl befriends a forest spirit who will disappear forever if touched by a human.",
     "genres": [
       "Drama",
       "Romance",
@@ -408,7 +394,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Science SARU",
     "director": "Fuga Yamashiro",
-    "description": "Two eccentric high schoolers get entangled in insane battles involving ghosts and aliens.",
     "genres": [
       "Action",
       "Comedy",
@@ -437,7 +422,6 @@ const animeList = [
     "runtime": 142,
     "studio": "Studio Colorido / Studio Chromato",
     "director": "Shingo Yamashita",
-    "description": "A beautifully animated reimagining of the classic Japanese folktale of the Bamboo Cutter.",
     "genres": [
       "Fantasy",
       "Drama",
@@ -465,7 +449,6 @@ const animeList = [
     "runtime": 102,
     "studio": "Bakken Record",
     "director": "Jun Matsumoto",
-    "description": "A sci-fi romance exploring parallel universes and the choices that define true love.",
     "genres": [
       "Romance",
       "Sci-Fi"
@@ -491,7 +474,6 @@ const animeList = [
     "runtime": 102,
     "studio": "TMS Entertainment",
     "director": "Ken'ichi Kasai",
-    "description": "The companion piece to \"To Every You\", showing the alternate universe path of love and sacrifice.",
     "genres": [
       "Romance",
       "Sci-Fi"
@@ -517,7 +499,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Trigger",
     "director": "Hiroyuki Imaishi",
-    "description": "A street kid survives in a technology-obsessed city of the future by becoming a mercenary outlaw.",
     "genres": [
       "Action",
       "Sci-Fi",
@@ -546,7 +527,6 @@ const animeList = [
     "runtime": 40,
     "studio": "Fortiche Production",
     "director": "Pascal Charrue",
-    "description": "Set in the League of Legends universe, two sisters fight on rival sides of a war between two cities.",
     "genres": [
       "Action",
       "Animation",
@@ -576,7 +556,6 @@ const animeList = [
     "runtime": 130,
     "studio": "Kyoto Animation",
     "director": "Naoko Yamada",
-    "description": "A former bully seeks redemption by trying to befriend the deaf girl he tormented in elementary school.",
     "genres": [
       "Drama",
       "Award Winning"
@@ -603,7 +582,6 @@ const animeList = [
     "runtime": 88,
     "studio": "Studio Ghibli",
     "director": "Isao Takahata",
-    "description": "A heartbreaking story of two siblings struggling to survive in Japan during the final months of WWII.",
     "genres": [
       "Drama"
     ],
@@ -628,7 +606,6 @@ const animeList = [
     "runtime": 119,
     "studio": "A-1 Pictures",
     "director": "Tatsuyuki Nagai",
-    "description": "A girl who lost her voice magically after traumatizing her family learns to express herself through music.",
     "genres": [
       "Drama",
       "Romance"
@@ -655,7 +632,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Wit Studio / MAPPA",
     "director": "Tetsuro Araki / Yuichiro Hayashi",
-    "description": "Humanity fights for survival against terrifying giant humanoids known as Titans.",
     "genres": [
       "Action",
       "Drama",
@@ -683,7 +659,6 @@ const animeList = [
     "runtime": 23,
     "studio": "P.A. Works",
     "director": "Toshiya Shinohara",
-    "description": "Childhood friends from a sea village must attend school on the surface, causing friction and romance.",
     "genres": [
       "Drama",
       "Romance",
@@ -710,7 +685,6 @@ const animeList = [
     "runtime": 25,
     "studio": "Kyoto Animation",
     "director": "Yasuhiro Takemoto",
-    "description": "An energy-conserving high schooler joins the classic literature club and solves everyday mysteries.",
     "genres": [
       "Mystery",
       "Slice of Life"
@@ -737,7 +711,6 @@ const animeList = [
     "runtime": 24,
     "studio": "A-1 Pictures / Trigger / CloverWorks",
     "director": "Atsushi Nishigori",
-    "description": "In a post-apocalyptic future, children pilot giant mechs to defend humanity against monstrous threats.",
     "genres": [
       "Action",
       "Drama",
@@ -765,7 +738,6 @@ const animeList = [
     "runtime": 25,
     "studio": "White Fox",
     "director": "Masaharu Watanabe",
-    "description": "A young man is transported to a fantasy world with the ability to rewind time upon his death.",
     "genres": [
       "Drama",
       "Fantasy",
@@ -792,7 +764,6 @@ const animeList = [
     "runtime": 90,
     "studio": "Shaft",
     "director": "Akiyuki Shinbo / Nobuyuki Takeuchi",
-    "description": "A group of friends explore the nature of fireworks while a boy uses a mysterious orb to alter time.",
     "genres": [
       "Drama",
       "Romance",
@@ -819,7 +790,6 @@ const animeList = [
     "runtime": 98,
     "studio": "Graphinica",
     "director": "Tomohiko Itou",
-    "description": "A high schooler travels back in time to help his past self correct a mistake and save his love.",
     "genres": [
       "Sci-Fi",
       "Drama",
@@ -846,7 +816,6 @@ const animeList = [
     "runtime": 40,
     "studio": "Flat Studio",
     "director": "loundraw",
-    "description": "Three troubled teens seek out an urban legend known as the Summer Ghost to find answers about life and death.",
     "genres": [
       "Drama",
       "Supernatural"
@@ -872,7 +841,6 @@ const animeList = [
     "runtime": 58,
     "studio": "Studio Durian",
     "director": "Kiyotaka Oshiyama",
-    "description": "A beautiful, emotional one-shot about the complicated rivalry and friendship of two aspiring manga artists.",
     "genres": [
       "Drama",
       "Avant Garde"
@@ -898,7 +866,6 @@ const animeList = [
     "runtime": 24,
     "studio": "WIT Studio / MAPPA",
     "director": "Shuhei Yabuta",
-    "description": "A young viking warrior seeks revenge against the man who killed his father in a deeply philosophical historical epic.",
     "genres": [
       "Action",
       "Adventure",
@@ -926,7 +893,6 @@ const animeList = [
     "runtime": 23,
     "studio": "Madhouse",
     "director": "Tetsuro Araki",
-    "description": "A brilliant high school student discovers a supernatural notebook that kills anyone whose name is written in it.",
     "genres": [
       "Supernatural",
       "Suspense"
@@ -952,7 +918,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Kyoto Animation",
     "director": "Tatsuya Ishihara",
-    "description": "A delinquent student finds meaning in life by helping a sweet, chronically ill girl revive the school drama club.",
     "genres": [
       "Drama",
       "Romance",
@@ -980,7 +945,6 @@ const animeList = [
     "runtime": 24,
     "studio": "LIDENFILMS",
     "director": "Yuki Ikeda",
-    "description": "Two students suffering from insomnia find comfort in each other and the school's abandoned observatory.",
     "genres": [
       "Romance",
       "Slice of Life"
@@ -1006,7 +970,6 @@ const animeList = [
     "runtime": 24,
     "studio": "OLM / TOHO animation",
     "director": "Norihiro Naganuma",
-    "description": "A sharp-witted apothecary girl solves medical mysteries and political intrigue within the Emperor's inner palace.",
     "genres": [
       "Drama",
       "Mystery",
@@ -1034,7 +997,6 @@ const animeList = [
     "runtime": 24,
     "studio": "MAPPA",
     "director": "Sunghoo Park / Shota Goshozono",
-    "description": "A high schooler consumes a cursed talisman and gets drawn into a dangerous world of Curses and Sorcerers.",
     "genres": [
       "Action",
       "Fantasy"
@@ -1060,7 +1022,6 @@ const animeList = [
     "runtime": 22,
     "studio": "A-1 Pictures",
     "director": "Tatsuyuki Nagai",
-    "description": "Childhood friends reconnect years later to help the spirit of their deceased friend pass on.",
     "genres": [
       "Drama",
       "Supernatural"
@@ -1086,7 +1047,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Ashi Productions",
     "director": "Hiroshi Ikehata",
-    "description": "Two awkward coworkers fake an engagement to avoid being transferred to a branch office in Siberia.",
     "genres": [
       "Romance",
       "Slice of Life"
@@ -1112,7 +1072,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Telecom Animation Film",
     "director": "Yūichirō Yano",
-    "description": "A sweet sports romance about a badminton player and a basketball star living under the same roof.",
     "genres": [
       "Romance",
       "Sports"
@@ -1139,7 +1098,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Project No.9",
     "director": "Lihua Wang / Chihiro Kumano",
-    "description": "An apathetic high school boy is slowly won over by his perfect, angelic neighbor who starts cooking for him.",
     "genres": [
       "Romance",
       "Slice of Life"
@@ -1166,7 +1124,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Shin-Ei Animation",
     "director": "Hiroaki Akagi",
-    "description": "A socially awkward boy with dark fantasies slowly falls in love with the quirky, popular girl in his class.",
     "genres": [
       "Comedy",
       "Romance"
@@ -1192,7 +1149,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Studio Mother",
     "director": "Junichi Yamamoto / Takao Kato",
-    "description": "Two mismatched students are paired up for a bizarre \"marriage practical\" assignment in school.",
     "genres": [
       "Comedy",
       "Romance"
@@ -1218,7 +1174,6 @@ const animeList = [
     "runtime": 24,
     "studio": "A-1 Pictures",
     "director": "Shinichi Omata",
-    "description": "Two brilliant student council leaders try to trick each other into confessing their love first.",
     "genres": [
       "Comedy",
       "Romance"
@@ -1245,7 +1200,6 @@ const animeList = [
     "runtime": 24,
     "studio": "J.C.Staff",
     "director": "Tatsuyuki Nagai",
-    "description": "Two mismatched high schoolers team up to help each other confess to their respective crushes.",
     "genres": [
       "Comedy",
       "Drama",
@@ -1272,7 +1226,6 @@ const animeList = [
     "runtime": 23,
     "studio": "A-1 Pictures",
     "director": "Tomohiko Itou",
-    "description": "A man travels back in time to his childhood to solve a string of kidnappings and save his classmate.",
     "genres": [
       "Mystery",
       "Supernatural",
@@ -1299,7 +1252,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Lerche",
     "director": "Seiji Kishi / Hiroyuki Hashimoto / Noriyuki Nomata",
-    "description": "Students in an ultra-competitive, cutthroat high school must use deception and strategy to rise to the top.",
     "genres": [
       "Drama",
       "Suspense"
@@ -1325,7 +1277,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Wit Studio / CloverWorks",
     "director": "Kazuhiro Furuhashi",
-    "description": "A spy, an assassin, and a telepathic child pretend to be a normal family for a high-stakes mission.",
     "genres": [
       "Action",
       "Comedy"
@@ -1351,7 +1302,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Doga Kobo",
     "director": "Ryota Itoh",
-    "description": "A beautiful half-Russian girl mutters sweet things in Russian, unaware that her crush perfectly understands her.",
     "genres": [
       "Comedy",
       "Romance"
@@ -1377,7 +1327,6 @@ const animeList = [
     "runtime": 24,
     "studio": "CloverWorks",
     "director": "Miho Tan Tanaka",
-    "description": "A heartwarming romance between a student at a boys' delinquent school and a girl from an elite academy.",
     "genres": [
       "Romance",
       "Slice of Life"
@@ -1403,7 +1352,6 @@ const animeList = [
     "runtime": 119,
     "studio": "Studio Ghibli",
     "director": "Hayao Miyazaki",
-    "description": "A young woman cursed with an old body gets swept up in the magical world of a wizard named Howl.",
     "genres": [
       "Adventure",
       "Fantasy",
@@ -1431,7 +1379,6 @@ const animeList = [
     "runtime": 24,
     "studio": "MAPPA",
     "director": "Ryu Nakayama / Tatsuya Yoshihara",
-    "description": "A young man merges with his pet chainsaw devil and joins a government agency to hunt other devils.",
     "genres": [
       "Action",
       "Dark Fantasy",
@@ -1458,7 +1405,6 @@ const animeList = [
     "runtime": 24,
     "studio": "A-1 Pictures",
     "director": "Shotaro Kitamura",
-    "description": "A boy constantly finds himself comforting the girls who lose the \"love triangles\" in his school.",
     "genres": [
       "Comedy",
       "Romance"
@@ -1484,7 +1430,6 @@ const animeList = [
     "runtime": 98,
     "studio": "Bones",
     "director": "Kotaro Tamura",
-    "description": "A marine biology student becomes the caretaker for a stubborn, wheelchair-bound artist with big dreams.",
     "genres": [
       "Drama",
       "Romance"
@@ -1510,7 +1455,6 @@ const animeList = [
     "runtime": 24,
     "studio": "CloverWorks",
     "director": "Shinpei Tomooka",
-    "description": "A happy alien tries to bring joy to a deeply traumatized human girl, leading to a dark tragedy.",
     "genres": [
       "Drama",
       "Psychological",
@@ -1538,7 +1482,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Project No.9",
     "director": "Kei Oikawa",
-    "description": "A touching drama about connection and finding light in a dark world.",
     "genres": [
       "Drama",
       "Romance"
@@ -1564,7 +1507,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Pine Jam",
     "director": "Kazuhiro Yoneda",
-    "description": "A comedic misunderstanding between two friends leads to unexpected romance.",
     "genres": [
       "Comedy",
       "Romance",
@@ -1591,7 +1533,6 @@ const animeList = [
     "runtime": 24,
     "studio": "ROLL2",
     "director": "Yasushi Tomoda",
-    "description": "An emotional drama focused on terminal illness, love, and living life to the fullest.",
     "genres": [
       "Drama",
       "Dark Fantasy",
@@ -1618,7 +1559,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Doga Kobo",
     "director": "Shota Umehara",
-    "description": "Childhood friends must navigate their shifting feelings and break the cycle of a complicated game.",
     "genres": [
       "Comedy",
       "Romance"
@@ -1644,7 +1584,6 @@ const animeList = [
     "runtime": 24,
     "studio": "A-1 Pictures",
     "director": "Shingo Adachi",
-    "description": "A secret organization of highly trained schoolgirls works in the shadows to maintain peace in Japan.",
     "genres": [
       "Action",
       "Sci-Fi"
@@ -1670,7 +1609,6 @@ const animeList = [
     "runtime": 24,
     "studio": "CloverWorks",
     "director": "Toshifumi Akai",
-    "description": "A fierce delinquent joins a high school famous for brawling to fight for the town's safety.",
     "genres": [
       "Action",
       "Comedy"
@@ -1696,7 +1634,6 @@ const animeList = [
     "runtime": 126,
     "studio": "Ascension, Sunrise",
     "director": "Keiichi Hara",
-    "description": "A soul is given a second chance at life inhabiting the body of a suicidal middle schooler.",
     "genres": [
       "Drama",
       "Slice of Life",
@@ -1723,7 +1660,6 @@ const animeList = [
     "runtime": 24,
     "studio": "A-1 Pictures",
     "director": "Toshimasa Ishii",
-    "description": "Child soldiers are forced to pilot mechs in a brutal, racially-segregated war of survival.",
     "genres": [
       "Action",
       "Drama",
@@ -1750,7 +1686,6 @@ const animeList = [
     "runtime": 24,
     "studio": "TMS Entertainment",
     "director": "Yoshihide Ibata",
-    "description": "An orphaned girl is taken in by a family cursed to turn into Zodiac animals when hugged by the opposite sex.",
     "genres": [
       "Comedy",
       "Drama",
@@ -1778,7 +1713,6 @@ const animeList = [
     "runtime": 24,
     "studio": "J.C.Staff",
     "director": "Chiaki Kon",
-    "description": "A law student suffering from amnesia must navigate his new college life, romance, and his forgotten past.",
     "genres": [
       "Comedy",
       "Drama",
@@ -1805,7 +1739,6 @@ const animeList = [
     "runtime": 125,
     "studio": "Studio Ghibli",
     "director": "Hayao Miyazaki",
-    "description": "A young girl wanders into a magical world of spirits and must work in a bathhouse to free her parents.",
     "genres": [
       "Adventure",
       "Drama",
@@ -1832,7 +1765,6 @@ const animeList = [
     "runtime": 24,
     "studio": "MAPPA",
     "director": "Kaori Makita",
-    "description": "A group of death-row convicts are sent to a beautiful but deadly island to find the elixir of life.",
     "genres": [
       "Action",
       "Adventure",
@@ -1859,7 +1791,6 @@ const animeList = [
     "runtime": 117,
     "studio": "Studio Chizu",
     "director": "Mamoru Hosoda",
-    "description": "A single mother struggles to raise two half-wolf children while hiding their secret from society.",
     "genres": [
       "Drama",
       "Fantasy",
@@ -1886,7 +1817,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Studio Pierrot",
     "director": "Shuhei Morita",
-    "description": "A college student survives a deadly attack but becomes a half-ghoul, forced to consume human flesh to survive.",
     "genres": [
       "Action",
       "Fantasy",
@@ -1913,7 +1843,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Madhouse, J.C.Staff",
     "director": "Shingo Natsume",
-    "description": "An incredibly powerful hero who can defeat any opponent with a single punch struggles to find a challenge.",
     "genres": [
       "Action",
       "Comedy",
@@ -1940,7 +1869,6 @@ const animeList = [
     "runtime": 24,
     "studio": "A-1 Pictures",
     "director": "Shunsuke Nakashige",
-    "description": "The weakest hunter of mankind gains a mysterious system that allows him to level up endlessly.",
     "genres": [
       "Action",
       "Adventure",
@@ -1967,7 +1895,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Madhouse",
     "director": "Hiroshi Koujina",
-    "description": "A young boy sets out on a perilous journey to become a Hunter and find his legendary father.",
     "genres": [
       "Action",
       "Adventure",
@@ -1994,7 +1921,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Bones",
     "director": "Yasuhiro Irie",
-    "description": "Two brothers use forbidden alchemy in an attempt to resurrect their mother, leading to a quest for the Philosopher's Stone.",
     "genres": [
       "Action",
       "Adventure",
@@ -2022,7 +1948,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Madhouse",
     "director": "Keiichirou Saitou",
-    "description": "An elf mage reflects on life, time, and relationships after completing a legendary decade-long quest.",
     "genres": [
       "Adventure",
       "Drama",
@@ -2049,7 +1974,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Production I.G",
     "director": "Susumu Mitsunaka",
-    "description": "A short but incredibly athletic high schooler aims to revitalize his school's once-great volleyball team.",
     "genres": [
       "Sports"
     ],
@@ -2074,7 +1998,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Doga Kobo",
     "director": "Ryouta Itou",
-    "description": "A clumsy boy is constantly protected by his cool, incredibly capable, and adorable girlfriend.",
     "genres": [
       "Comedy",
       "Romance"
@@ -2100,7 +2023,6 @@ const animeList = [
     "runtime": 24,
     "studio": "A-1 Pictures, CloverWorks",
     "director": "Kanta Kamei",
-    "description": "An otaku recruits an ordinary classmate to be the heroine of his ultimate dating sim game.",
     "genres": [
       "Comedy",
       "Romance"
@@ -2126,7 +2048,6 @@ const animeList = [
     "runtime": 24,
     "studio": "AIC PLUS+, Production IMS, J.C.Staff, Geek Toys",
     "director": "Keitarou Motonaga",
-    "description": "A high schooler must date powerful \"Spirits\" and make them fall in love to prevent catastrophic spatial quakes.",
     "genres": [
       "Action",
       "Romance",
@@ -2153,7 +2074,6 @@ const animeList = [
     "runtime": 18,
     "studio": "Haoliners Animation League, Pb Animation",
     "director": "Li Haoling",
-    "description": "An incredibly powerful teenager tries to live a normal high school life while hiding his god-like abilities.",
     "genres": [
       "Action",
       "Adventure",
@@ -2181,7 +2101,6 @@ const animeList = [
     "runtime": 24,
     "studio": "P.A. Works",
     "director": "Shinya Kawatsura",
-    "description": "A soothing, slice-of-life journey through delicious cooking and heartwarming human connections.",
     "genres": [
       "Comedy",
       "Gourmet",
@@ -2208,7 +2127,6 @@ const animeList = [
     "runtime": 24,
     "studio": "J.C.Staff",
     "director": "Shintaro Doge",
-    "description": "Two best friends navigate the messy boundaries between platonic friendship and romantic feelings.",
     "genres": [
       "Comedy",
       "Romance"
@@ -2234,7 +2152,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Soigne",
     "director": "Tatsuya Sasaki",
-    "description": "A calm and composed girl reveals a surprisingly wild and lovable side whenever she drinks.",
     "genres": [
       "Comedy",
       "Slice of Life",
@@ -2261,7 +2178,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Nomad",
     "director": "Toshihiro Kikuchi",
-    "description": "A high school girl uses her drama club acting skills to play different \"harem\" archetypes for her crush.",
     "genres": [
       "Comedy",
       "Romance"
@@ -2287,7 +2203,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Kyoto Animation",
     "director": "Tatsuya Ishihara",
-    "description": "A former \"chuunibyou\" tries to live a normal high school life but is dragged into the delusions of a quirky classmate.",
     "genres": [
       "Comedy",
       "Drama",
@@ -2314,7 +2229,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Connect",
     "director": "Takashi Kawabata",
-    "description": "A quiet student befriends the slightly less popular, but far more interesting, girl in his class.",
     "genres": [
       "Comedy",
       "Romance"
@@ -2340,7 +2254,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Diomedéa",
     "director": "Shinsuke Yanagi",
-    "description": "Students at an elite girls' school secretly clash in highly competitive arcade fighting games.",
     "genres": [
       "Comedy",
       "Action"
@@ -2366,7 +2279,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Shaft",
     "director": "Akiyuki Shinbo, Naoyuki Tatsuwa",
-    "description": "The heirs of two rival gang factions must pretend to be dating to prevent an all-out war.",
     "genres": [
       "Comedy",
       "Romance"
@@ -2392,7 +2304,6 @@ const animeList = [
     "runtime": 106,
     "studio": "CloverWorks",
     "director": "Tatsuyuki Nagai",
-    "description": "A complex story of music, romance, and time-traveling regrets in a small Japanese town.",
     "genres": [
       "Drama",
       "Romance",
@@ -2419,7 +2330,6 @@ const animeList = [
     "runtime": 90,
     "studio": "CoMix Wave Films",
     "director": "Makoto Shinkai",
-    "description": "Three childhood friends build a plane to reach a mysterious tower in an alternate-history divided Japan.",
     "genres": [
       "Drama",
       "Romance",
@@ -2446,7 +2356,6 @@ const animeList = [
     "runtime": 23,
     "studio": "TMS Entertainment",
     "director": "Tomo Kosaka",
-    "description": "An unemployed 27-year-old is given a pill that makes him look 17 so he can redo his final year of high school.",
     "genres": [
       "Drama",
       "Romance",
@@ -2473,7 +2382,6 @@ const animeList = [
     "runtime": 111,
     "studio": "Studio Ghibli",
     "director": "Yoshifumi Kondo",
-    "description": "A young girl who loves reading discovers her true passion for writing while falling for an aspiring violin maker.",
     "genres": [
       "Drama",
       "Romance"
@@ -2499,7 +2407,6 @@ const animeList = [
     "runtime": 98,
     "studio": "Madhouse",
     "director": "Mamoru Hosoda",
-    "description": "A high school girl discovers she can literally leap backwards through time and uses it for trivial things.",
     "genres": [
       "Adventure",
       "Drama",
@@ -2527,7 +2434,6 @@ const animeList = [
     "runtime": 23,
     "studio": "White Fox",
     "director": "Tomoki Kobayashi",
-    "description": "A country boy joins a group of assassins to overthrow a deeply corrupt and ruthless empire.",
     "genres": [
       "Action",
       "Fantasy"
@@ -2553,7 +2459,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Studio Pierrot",
     "director": "Takeshi Furuta",
-    "description": "A boy who hears voices is recruited into an intergalactic space police force.",
     "genres": [
       "Action",
       "Sci-Fi"
@@ -2579,7 +2484,6 @@ const animeList = [
     "runtime": 64,
     "studio": "Shaft",
     "director": "Akiyuki Shinbo, Tatsuya Oishi",
-    "description": "The dark, visually stunning prequel to the Monogatari series exploring a boy's fateful encounter with a vampire.",
     "genres": [
       "Action",
       "Mystery",
@@ -2607,7 +2511,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Kyoto Animation",
     "director": "Taichi Ishidate",
-    "description": "A half-youmu boy meets a spirit warrior girl who uses her cursed blood as a weapon.",
     "genres": [
       "Action",
       "Fantasy",
@@ -2634,7 +2537,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Kyoto Animation",
     "director": "Naoko Yamada",
-    "description": "Four high school girls revive the light music club, drinking tea and slowly becoming a real band.",
     "genres": [
       "Comedy",
       "Music"
@@ -2660,7 +2562,6 @@ const animeList = [
     "runtime": 23,
     "studio": "Production I.G",
     "director": "Hiro Kaburaki",
-    "description": "A sweet, misunderstood girl who looks like Sadako from The Ring slowly makes friends and finds love.",
     "genres": [
       "Drama",
       "Romance"
@@ -2686,7 +2587,6 @@ const animeList = [
     "runtime": 85,
     "studio": "Studio Lico, Studio N",
     "director": "Kim Yong-hwan",
-    "description": "A magical, heartwarming mystery about finding letters from a secret friend at a new school.",
     "genres": [
       "Drama",
       "Mystery",
@@ -2713,7 +2613,6 @@ const animeList = [
     "runtime": 24,
     "studio": "P.A. Works",
     "director": "Soichi Masui",
-    "description": "A young woman from Tokyo accidentally becomes the \"Queen\" of a struggling rural town's tourism board.",
     "genres": [
       "Comedy",
       "Slice of Life"
@@ -2739,7 +2638,6 @@ const animeList = [
     "runtime": 23,
     "studio": "Studio Silver, Arvo Animation",
     "director": "Yoshiaki Iwasaki",
-    "description": "A diligent student must tutor two genius girls in their weakest subjects to secure a scholarship.",
     "genres": [
       "Comedy",
       "Romance"
@@ -2765,7 +2663,6 @@ const animeList = [
     "runtime": 24,
     "studio": "P.A. Works",
     "director": "Seiji Kishi",
-    "description": "Teens in an afterlife purgatory form a rebellion against God while trying to resolve their lingering regrets.",
     "genres": [
       "Action",
       "Drama",
@@ -2792,7 +2689,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Brain's Base, Drive",
     "director": "Masahiko Murata, Kiyoko Sayama",
-    "description": "An immortal orb takes the form of things it encounters, learning about humanity through love and loss.",
     "genres": [
       "Adventure",
       "Drama",
@@ -2819,7 +2715,6 @@ const animeList = [
     "runtime": 95,
     "studio": "Shin-Ei Animation, SynergySP",
     "director": "Kei Suzuki",
-    "description": "A poignant short film about fleeting summer memories and unbroken promises.",
     "genres": [
       "Drama",
       "Romance"
@@ -2845,7 +2740,6 @@ const animeList = [
     "runtime": 24,
     "studio": "Studio Gokumi, AXsiZ",
     "director": "Kazuomi Koga",
-    "description": "A devoted boy suddenly gives up on his crush, causing her to realize she actually misses his attention.",
     "genres": [
       "Comedy",
       "Romance"

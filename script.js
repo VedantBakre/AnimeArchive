@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tag.className = 'genre-tag genre-chip';
         tag.textContent = genre;
         tag.addEventListener('click', () => {
-          closeModal();
+          closeDetailModal();
           DOM.searchBox.value = genre;
           state.searchQuery = genre;
           filterAndSearch();
@@ -702,6 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function switchAnimeEntry(direction) {
     if (filteredAnimeList.length <= 1 || isSwitchingAnime) return;
     isSwitchingAnime = true;
+    DOM.modalDescPanel.classList.remove('open');
 
     const modalBody = DOM.detailModal.querySelector('.modal-body-layout');
     const exitClass = direction === 'next' ? 'slide-out-left' : 'slide-out-right';

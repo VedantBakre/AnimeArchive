@@ -777,6 +777,11 @@ body {
   transform: translateX(-20px);
   transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
   overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.modal-desc-panel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .modal-desc-panel.open {
@@ -831,7 +836,8 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
-.modal.active .modal-wrapper {
+.modal.active .modal-wrapper,
+.modal.active > .modal-content {
   transform: scale(1) translateY(0);
 }
 

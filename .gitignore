@@ -4,3 +4,7 @@
 # OS Files
 .DS_Store
 Thumbs.db
+
+# Development files
+node_modules/
+test.js

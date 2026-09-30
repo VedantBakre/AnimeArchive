@@ -1551,9 +1551,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Keyboard Shortcuts Modal Toggle
   document.addEventListener('keydown', (e) => {
-    if (e.key === '?' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    const isQuestionMark = e.key === '?' || (e.shiftKey && e.key === '/');
+    const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName);
+    
+    if (isQuestionMark && !isInput) {
+      e.preventDefault(); // Prevent browser 'Quick Find' or similar default actions
       DOM.shortcutsModal.classList.toggle('active');
     }
+    
     if (e.key === 'Escape') {
       DOM.shortcutsModal.classList.remove('active');
     }

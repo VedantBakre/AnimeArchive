@@ -139,22 +139,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Anime Quotes Database
   const allQuotes = [
+    { text: "“Kimi no Na wa...?”", character: "", anime: "Your Name" },
+    { text: "“I want to eat your pancreas.”", character: "Haruki Shiga", anime: "I Want To Eat Your Pancreas", hideAnime: true },
+    { text: "“Set your heart ablaze. Go beyond your limits!”", character: "Kyojuro Rengoku", anime: "Demon Slayer" },
+    { text: "“No matter how many people you may lose, you have no choice but to go on living. No matter how devastating the blows may be.”", character: "Tanjiro Kamado", anime: "Demon Slayer" },
+    { text: "“Spring will be here soon. Spring, the season I met you, is coming. A spring without you is coming.”", character: "Kousei Arima", anime: "Your Lie in April" },
+    { text: "“I told one single lie... I said that Kaori Miyazono liked Ryota Watari.”", character: "Kaori Miyazono", anime: "Your Lie in April" },
+    { text: "“Hey... they say it's five centimeters per second. The speed at which cherry blossom petals fall.”", character: "Akari Shinohara", anime: "5cm Per Second" },
+    { text: "“When you love something, you shouldn't care about what anyone else says! Loving something with all your heart is awesome!”", character: "Marin Kitagawa", anime: "My Dress Up Darling" },
+    { text: "“Forgive me... wish we could go to the moon together.”", character: "David Martinez", anime: "Cyberpunk: Edgerunners" },
+    { text: "“You never had to save me. All I ever wanted was for you to live!”", character: "Lucy", anime: "Cyberpunk: Edgerunners" },
+    { text: "“We've all had bad days. But we keep going. We have to.”", character: "Vi", anime: "Arcane" },
     { text: "“Wherever you are in the world, I'll search for you.”", character: "Taki Tachibana", anime: "Your Name" },
-    { text: "“Feel the rage, the powerful, pure rage of not being able to forgive will become your unswerving drive to take action.”", character: "Giyu Tomioka", anime: "Demon Slayer" },
-    { text: "“Was I able to live inside someone's heart? Was I able to live inside your heart?”", character: "Kaori Miyazono", anime: "Your Lie in April" },
     { text: "“Things would have been so much better back then... If we had heard each other's voices.”", character: "Shoya Ishida", anime: "A Silent Voice" },
-    { text: "“You can't be found unless you make a choice to interact with others.”", character: "Sakura Yamauchi", anime: "I Want To Eat Your Pancreas" },
     { text: "“I'm going to find my tomorrow.”", character: "Suzume Iwato", anime: "Suzume" },
     { text: "“Who cares if we don't see the sunshine ever again? I want you more than any blue sky.”", character: "Hodaka Morishima", anime: "Weathering With You" },
     { text: "“It's not about being liked by everyone. I just need one person to need me.”", character: "Sakuta Azusagawa", anime: "Rascal Does Not Dream of Bunny Girl Senpai" },
-    { text: "“It's not that I want to be someone else. I just want to be me, but better.”", character: "Kyoko Hori", anime: "Horimiya" },
-    { text: "“You're stronger than you think. And one day... this city's gonna respect us.”", character: "Vi", anime: "Arcane" },
-    { text: "“I want to know what 'I love you' means.”", character: "Violet Evergarden", anime: "Violet Evergarden" },
-    { text: "“If you have time to think of a beautiful end, then live beautifully until the end.”", character: "Gintoki Sakata", anime: "Gintama" },
-    { text: "“A lesson without pain is meaningless.”", character: "Edward Elric", anime: "Fullmetal Alchemist: Brotherhood" },
-    { text: "“Whatever you lose, you'll find it again. But what you throw away you'll never get back.”", character: "Kenshin Himura", anime: "Rurouni Kenshin" },
-    { text: "“People’s lives don’t end when they die. It ends when they lose faith.”", character: "Itachi Uchiha", anime: "Naruto" },
-    { text: "“The only thing we're allowed to do is believe that we won't regret the choice we made.”", character: "Levi Ackerman", anime: "Attack on Titan" }
+    { text: "“It's not that I want to be someone else. I just want to be me, but better.”", character: "Kyoko Hori", anime: "Horimiya" }
   ];
 
   // Dynamically populate quotes from watched anime
@@ -172,7 +173,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateQuoteUI() {
     const q = quotes[currentQuoteIndex];
-    DOM.heroQuote.textContent = `${q.text} - ${q.character} (From: ${q.anime})`;
+    let displayText = q.text;
+    if (q.character) {
+      displayText += ` - ${q.character}`;
+    }
+    if (!q.hideAnime) {
+      displayText += ` (From: ${q.anime})`;
+    }
+    DOM.heroQuote.textContent = displayText;
   }
 
   updateQuoteUI(); // Set first quote immediately

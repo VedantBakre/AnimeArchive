@@ -161,6 +161,7 @@ for r in rows[1:]:
         "runtime": entry.get('Runtime'),
         "studio": entry.get('Studio'),
         "director": entry.get('Director'),
+        "description": entry.get('Description'),
         "genres": genres,
         "folderName": folder_name,
         "posters": posters,

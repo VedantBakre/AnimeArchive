@@ -81,6 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
     modalMetaDirector: document.getElementById('modal-meta-director'),
     modalGenresContainer: document.getElementById('modal-genres-container'),
     modalThoughtsText: document.getElementById('modal-thoughts-text'),
+    modalReadDescBtn: document.getElementById('modal-read-desc-btn'),
+    modalDescPanel: document.getElementById('modal-desc-panel'),
+    descCloseBtn: document.getElementById('desc-close-btn'),
+    modalDescText: document.getElementById('modal-desc-text'),
     
     // Settings Controls
     toggleDarkMode: document.getElementById('toggle-dark-mode'),
@@ -540,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeDetailModal() {
     DOM.detailModal.classList.remove('active');
+    DOM.modalDescPanel.classList.remove('open');
     DOM.body.style.overflow = '';
   }
 
@@ -568,6 +573,15 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.modalMetaRuntime.textContent = anime.runtime ? `${anime.runtime} mins` : '-';
     DOM.modalMetaStudio.textContent = anime.studio || '-';
     DOM.modalMetaDirector.textContent = anime.director || '-';
+
+    // Description
+    if (anime.description) {
+      DOM.modalDescText.textContent = anime.description;
+      DOM.modalReadDescBtn.classList.remove('hidden');
+    } else {
+      DOM.modalDescText.textContent = "No description available.";
+      DOM.modalReadDescBtn.classList.add('hidden');
+    }
 
     // Genres (Clickable chips)
     DOM.modalGenresContainer.innerHTML = '';
@@ -761,6 +775,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Bind detail popup events
   DOM.modalCloseBtn.addEventListener('click', closeDetailModal);
   DOM.modalBackdrop.addEventListener('click', closeDetailModal);
+  
+  DOM.modalReadDescBtn.addEventListener('click', () => {
+    DOM.modalDescPanel.classList.toggle('open');
+  });
+  DOM.descCloseBtn.addEventListener('click', () => {
+    DOM.modalDescPanel.classList.remove('open');
+  });
   DOM.posterPrevBtn.addEventListener('click', prevPoster);
   DOM.posterNextBtn.addEventListener('click', nextPoster);
   DOM.modalPrevBtn.addEventListener('click', prevAnimeEntry);

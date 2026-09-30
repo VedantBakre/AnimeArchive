@@ -11,20 +11,25 @@ Live Demo hosted on GitHub Pages: **[vedantbakre.github.io/AnimeArchive](https:/
 ## ✨ Features
 
 - **Cozy Design System:** CURATED Light & Dark modes utilizing warm beige, coffee, and amber accents.
-- **Dynamic Stats Board:** Shows live numbers for watched titles, movies, series, average ratings, total hours watched, and your top favorite genre.
+- **Dynamic Stats Board:** Shows live numbers for watched titles, movies, series, average ratings, total hours watched, and your top favorite genre. Includes a dynamic filter count indicator when searching.
 - **Handwritten Aesthetic:** Custom cursive script headings under posters resembling handwritten notebook entries.
+- **Quote Rotation System:** A parallax hero section that slowly cycles through iconic, memorable quotes from your watched anime library.
+- **Surprise Me Button:** A quick way to discover and re-visit a random entry from your active filters.
 - **Detail Popup Modal:** Backdrop-blurred overlay displaying metadata details, a slide viewer for alternate artwork/seasons, and a **"My Thoughts"** section for personal feedback notes.
+- **Description Panel:** A sleek, non-intrusive side-panel attached to the detail modal for reading longer anime synopses.
 - **Mini Audio Player:** A floating music player that features:
   - **Lofi Playlist:** A custom playlist of calming lo-fi tracks.
   - **Ambient Sounds Mixer:** Layerable background soundscapes (Rain, Ocean, Space) with independent volume sliders.
 - **Sakura Petals Engine:** A lightweight HTML5 Canvas rendering engine for falling cherry blossom petals that automatically pauses when you switch tabs to conserve computer performance.
 - **Atmosphere Mode (Full Immersion):** Smoothly transitions the interface out, filling the screen with looping backdrop videos (Gaming Room, Rainy Night, Space, Starlit Ocean) and turning the site into a calm screensaver.
+- **Mobile Support:** Fully responsive grid layout with touch/swipe navigation support on the detail modal.
 - **Automatic Settings Storage:** Saves your preferences (theme, lofi playback, petals active, volumes) in `localStorage` so they persist automatically on reload.
-- **Keyboard Shortcuts:**
+- **Keyboard Shortcuts:** (Press `?` or `Shift + /` anywhere to view)
   - `Space`: Play/Pause lofi music.
-  - `Escape`: Close detail popups or exit Atmosphere Mode.
+  - `Escape`: Close detail popups, shortcuts modal, or exit Atmosphere Mode.
   - `ArrowLeft` / `ArrowRight`: Navigate between previous/next anime entries inside the detail popup.
   - `,` / `.` (Comma / Period): Cycle through alternate posters within the current anime entry.
+  - `Ctrl` + `Alt` + `A` (or `Cmd` + `Opt` + `A`): Unlock Admin Mode.
 
 ---
 
@@ -102,7 +107,15 @@ pip install openpyxl
    python compile_data.py
    ```
 
-### 3. Adding New Lofi Music or Ambience
+### 3. Live Editing with Admin Mode (Two-Way Sync)
+If you want to edit your ratings or feedback without re-running the python compiler locally:
+1. On the live site, press `Ctrl + Alt + A` to open Admin Login.
+2. Enter your setup PIN and your GitHub Fine-Grained Personal Access Token (PAT).
+3. The detail modal will unlock an "Admin Edit" section.
+4. Make your changes and click "Save Changes & Commit". 
+5. The changes will be instantly applied visually and a commit will be automatically pushed to your GitHub repository updating `data.js`. The next time you run `compile_data.py`, it will securely preserve these live edits over the local excel data!
+
+### 4. Adding New Lofi Music or Ambience
 - Put music files (`.mp3` or `.m4a`) in `assets/music/lofi/` (lofi music playlist) or `assets/music/ambience/` (layerable atmosphere mixers).
 - Run the compiler:
    ```bash

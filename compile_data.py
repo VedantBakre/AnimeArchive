@@ -10,18 +10,52 @@ lofi_dir = 'assets/music/lofi'
 ambience_dir = 'assets/music/ambience'
 atmosphere_dir = 'assets/atmosphere'
 output_path = 'data.js'
+snapshot_path = 'assets/data/.last_compile_snapshot.json'
 
 print("[Info] Compiling project assets and excel sheets into data.js...")
 
-# --- Two-Way Sync: Load existing data.js to preserve Admin Mode edits ---
-# Admin Mode can edit myRating, status, and feedback directly on GitHub.
-# When recompiling from Excel, we preserve those fields if they were
-# changed via Admin Mode (i.e., differ from what Excel has).
-existing_admin_overrides = {}  # keyed by entry ID
+# ==========================================================================
+#  TRUE TWO-WAY SYNC ENGINE
+#  Uses a snapshot to detect which side (Excel or Admin) made the latest
+#  change. After compile, both data.js AND Excel are fully synchronized.
+#
+#  How it works:
+#    1. Load the SNAPSHOT (what Excel looked like at last compile)
+#    2. Load data.js (may contain Admin edits since last compile)
+#    3. Load current Excel (may contain user edits since last compile)
+#    4. For each synced field (myRating, status, feedback):
+#       - Excel changed from snapshot → Excel was edited → EXCEL WINS
+#       - Excel unchanged, data.js changed → Admin edited → ADMIN WINS
+#       - Both changed → EXCEL WINS (tiebreak: physical access = intent)
+#       - Neither changed → use Excel value (they're the same anyway)
+#    5. Write winning values to data.js AND back to Excel
+#    6. Save a fresh snapshot for next compile
+# ==========================================================================
+
+# --- Step 1: Load previous compile snapshot ---
+previous_snapshot = {}  # keyed by entry ID → {myRating, status, feedback}
+
+def load_snapshot():
+    """Load the snapshot of Excel values from the last compile."""
+    global previous_snapshot
+    if not os.path.exists(snapshot_path):
+        print("[Info] No compile snapshot found — first run with sync engine.")
+        return
+    try:
+        with open(snapshot_path, 'r', encoding='utf-8') as f:
+            previous_snapshot = json.load(f)
+        print(f"[Info] Loaded snapshot from last compile ({len(previous_snapshot)} entries).")
+    except Exception as e:
+        print(f"[Warning] Could not load snapshot: {e}")
+
+load_snapshot()
+
+# --- Step 2: Load existing data.js (may contain Admin edits) ---
+existing_data_js = {}  # keyed by entry ID → {myRating, status, feedback}
 
 def load_existing_data_js():
     """Parse the existing data.js and extract admin-editable fields per entry."""
-    global existing_admin_overrides
+    global existing_data_js
     
     if not os.path.exists(output_path):
         print("[Info] No existing data.js found — fresh compile.")
@@ -31,11 +65,9 @@ def load_existing_data_js():
         with open(output_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # Extract the animeList JSON array from the JS file
-        # Pattern: const animeList = [ ... ];
         match = re.search(r'const\s+animeList\s*=\s*(\[[\s\S]*?\]);', content)
         if not match:
-            print("[Warning] Could not parse existing data.js animeList — skipping two-way sync.")
+            print("[Warning] Could not parse existing data.js animeList — skipping sync.")
             return
         
         anime_json = match.group(1)
@@ -44,19 +76,26 @@ def load_existing_data_js():
         for entry in existing_entries:
             entry_id = entry.get('id')
             if entry_id is not None:
-                existing_admin_overrides[entry_id] = {
+                existing_data_js[entry_id] = {
                     'myRating': entry.get('myRating'),
                     'status': entry.get('status'),
                     'feedback': entry.get('feedback'),
                 }
         
-        print(f"[Info] Loaded {len(existing_admin_overrides)} existing entries for two-way sync.")
+        print(f"[Info] Loaded {len(existing_data_js)} entries from existing data.js.")
     except Exception as e:
-        print(f"[Warning] Failed to parse existing data.js for two-way sync: {e}")
+        print(f"[Warning] Failed to parse existing data.js: {e}")
 
 load_existing_data_js()
 
-# 1. Parse Anime Excel Sheet
+# --- Helper: normalize a value for comparison ---
+def norm(val):
+    """Normalize a value to a comparable string. None and '' both become ''."""
+    if val is None:
+        return ''
+    return str(val).strip()
+
+# --- Step 3: Parse Excel and apply sync logic ---
 if not os.path.exists(xlsx_path):
     print(f"[Error] Could not find {xlsx_path}!")
     exit(1)
@@ -67,8 +106,18 @@ rows = list(sheet.iter_rows(values_only=True))
 
 headers = [cell for cell in rows[0] if cell is not None]
 
+# Find column indices for fields we may need to write back to Excel
+HEADER_TO_COL = {}
+for i, h in enumerate(headers):
+    HEADER_TO_COL[h] = i + 1  # openpyxl uses 1-based column indices
+
+# Track which Excel cells need to be updated (row_number → {field: value})
+excel_writebacks = {}
+# Build fresh snapshot for this compile
+new_snapshot = {}
+
 anime_entries = []
-for r in rows[1:]:
+for row_idx, r in enumerate(rows[1:], start=2):  # row_idx = Excel row number
     if not r or r[0] is None:
         continue
     
@@ -122,44 +171,85 @@ for r in rows[1:]:
     feedback_from_excel = entry.get('Feedback')
     status_from_excel = entry.get('Status')
 
-    # --- Two-Way Sync Logic ---
-    # Excel is the authoritative source of truth. When Excel has meaningful
-    # data for a field, it always wins. Admin overrides from data.js are
-    # only used to FILL IN GAPS where Excel leaves a field empty/None.
-    # This prevents the old data.js values from silently overriding
-    # intentional Excel updates (e.g., changing status to "Watched").
-    if entry_id is not None and entry_id in existing_admin_overrides:
-        override = existing_admin_overrides[entry_id]
+    # --- Two-Way Sync: Snapshot-based "latest wins" logic ---
+    # Compare three sources: Excel (current), Snapshot (last compile), data.js (live)
+    entry_id_str = str(entry_id) if entry_id is not None else None
+    snap = previous_snapshot.get(entry_id_str, {}) if entry_id_str else {}
+    live = existing_data_js.get(entry_id, {}) if entry_id is not None else {}
+    
+    def resolve_field(field_name, excel_val, snap_key):
+        """
+        Resolve which value to use for a synced field.
+        Returns (winning_value, source_label) where source_label is for logging.
+        """
+        excel_norm = norm(excel_val)
+        snap_norm = norm(snap.get(snap_key))
+        live_norm = norm(live.get(snap_key))
         
-        # My Rating: only use admin value if Excel cell is empty
-        admin_rating = override.get('myRating')
-        excel_has_rating = my_rating is not None and str(my_rating).strip() != ''
-        if not excel_has_rating and admin_rating is not None and str(admin_rating).strip() != '':
-            print(f"  [Sync] '{entry.get('Name')}' — filling empty myRating from admin: '{admin_rating}'")
-            my_rating = admin_rating
+        excel_changed = excel_norm != snap_norm
+        admin_changed = live_norm != snap_norm
         
-        # Status: only use admin value if Excel cell is empty
-        admin_status = override.get('status')
-        excel_has_status = status_from_excel is not None and str(status_from_excel).strip() != ''
-        if not excel_has_status and admin_status is not None and str(admin_status).strip() != '':
-            print(f"  [Sync] '{entry.get('Name')}' — filling empty status from admin: '{admin_status}'")
-            status_from_excel = admin_status
-        
-        # Feedback: only use admin value if Excel cell is empty
-        admin_feedback = override.get('feedback')
-        excel_has_feedback = feedback_from_excel is not None and str(feedback_from_excel).strip() != ''
-        if not excel_has_feedback and admin_feedback is not None and str(admin_feedback).strip() != '':
-            print(f"  [Sync] '{entry.get('Name')}' — filling empty feedback from admin: '{admin_feedback}'")
-            feedback_from_excel = admin_feedback
+        if excel_changed:
+            # Excel was edited since last compile — Excel wins (even if admin also changed)
+            if admin_changed and excel_norm != live_norm:
+                return excel_val, 'excel-wins-over-admin'
+            return excel_val, 'excel'
+        elif admin_changed and live_norm != '':
+            # Excel unchanged, but admin edited on live site — Admin wins
+            return live.get(snap_key), 'admin'
+        else:
+            # Neither changed, or both are the same — use Excel
+            return excel_val, 'unchanged'
+
+    # Resolve each synced field
+    final_rating, rating_source = resolve_field('My Rating', my_rating, 'myRating')
+    final_status, status_source = resolve_field('Status', status_from_excel, 'status')
+    final_feedback, feedback_source = resolve_field('Feedback', feedback_from_excel, 'feedback')
+
+    # Log any sync decisions
+    name = entry.get('Name')
+    if rating_source == 'admin':
+        print(f"  [Sync] '{name}' — using admin myRating: '{norm(final_rating)}' (Excel unchanged)")
+    elif rating_source == 'excel-wins-over-admin':
+        print(f"  [Sync] '{name}' — Excel myRating wins: '{norm(final_rating)}' (admin had: '{norm(live.get('myRating'))}')")
+    
+    if status_source == 'admin':
+        print(f"  [Sync] '{name}' — using admin status: '{norm(final_status)}' (Excel unchanged)")
+    elif status_source == 'excel-wins-over-admin':
+        print(f"  [Sync] '{name}' — Excel status wins: '{norm(final_status)}' (admin had: '{norm(live.get('status'))}')")
+    
+    if feedback_source == 'admin':
+        print(f"  [Sync] '{name}' — using admin feedback: '{norm(final_feedback)[:50]}...' (Excel unchanged)")
+    elif feedback_source == 'excel-wins-over-admin':
+        print(f"  [Sync] '{name}' — Excel feedback wins (admin had different)")
+
+    # Track cells that need to be written back to Excel (admin wins → update Excel)
+    writeback = {}
+    if rating_source == 'admin' and norm(final_rating) != norm(my_rating):
+        writeback['My Rating'] = final_rating
+    if status_source == 'admin' and norm(final_status) != norm(status_from_excel):
+        writeback['Status'] = final_status
+    if feedback_source == 'admin' and norm(final_feedback) != norm(feedback_from_excel):
+        writeback['Feedback'] = final_feedback
+    if writeback:
+        excel_writebacks[row_idx] = writeback
+
+    # Save snapshot of the FINAL resolved values (what will be in data.js)
+    if entry_id_str:
+        new_snapshot[entry_id_str] = {
+            'myRating': norm(final_rating) if final_rating else None,
+            'status': norm(final_status) if final_status else None,
+            'feedback': norm(final_feedback) if final_feedback else None,
+        }
 
     anime_entries.append({
         "id": entry_id,
-        "name": entry.get('Name'),
+        "name": name,
         "japaneseName": jp_name,
         "type": entry.get('Type'),
         "rating": entry.get('Rating'),
-        "myRating": my_rating,
-        "feedback": feedback_from_excel,
+        "myRating": final_rating,
+        "feedback": final_feedback,
         "seasons": entry.get('Seasons') if entry.get('Seasons') is not None else entry.get('No. of Seasons'),
         "episodes": entry.get('Episodes') if entry.get('Episodes') is not None else entry.get('Avg No. of Episodes'),
         "year": entry.get('Year') if entry.get('Year') is not None else entry.get('Released Year'),
@@ -170,9 +260,30 @@ for r in rows[1:]:
         "genres": genres,
         "folderName": folder_name,
         "posters": posters,
-        "status": status_from_excel,
+        "status": final_status,
         "fav": fav
     })
+
+# --- Step 4: Write admin changes back to Excel ---
+if excel_writebacks:
+    print(f"\n[Sync] Writing {len(excel_writebacks)} admin edit(s) back to Excel...")
+    for row_num, fields in excel_writebacks.items():
+        for field_name, value in fields.items():
+            col = HEADER_TO_COL.get(field_name)
+            if col:
+                sheet.cell(row=row_num, column=col, value=value)
+                anime_name = sheet.cell(row=row_num, column=HEADER_TO_COL.get('Name', 2)).value
+                print(f"  [Excel←Admin] Row {row_num} '{anime_name}': {field_name} = '{value}'")
+    wb.save(xlsx_path)
+    print(f"[Sync] Excel file updated and saved.")
+else:
+    print("[Sync] Excel is already up to date — no writeback needed.")
+
+# --- Step 5: Save fresh snapshot ---
+os.makedirs(os.path.dirname(snapshot_path), exist_ok=True)
+with open(snapshot_path, 'w', encoding='utf-8') as f:
+    json.dump(new_snapshot, f, indent=2, ensure_ascii=False)
+print(f"[Info] Saved compile snapshot ({len(new_snapshot)} entries).")
 
 # 2. Parse Lofi Audio Tracks
 lofi_tracks = []
@@ -252,4 +363,4 @@ const atmospheres = {json.dumps(atmospheres, indent=2, ensure_ascii=False)};
 with open(output_path, 'w', encoding='utf-8') as f:
     f.write(data_js_content)
 
-print(f"[Success] Compile complete! Generated {len(anime_entries)} anime entries, {len(lofi_tracks)} lofi tracks, {len(ambience_tracks)} ambient sounds, and {len(atmospheres)} atmospheres.")
+print(f"\n[Success] Compile complete! Generated {len(anime_entries)} anime entries, {len(lofi_tracks)} lofi tracks, {len(ambience_tracks)} ambient sounds, and {len(atmospheres)} atmospheres.")

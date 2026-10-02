@@ -8,3 +8,6 @@ Thumbs.db
 # Development files
 node_modules/
 test.js
+
+# Compile sync snapshot (local state, not project data)
+assets/data/.last_compile_snapshot.json

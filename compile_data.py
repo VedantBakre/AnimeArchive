@@ -123,28 +123,33 @@ for r in rows[1:]:
     status_from_excel = entry.get('Status')
 
     # --- Two-Way Sync Logic ---
-    # For myRating, status, and feedback: if the existing data.js has a
-    # different value than Excel, prefer the data.js value (admin edits).
-    # If data.js matches Excel or doesn't exist, use Excel's value.
+    # Excel is the authoritative source of truth. When Excel has meaningful
+    # data for a field, it always wins. Admin overrides from data.js are
+    # only used to FILL IN GAPS where Excel leaves a field empty/None.
+    # This prevents the old data.js values from silently overriding
+    # intentional Excel updates (e.g., changing status to "Watched").
     if entry_id is not None and entry_id in existing_admin_overrides:
         override = existing_admin_overrides[entry_id]
         
-        # My Rating: prefer admin override if it exists and differs
+        # My Rating: only use admin value if Excel cell is empty
         admin_rating = override.get('myRating')
-        if admin_rating is not None and admin_rating != '' and admin_rating != my_rating:
-            print(f"  [Sync] '{entry.get('Name')}' — keeping admin myRating: '{admin_rating}' (Excel has: '{my_rating}')")
+        excel_has_rating = my_rating is not None and str(my_rating).strip() != ''
+        if not excel_has_rating and admin_rating is not None and str(admin_rating).strip() != '':
+            print(f"  [Sync] '{entry.get('Name')}' — filling empty myRating from admin: '{admin_rating}'")
             my_rating = admin_rating
         
-        # Status: prefer admin override if it differs
+        # Status: only use admin value if Excel cell is empty
         admin_status = override.get('status')
-        if admin_status is not None and admin_status != '' and admin_status != status_from_excel:
-            print(f"  [Sync] '{entry.get('Name')}' — keeping admin status: '{admin_status}' (Excel has: '{status_from_excel}')")
+        excel_has_status = status_from_excel is not None and str(status_from_excel).strip() != ''
+        if not excel_has_status and admin_status is not None and str(admin_status).strip() != '':
+            print(f"  [Sync] '{entry.get('Name')}' — filling empty status from admin: '{admin_status}'")
             status_from_excel = admin_status
         
-        # Feedback: prefer admin override if it differs
+        # Feedback: only use admin value if Excel cell is empty
         admin_feedback = override.get('feedback')
-        if admin_feedback is not None and admin_feedback != '' and admin_feedback != feedback_from_excel:
-            print(f"  [Sync] '{entry.get('Name')}' — keeping admin feedback: '{admin_feedback}' (Excel has: '{feedback_from_excel}')")
+        excel_has_feedback = feedback_from_excel is not None and str(feedback_from_excel).strip() != ''
+        if not excel_has_feedback and admin_feedback is not None and str(admin_feedback).strip() != '':
+            print(f"  [Sync] '{entry.get('Name')}' — filling empty feedback from admin: '{admin_feedback}'")
             feedback_from_excel = admin_feedback
 
     anime_entries.append({

@@ -1343,7 +1343,7 @@ const animeList = [
     "japaneseName": "時々ボソッとロシア語でデレる隣のアーnyaさん (Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san)",
     "type": "Series",
     "rating": 7.62,
-    "myRating": "N/A",
+    "myRating": "8/10",
     "feedback": null,
     "seasons": 2,
     "episodes": 12,
@@ -1360,7 +1360,7 @@ const animeList = [
     "posters": [
       "assets/posters/alya-sometimes-hides-her-feelings-in-russian/1.webp"
     ],
-    "status": "Pending",
+    "status": "Watched",
     "fav": false
   },
   {

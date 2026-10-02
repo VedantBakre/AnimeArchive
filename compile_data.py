@@ -265,6 +265,8 @@ for row_idx, r in enumerate(rows[1:], start=2):  # row_idx = Excel row number
     })
 
 # --- Step 4: Write admin changes back to Excel ---
+excel_modified = False
+
 if excel_writebacks:
     print(f"\n[Sync] Writing {len(excel_writebacks)} admin edit(s) back to Excel...")
     for row_num, fields in excel_writebacks.items():
@@ -274,10 +276,117 @@ if excel_writebacks:
                 sheet.cell(row=row_num, column=col, value=value)
                 anime_name = sheet.cell(row=row_num, column=HEADER_TO_COL.get('Name', 2)).value
                 print(f"  [Excel←Admin] Row {row_num} '{anime_name}': {field_name} = '{value}'")
-    wb.save(xlsx_path)
-    print(f"[Sync] Excel file updated and saved.")
+    excel_modified = True
 else:
-    print("[Sync] Excel is already up to date — no writeback needed.")
+    print("[Sync] No field-level writebacks needed.")
+
+# --- Step 4b: Rescue orphan entries (in data.js but NOT in Excel) ---
+# When an agent or admin adds entries directly to data.js, they won't exist
+# in Excel. We detect these orphans and add them as new rows so they survive
+# future compiles and Excel stays the complete source of truth.
+excel_ids = {e['id'] for e in anime_entries}
+
+# Full data.js entries (not just the sync fields — we need all metadata)
+orphan_entries_from_js = []
+if existing_data_js:
+    # Re-parse data.js for full entry data (not just the 3 sync fields)
+    try:
+        with open(output_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        match = re.search(r'const\s+animeList\s*=\s*(\[[\s\S]*?\]);', content)
+        if match:
+            all_js_entries = json.loads(match.group(1))
+            for js_entry in all_js_entries:
+                if js_entry.get('id') is not None and js_entry['id'] not in excel_ids:
+                    orphan_entries_from_js.append(js_entry)
+    except Exception as e:
+        print(f"[Warning] Could not scan data.js for orphan entries: {e}")
+
+if orphan_entries_from_js:
+    print(f"\n[Rescue] Found {len(orphan_entries_from_js)} entries in data.js that are NOT in Excel!")
+    
+    # Map from data.js field names → Excel header names
+    JS_TO_EXCEL = {
+        'id': 'ID', 'name': 'Name', 'japaneseName': 'Japanese Name',
+        'type': 'Type', 'rating': 'Rating', 'myRating': 'My Rating',
+        'feedback': 'Feedback', 'seasons': 'Seasons', 'episodes': 'Episodes',
+        'year': 'Year', 'runtime': 'Runtime', 'studio': 'Studio',
+        'director': 'Director', 'folderName': 'Folder Name',
+        'status': 'Status', 'description': 'Description',
+    }
+    
+    for orphan in orphan_entries_from_js:
+        next_row = sheet.max_row + 1
+        name = orphan.get('name', '???')
+        
+        # Write each field to the correct Excel column
+        for js_key, excel_header in JS_TO_EXCEL.items():
+            col = HEADER_TO_COL.get(excel_header)
+            if col and js_key in orphan:
+                sheet.cell(row=next_row, column=col, value=orphan[js_key])
+        
+        # Handle special fields
+        # Genre: join list back to comma-separated string
+        genres = orphan.get('genres', [])
+        genre_col = HEADER_TO_COL.get('Genre')
+        if genre_col and genres:
+            sheet.cell(row=next_row, column=genre_col, value=', '.join(genres))
+        
+        # Fav: convert boolean back to "Yes"/"No"
+        fav_col = HEADER_TO_COL.get('Fav')
+        if fav_col:
+            sheet.cell(row=next_row, column=fav_col, value='Yes' if orphan.get('fav') else None)
+        
+        print(f"  [Excel←Rescue] Row {next_row}: Added '{name}' (ID {orphan.get('id')})")
+        
+        # Also add to anime_entries so data.js includes it
+        # Re-scan posters for this entry (they may exist on disk)
+        folder_name = orphan.get('folderName', '')
+        posters = []
+        if folder_name:
+            folder_path = os.path.join(posters_dir, folder_name)
+            if os.path.exists(folder_path):
+                poster_files = sorted(os.listdir(folder_path))
+                for pf in poster_files:
+                    pf_full = os.path.join(folder_path, pf)
+                    if os.path.isfile(pf_full) and pf.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif')):
+                        posters.append(f"assets/posters/{folder_name}/{pf}")
+        
+        anime_entries.append({
+            "id": orphan.get('id'),
+            "name": name,
+            "japaneseName": orphan.get('japaneseName'),
+            "type": orphan.get('type'),
+            "rating": orphan.get('rating'),
+            "myRating": orphan.get('myRating'),
+            "feedback": orphan.get('feedback'),
+            "seasons": orphan.get('seasons'),
+            "episodes": orphan.get('episodes'),
+            "year": orphan.get('year'),
+            "runtime": orphan.get('runtime'),
+            "studio": orphan.get('studio'),
+            "director": orphan.get('director'),
+            "description": orphan.get('description'),
+            "genres": genres,
+            "folderName": folder_name,
+            "posters": posters if posters else orphan.get('posters', []),
+            "status": orphan.get('status'),
+            "fav": orphan.get('fav', False)
+        })
+        
+        # Add to snapshot
+        entry_id_str = str(orphan.get('id'))
+        new_snapshot[entry_id_str] = {
+            'myRating': norm(orphan.get('myRating')),
+            'status': norm(orphan.get('status')),
+            'feedback': norm(orphan.get('feedback')),
+        }
+    
+    excel_modified = True
+
+if excel_modified:
+    wb.save(xlsx_path)
+    print(f"[Sync] Excel file saved.")
 
 # --- Step 5: Save fresh snapshot ---
 os.makedirs(os.path.dirname(snapshot_path), exist_ok=True)

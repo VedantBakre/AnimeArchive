@@ -284,10 +284,15 @@ else:
 # When an agent or admin adds entries directly to data.js, they won't exist
 # in Excel. We detect these orphans and add them as new rows so they survive
 # future compiles and Excel stays the complete source of truth.
+#
+# IMPORTANT: If an entry IS in the snapshot (existed in Excel last compile)
+# but is now gone from Excel, the user deliberately deleted it — DON'T rescue.
+# Only rescue entries that are NOT in the snapshot (truly new additions).
 excel_ids = {e['id'] for e in anime_entries}
 
 # Full data.js entries (not just the sync fields — we need all metadata)
 orphan_entries_from_js = []
+deleted_entries = []
 if existing_data_js:
     # Re-parse data.js for full entry data (not just the 3 sync fields)
     try:
@@ -297,10 +302,23 @@ if existing_data_js:
         if match:
             all_js_entries = json.loads(match.group(1))
             for js_entry in all_js_entries:
-                if js_entry.get('id') is not None and js_entry['id'] not in excel_ids:
-                    orphan_entries_from_js.append(js_entry)
+                entry_id = js_entry.get('id')
+                if entry_id is not None and entry_id not in excel_ids:
+                    entry_id_str = str(entry_id)
+                    if entry_id_str in previous_snapshot:
+                        # Was in Excel last time, now removed → user deleted it
+                        deleted_entries.append(js_entry)
+                    else:
+                        # Never was in Excel → truly new (agent/admin added)
+                        orphan_entries_from_js.append(js_entry)
     except Exception as e:
         print(f"[Warning] Could not scan data.js for orphan entries: {e}")
+
+if deleted_entries:
+    print(f"\n[Sync] {len(deleted_entries)} entries were removed from Excel — respecting deletion:")
+    for d in deleted_entries:
+        print(f"  [Deleted] ID {d.get('id')}: '{d.get('name')}'")
+
 
 if orphan_entries_from_js:
     print(f"\n[Rescue] Found {len(orphan_entries_from_js)} entries in data.js that are NOT in Excel!")

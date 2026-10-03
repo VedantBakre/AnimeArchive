@@ -2873,10 +2873,6 @@ const lofiPlaylist = [
     "file": "assets/music/lofi/lofi-rain.m4a"
   },
   {
-    "title": "Lofi Waves",
-    "file": "assets/music/lofi/lofi-waves.m4a"
-  },
-  {
     "title": "Under The Bridge",
     "file": "assets/music/lofi/under-the-bridge.m4a"
   }

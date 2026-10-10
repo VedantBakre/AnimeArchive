@@ -139,33 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
     backToTopBtn: document.getElementById('back-to-top-btn'),
     shortcutsModal: document.getElementById('shortcuts-modal'),
     shortcutsBackdrop: document.getElementById('shortcuts-backdrop'),
-    shortcutsCloseBtn: document.getElementById('shortcuts-close-btn')
+    shortcutsCloseBtn: document.getElementById('shortcuts-close-btn'),
+    quoteSelect: document.getElementById('quote-select')
   };
 
-  // Anime Quotes Database
-  const allQuotes = [
-    { text: "“Kimi no Na wa...?”", character: "", anime: "Your Name" },
-    { text: "“I want to eat your pancreas.”", character: "Haruki Shiga", anime: "I Want To Eat Your Pancreas", hideAnime: true },
-    { text: "“Set your heart ablaze. Go beyond your limits!”", character: "Kyojuro Rengoku", anime: "Demon Slayer" },
-    { text: "“No matter how many people you may lose, you have no choice but to go on living. No matter how devastating the blows may be.”", character: "Tanjiro Kamado", anime: "Demon Slayer" },
-    { text: "“Spring will be here soon. Spring, the season I met you, is coming. A spring without you is coming.”", character: "Kousei Arima", anime: "Your Lie in April" },
-    { text: "“I told one single lie... I said that Kaori Miyazono liked Ryota Watari.”", character: "Kaori Miyazono", anime: "Your Lie in April" },
-    { text: "“Hey... they say it's five centimeters per second. The speed at which cherry blossom petals fall.”", character: "Akari Shinohara", anime: "5cm Per Second" },
-    { text: "“When you love something, you shouldn't care about what anyone else says! Loving something with all your heart is awesome!”", character: "Marin Kitagawa", anime: "My Dress Up Darling" },
-    { text: "“Forgive me... wish we could go to the moon together.”", character: "David Martinez", anime: "Cyberpunk: Edgerunners" },
-    { text: "“You never had to save me. All I ever wanted was for you to live!”", character: "Lucy", anime: "Cyberpunk: Edgerunners" },
-    { text: "“We've all had bad days. But we keep going. We have to.”", character: "Vi", anime: "Arcane" },
-    { text: "“Wherever you are in the world, I'll search for you.”", character: "Taki Tachibana", anime: "Your Name" },
-    { text: "“Things would have been so much better back then... If we had heard each other's voices.”", character: "Shoya Ishida", anime: "A Silent Voice" },
-    { text: "“I'm going to find my tomorrow.”", character: "Suzume Iwato", anime: "Suzume" },
-    { text: "“Who cares if we don't see the sunshine ever again? I want you more than any blue sky.”", character: "Hodaka Morishima", anime: "Weathering With You" },
-    { text: "“It's not about being liked by everyone. I just need one person to need me.”", character: "Sakuta Azusagawa", anime: "Rascal Does Not Dream of Bunny Girl Senpai" },
-    { text: "“It's not that I want to be someone else. I just want to be me, but better.”", character: "Kyoko Hori", anime: "Horimiya" },
-    { text: "“I will love every you and all your possibilities.”", character: "Koyomi Takasaki", anime: "To Every You I've Loved Before" },
-    { text: "“Even if there were 100 worlds, and 100 parallel lives... I would still choose you.”", character: "Koyomi Takasaki", anime: "To Every You I've Loved Before" }
-  ];
-
   // Dynamically populate quotes from watched anime
+
   const watchedAnimeNames = new Set(animeList.filter(a => (a.status || '').toLowerCase() === 'watched').map(a => a.name));
   let quotes = allQuotes.filter(q => watchedAnimeNames.has(q.anime));
   
@@ -177,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let currentQuoteIndex = 0;
+  let quoteRotationInterval = null;
 
   function updateQuoteUI() {
     const q = quotes[currentQuoteIndex];
@@ -190,16 +170,68 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.heroQuote.textContent = displayText;
   }
 
-  updateQuoteUI(); // Set first quote immediately
+  function startQuoteRotation() {
+    stopQuoteRotation();
+    quoteRotationInterval = setInterval(() => {
+      currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+      DOM.heroQuote.style.opacity = 0;
+      setTimeout(() => {
+        updateQuoteUI();
+        DOM.heroQuote.style.opacity = 1;
+      }, 500);
+    }, 8000);
+  }
 
-  setInterval(() => {
-    currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-    DOM.heroQuote.style.opacity = 0;
-    setTimeout(() => {
+  function stopQuoteRotation() {
+    if (quoteRotationInterval) {
+      clearInterval(quoteRotationInterval);
+      quoteRotationInterval = null;
+    }
+  }
+
+  // Populate Select Quote Dropdown
+  if (DOM.quoteSelect) {
+    quotes.forEach((q, index) => {
+      const option = document.createElement('option');
+      option.value = index;
+      let shortText = q.text.substring(0, 30) + (q.text.length > 30 ? '...' : '');
+      option.textContent = `${q.anime}: ${shortText}`;
+      DOM.quoteSelect.appendChild(option);
+    });
+
+    const savedQuote = localStorage.getItem('selectedQuoteIndex');
+    if (savedQuote && savedQuote !== 'slideshow' && quotes[savedQuote]) {
+      DOM.quoteSelect.value = savedQuote;
+      currentQuoteIndex = parseInt(savedQuote, 10);
       updateQuoteUI();
-      DOM.heroQuote.style.opacity = 1;
-    }, 500);
-  }, 8000);
+      // Do not start rotation
+    } else {
+      DOM.quoteSelect.value = 'slideshow';
+      updateQuoteUI(); // Set first quote immediately
+      startQuoteRotation();
+    }
+
+    DOM.quoteSelect.addEventListener('change', (e) => {
+      const val = e.target.value;
+      localStorage.setItem('selectedQuoteIndex', val);
+      if (val === 'slideshow') {
+        startQuoteRotation();
+      } else {
+        stopQuoteRotation();
+        currentQuoteIndex = parseInt(val, 10);
+        DOM.heroQuote.style.opacity = 0;
+        setTimeout(() => {
+          updateQuoteUI();
+          DOM.heroQuote.style.opacity = 1;
+        }, 300);
+      }
+    });
+  } else {
+    // Fallback if UI doesn't have it
+    updateQuoteUI();
+    startQuoteRotation();
+  }
+  
   DOM.heroQuote.style.transition = 'opacity 0.5s ease';
 
   // --- 3. Live Clock Integration ---

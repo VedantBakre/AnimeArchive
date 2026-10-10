@@ -1,4 +1,121 @@
 // Auto-generated data file from anime.xlsx and asset directories
+const allQuotes = [
+  {
+    "id": 1,
+    "text": "Kimi no Na wa...?",
+    "character": null,
+    "anime": "Your Name"
+  },
+  {
+    "id": 2,
+    "text": "I want to eat your pancreas.",
+    "character": "Haruki Shiga",
+    "anime": "I Want To Eat Your Pancreas"
+  },
+  {
+    "id": 3,
+    "text": "Set your heart ablaze. Go beyond your limits!",
+    "character": "Kyojuro Rengoku",
+    "anime": "Demon Slayer"
+  },
+  {
+    "id": 4,
+    "text": "No matter how many people you may lose, you have no choice but to go on living. No matter how devastating the blows may be.",
+    "character": "Tanjiro Kamado",
+    "anime": "Demon Slayer"
+  },
+  {
+    "id": 5,
+    "text": "Spring will be here soon. Spring, the season I met you, is coming. A spring without you is coming.",
+    "character": "Kousei Arima",
+    "anime": "Your Lie in April"
+  },
+  {
+    "id": 6,
+    "text": "I told one single lie... I said that Kaori Miyazono liked Ryota Watari.",
+    "character": "Kaori Miyazono",
+    "anime": "Your Lie in April"
+  },
+  {
+    "id": 7,
+    "text": "Hey... they say it's five centimeters per second. The speed at which cherry blossom petals fall.",
+    "character": "Akari Shinohara",
+    "anime": "5cm Per Second"
+  },
+  {
+    "id": 8,
+    "text": "When you love something, you shouldn't care about what anyone else says! Loving something with all your heart is awesome!",
+    "character": "Marin Kitagawa",
+    "anime": "My Dress Up Darling"
+  },
+  {
+    "id": 9,
+    "text": "Forgive me... wish we could go to the moon together.",
+    "character": "David Martinez",
+    "anime": "Cyberpunk: Edgerunners"
+  },
+  {
+    "id": 10,
+    "text": "You never had to save me. All I ever wanted was for you to live!",
+    "character": "Lucy",
+    "anime": "Cyberpunk: Edgerunners"
+  },
+  {
+    "id": 11,
+    "text": "We've all had bad days. But we keep going. We have to.",
+    "character": "Vi",
+    "anime": "Arcane"
+  },
+  {
+    "id": 12,
+    "text": "Wherever you are in the world, I'll search for you.",
+    "character": "Taki Tachibana",
+    "anime": "Your Name"
+  },
+  {
+    "id": 13,
+    "text": "Things would have been so much better back then... If we had heard each other's voices.",
+    "character": "Shoya Ishida",
+    "anime": "A Silent Voice"
+  },
+  {
+    "id": 14,
+    "text": "I'm going to find my tomorrow.",
+    "character": "Suzume Iwato",
+    "anime": "Suzume"
+  },
+  {
+    "id": 15,
+    "text": "Who cares if we don't see the sunshine ever again? I want you more than any blue sky.",
+    "character": "Hodaka Morishima",
+    "anime": "Weathering With You"
+  },
+  {
+    "id": 16,
+    "text": "It's not about being liked by everyone. I just need one person to need me.",
+    "character": "Sakuta Azusagawa",
+    "anime": "Rascal Does Not Dream of Bunny Girl Senpai"
+  },
+  {
+    "id": 17,
+    "text": "It's not that I want to be someone else. I just want to be me, but better.",
+    "character": "Kyoko Hori",
+    "anime": "Horimiya"
+  },
+  {
+    "id": 18,
+    "text": "I will love every you and all your possibilities.",
+    "character": "Koyomi Takasaki",
+    "anime": "To Every You I've Loved Before"
+  },
+  {
+    "id": 19,
+    "text": "Even if there were 100 worlds, and 100 parallel lives... I would still choose you.",
+    "character": "Koyomi Takasaki",
+    "anime": "To Every You I've Loved Before"
+  }
+];
+
 const animeList = [
   {
     "id": 1,

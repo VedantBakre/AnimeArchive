@@ -476,8 +476,90 @@ if os.path.exists(atmosphere_dir):
                 "themeColor": theme_color
             })
 
+# ==========================================================================
+#  QUOTES TWO-WAY SYNC ENGINE
+# ==========================================================================
+quotes_snapshot_path = 'assets/data/.quotes_snapshot.json'
+quotes_snapshot = {}
+if os.path.exists(quotes_snapshot_path):
+    try:
+        with open(quotes_snapshot_path, 'r', encoding='utf-8') as f:
+            quotes_snapshot = json.load(f)
+    except: pass
+
+existing_quotes = []
+if os.path.exists(output_path):
+    try:
+        with open(output_path, 'r', encoding='utf-8') as f:
+            js_data = f.read()
+            match = re.search(r'const\s+allQuotes\s*=\s*(\[[\s\S]*?\]);', js_data)
+            if match:
+                existing_quotes = json.loads(match.group(1))
+    except: pass
+
+q_sheet = wb['Quotes'] if 'Quotes' in wb.sheetnames else None
+allQuotes = []
+excel_quote_ids = set()
+
+if q_sheet:
+    q_rows = list(q_sheet.iter_rows(values_only=True))
+    if len(q_rows) > 1:
+        q_headers = [c for c in q_rows[0] if c is not None]
+        Q_HEADER_TO_COL = {h: i + 1 for i, h in enumerate(q_headers)}
+        
+        for q_row in q_rows[1:]:
+            if not q_row or q_row[0] is None: continue
+            q_id = q_row[0]
+            excel_quote_ids.add(q_id)
+            
+            # For now, admin doesn't edit quotes, so we just take Excel values
+            q_text = q_row[Q_HEADER_TO_COL.get('Quote', 2) - 1]
+            q_char = q_row[Q_HEADER_TO_COL.get('Character', 3) - 1]
+            q_anime = q_row[Q_HEADER_TO_COL.get('Anime', 4) - 1]
+            
+            allQuotes.append({
+                "id": q_id,
+                "text": q_text,
+                "character": q_char,
+                "anime": q_anime
+            })
+
+# Rescue orphan quotes (added by agent/JS directly)
+deleted_quotes = []
+orphan_quotes = []
+for js_q in existing_quotes:
+    js_id = js_q.get('id')
+    if js_id is not None and js_id not in excel_quote_ids:
+        if str(js_id) in quotes_snapshot:
+            deleted_quotes.append(js_q)
+        else:
+            orphan_quotes.append(js_q)
+
+q_excel_modified = False
+if orphan_quotes and q_sheet:
+    print(f"\n[Rescue] Found {len(orphan_quotes)} orphan quotes in data.js!")
+    for orphan in orphan_quotes:
+        next_row = q_sheet.max_row + 1
+        q_sheet.cell(row=next_row, column=1, value=orphan.get('id'))
+        q_sheet.cell(row=next_row, column=2, value=orphan.get('text'))
+        q_sheet.cell(row=next_row, column=3, value=orphan.get('character'))
+        q_sheet.cell(row=next_row, column=4, value=orphan.get('anime'))
+        allQuotes.append(orphan)
+        print(f"  [Excel←Rescue] Added Quote ID {orphan.get('id')} to Excel.")
+    q_excel_modified = True
+
+if q_excel_modified:
+    wb.save(xlsx_path)
+    print("[Sync] Excel Quotes saved.")
+
+new_quotes_snapshot = {str(q['id']): True for q in allQuotes}
+with open(quotes_snapshot_path, 'w', encoding='utf-8') as f:
+    json.dump(new_quotes_snapshot, f, indent=2, ensure_ascii=False)
+
 # Write to data.js
 data_js_content = f"""// Auto-generated data file from anime.xlsx and asset directories
+const allQuotes = {json.dumps(allQuotes, indent=2, ensure_ascii=False)};
+
 const animeList = {json.dumps(anime_entries, indent=2, ensure_ascii=False)};
 
 const lofiPlaylist = {json.dumps(lofi_tracks, indent=2, ensure_ascii=False)};
@@ -490,4 +572,4 @@ const atmospheres = {json.dumps(atmospheres, indent=2, ensure_ascii=False)};
 with open(output_path, 'w', encoding='utf-8') as f:
     f.write(data_js_content)
 
-print(f"\n[Success] Compile complete! Generated {len(anime_entries)} anime entries, {len(lofi_tracks)} lofi tracks, {len(ambience_tracks)} ambient sounds, and {len(atmospheres)} atmospheres.")
+print(f"\n[Success] Compile complete! Generated {len(anime_entries)} anime entries, {len(lofi_tracks)} lofi tracks, {len(ambience_tracks)} ambient sounds, {len(atmospheres)} atmospheres, and {len(allQuotes)} quotes.")

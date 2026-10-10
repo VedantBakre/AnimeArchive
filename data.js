@@ -457,8 +457,8 @@ const animeList = [
     "japaneseName": "僕が愛したすべての君へ (Boku ga Aishita Subete no Kimi e)",
     "type": "Movie",
     "rating": 7.1,
-    "myRating": "N/A",
-    "feedback": "Parallel Worlds Sci-Fi",
+    "myRating": "10/10",
+    "feedback": null,
     "seasons": 1,
     "episodes": 1,
     "year": 2022,
@@ -474,7 +474,7 @@ const animeList = [
     "posters": [
       "assets/posters/to-every-you-ive-loved-before/1.webp"
     ],
-    "status": "Pending",
+    "status": "Watched",
     "fav": false
   },
   {
@@ -484,7 +484,7 @@ const animeList = [
     "type": "Movie",
     "rating": 7.25,
     "myRating": "N/A",
-    "feedback": "Interconnected Story",
+    "feedback": null,
     "seasons": 1,
     "episodes": 1,
     "year": 2022,

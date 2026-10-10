@@ -160,7 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
     { text: "“I'm going to find my tomorrow.”", character: "Suzume Iwato", anime: "Suzume" },
     { text: "“Who cares if we don't see the sunshine ever again? I want you more than any blue sky.”", character: "Hodaka Morishima", anime: "Weathering With You" },
     { text: "“It's not about being liked by everyone. I just need one person to need me.”", character: "Sakuta Azusagawa", anime: "Rascal Does Not Dream of Bunny Girl Senpai" },
-    { text: "“It's not that I want to be someone else. I just want to be me, but better.”", character: "Kyoko Hori", anime: "Horimiya" }
+    { text: "“It's not that I want to be someone else. I just want to be me, but better.”", character: "Kyoko Hori", anime: "Horimiya" },
+    { text: "“I will love every you and all your possibilities.”", character: "Koyomi Takasaki", anime: "To Every You I've Loved Before" },
+    { text: "“Even if there were 100 worlds, and 100 parallel lives... I would still choose you.”", character: "Koyomi Takasaki", anime: "To Every You I've Loved Before" }
   ];
 
   // Dynamically populate quotes from watched anime

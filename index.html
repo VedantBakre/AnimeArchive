@@ -433,6 +433,24 @@
         <input type="range" id="volume-sounds" min="0" max="1" step="0.05" value="0.5" class="volume-slider">
       </div>
     </div>
+
+    <div class="settings-group">
+      <h4>Navigation & Shortcuts</h4>
+      <div class="setting-row">
+        <span>Keyboard Hotkeys</span>
+        <button id="open-shortcuts-btn" class="settings-shortcuts-btn" type="button" aria-label="Open Keyboard Shortcuts Modal">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+            <line x1="6" y1="8" x2="6.01" y2="8" stroke-width="2.5"></line>
+            <line x1="10" y1="8" x2="10.01" y2="8" stroke-width="2.5"></line>
+            <line x1="14" y1="8" x2="14.01" y2="8" stroke-width="2.5"></line>
+            <line x1="18" y1="8" x2="18.01" y2="8" stroke-width="2.5"></line>
+            <line x1="7" y1="16" x2="17" y2="16"></line>
+          </svg>
+          <span>View Guide (<kbd class="inline-kbd">?</kbd>)</span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Floating Music Player (Bottom Left) -->
@@ -587,24 +605,149 @@
   </button>
 
   <!-- Shortcuts Modal -->
-  <div id="shortcuts-modal" class="modal shortcuts-modal">
+  <div id="shortcuts-modal" class="modal shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-heading">
     <div id="shortcuts-backdrop" class="modal-backdrop"></div>
-    <div class="modal-content shortcuts-content">
-      <button id="shortcuts-close-btn" class="icon-btn modal-close-btn" aria-label="Close Shortcuts">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="modal-content shortcuts-card">
+      <button id="shortcuts-close-btn" class="icon-btn shortcuts-close-btn" aria-label="Close Shortcuts">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
-      <h2 class="shortcuts-title">Keyboard Shortcuts</h2>
-      <ul class="shortcuts-list">
-        <li><kbd>Space</kbd> <span>Play/Pause Lofi Music</span></li>
-        <li><kbd>Esc</kbd> <span>Close Modals / Exit Atmosphere</span></li>
-        <li><kbd>←</kbd> / <kbd>→</kbd> <span>Previous / Next Anime</span></li>
-        <li><kbd>,</kbd> / <kbd>.</kbd> <span>Previous / Next Poster</span></li>
-        <li><kbd>Shift</kbd> + <kbd>?</kbd> <span>Show / Hide Shortcuts</span></li>
-        <li><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>A</kbd> <span>Admin Mode</span></li>
-      </ul>
+
+      <!-- Header with Icon & Subtitle -->
+      <div class="shortcuts-header">
+        <div class="shortcuts-icon-box">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+            <line x1="6" y1="8" x2="6.01" y2="8" stroke-width="3"></line>
+            <line x1="10" y1="8" x2="10.01" y2="8" stroke-width="3"></line>
+            <line x1="14" y1="8" x2="14.01" y2="8" stroke-width="3"></line>
+            <line x1="18" y1="8" x2="18.01" y2="8" stroke-width="3"></line>
+            <line x1="6" y1="12" x2="6.01" y2="12" stroke-width="3"></line>
+            <line x1="10" y1="12" x2="10.01" y2="12" stroke-width="3"></line>
+            <line x1="14" y1="12" x2="14.01" y2="12" stroke-width="3"></line>
+            <line x1="18" y1="12" x2="18.01" y2="12" stroke-width="3"></line>
+            <line x1="7" y1="16" x2="17" y2="16"></line>
+          </svg>
+        </div>
+        <div class="shortcuts-title-wrap">
+          <h2 id="shortcuts-heading" class="shortcuts-title">Keyboard Shortcuts</h2>
+          <p class="shortcuts-subtitle">Power-user hotkeys for seamless navigation</p>
+        </div>
+      </div>
+
+      <!-- Categorized Shortcut Groups -->
+      <div class="shortcuts-body">
+        
+        <!-- Group 1: General Navigation -->
+        <div class="shortcut-group">
+          <div class="shortcut-group-header">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+            </svg>
+            <span>Navigation & Quick Actions</span>
+          </div>
+          <div class="shortcut-list">
+            <div class="shortcut-item">
+              <span class="shortcut-desc">Toggle Shortcuts Guide</span>
+              <div class="shortcut-keys">
+                <kbd>Shift</kbd>
+                <span class="key-plus">+</span>
+                <kbd>?</kbd>
+              </div>
+            </div>
+            <div class="shortcut-item">
+              <span class="shortcut-desc">Quick Search Anime</span>
+              <div class="shortcut-keys">
+                <kbd>/</kbd>
+              </div>
+            </div>
+            <div class="shortcut-item">
+              <span class="shortcut-desc">Close Active Window / Exit Immersion</span>
+              <div class="shortcut-keys">
+                <kbd>Esc</kbd>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 2: Anime Explorer -->
+        <div class="shortcut-group">
+          <div class="shortcut-group-header">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+              <line x1="7" y1="2" x2="7" y2="22"></line>
+              <line x1="17" y1="2" x2="17" y2="22"></line>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <line x1="2" y1="7" x2="7" y2="7"></line>
+              <line x1="2" y1="17" x2="7" y2="17"></line>
+              <line x1="17" y1="17" x2="22" y2="17"></line>
+              <line x1="17" y1="7" x2="22" y2="7"></line>
+            </svg>
+            <span>Anime Explorer (Popup Modal)</span>
+          </div>
+          <div class="shortcut-list">
+            <div class="shortcut-item">
+              <span class="shortcut-desc">Previous / Next Anime Entry</span>
+              <div class="shortcut-keys">
+                <kbd>&larr;</kbd>
+                <span class="key-sep">/</span>
+                <kbd>&rarr;</kbd>
+              </div>
+            </div>
+            <div class="shortcut-item">
+              <span class="shortcut-desc">Cycle Alternate Poster Variants</span>
+              <div class="shortcut-keys">
+                <kbd>,</kbd>
+                <span class="key-sep">/</span>
+                <kbd>.</kbd>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 3: Media & System -->
+        <div class="shortcut-group">
+          <div class="shortcut-group-header">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+            <span>Music & Administration</span>
+          </div>
+          <div class="shortcut-list">
+            <div class="shortcut-item">
+              <span class="shortcut-desc">Play / Pause Lofi Music</span>
+              <div class="shortcut-keys">
+                <kbd class="kbd-wide">Space</kbd>
+              </div>
+            </div>
+            <div class="shortcut-item">
+              <span class="shortcut-desc">Unlock Admin Portal</span>
+              <div class="shortcut-keys">
+                <kbd>Ctrl</kbd>
+                <span class="key-plus">+</span>
+                <kbd>Alt</kbd>
+                <span class="key-plus">+</span>
+                <kbd>A</kbd>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Pro-Tip -->
+      <div class="shortcuts-footer">
+        <div class="shortcuts-tip">
+          <span class="tip-badge">TIP</span>
+          <span class="tip-text">Press <kbd class="kbd-mini">Esc</kbd> or click outside anytime to dismiss this overlay.</span>
+        </div>
+      </div>
+
     </div>
   </div>
 

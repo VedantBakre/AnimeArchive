@@ -140,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     shortcutsModal: document.getElementById('shortcuts-modal'),
     shortcutsBackdrop: document.getElementById('shortcuts-backdrop'),
     shortcutsCloseBtn: document.getElementById('shortcuts-close-btn'),
+    openShortcutsBtn: document.getElementById('open-shortcuts-btn'),
     quoteSelectTrigger: document.getElementById('quote-select-trigger'),
     quoteSelectLabel: document.getElementById('quote-select-label'),
     quoteSelectDropdown: document.getElementById('quote-select-dropdown')
@@ -1529,12 +1530,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- 14. Keyboard Accessibility Navigation ---
+  // --- 14. Keyboard Accessibility Navigation & Shortcuts ---
+  function openShortcutsModal() {
+    DOM.shortcutsModal.classList.add('active');
+    if (!DOM.detailModal.classList.contains('active')) {
+      DOM.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeShortcutsModal() {
+    DOM.shortcutsModal.classList.remove('active');
+    if (!DOM.detailModal.classList.contains('active')) {
+      DOM.body.style.overflow = '';
+    }
+  }
+
+  function toggleShortcutsModal() {
+    if (DOM.shortcutsModal.classList.contains('active')) {
+      closeShortcutsModal();
+    } else {
+      openShortcutsModal();
+    }
+  }
+
   document.addEventListener('keydown', (e) => {
+    const activeTag = document.activeElement ? document.activeElement.tagName : '';
+    const isInputActive = ['INPUT', 'SELECT', 'TEXTAREA'].includes(activeTag);
+
     // ESC: close detail popup, shortcuts modal, or exit full immersion mode
     if (e.key === 'Escape') {
       if (DOM.shortcutsModal.classList.contains('active')) {
-        DOM.shortcutsModal.classList.remove('active');
+        closeShortcutsModal();
       } else if (DOM.detailModal.classList.contains('active')) {
         closeDetailModal();
       } else if (state.activeAtmosphere !== 'none') {
@@ -1542,9 +1568,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // Quick Search with "/" (only when not inside an input and modals are closed)
+    if (e.key === '/' && !e.shiftKey && !isInputActive) {
+      if (!DOM.shortcutsModal.classList.contains('active') && !DOM.detailModal.classList.contains('active')) {
+        e.preventDefault();
+        DOM.searchBox.focus();
+        DOM.searchBox.select();
+      }
+    }
+
     // Space: Play/Pause lofi background music
-    // Guard: don't fire if the user is typing or interacting with a form element
-    const activeTag = document.activeElement ? document.activeElement.tagName : '';
+    // Guard: don't fire if the user is typing or interacting with form elements/buttons
     if (e.key === ' ' && !['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON'].includes(activeTag)) {
       e.preventDefault();
       togglePlayPause();
@@ -1567,9 +1601,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Shortcuts Modal Toggle (? or Shift+/)
     const isQuestionMark = e.key === '?' || (e.shiftKey && e.key === '/');
-    if (isQuestionMark && !['INPUT', 'TEXTAREA', 'SELECT'].includes(activeTag)) {
+    if (isQuestionMark && !isInputActive) {
       e.preventDefault();
-      DOM.shortcutsModal.classList.toggle('active');
+      toggleShortcutsModal();
     }
   });
 
@@ -1687,13 +1721,15 @@ document.addEventListener('DOMContentLoaded', () => {
     openDetailModal(filteredAnimeList[randomIndex].id);
   });
 
-  // (Keydown listener for shortcuts merged into main accessibility listener above)
-  DOM.shortcutsCloseBtn.addEventListener('click', () => {
-    DOM.shortcutsModal.classList.remove('active');
-  });
-  DOM.shortcutsBackdrop.addEventListener('click', () => {
-    DOM.shortcutsModal.classList.remove('active');
-  });
+  // Shortcuts Modal Listeners
+  DOM.shortcutsCloseBtn.addEventListener('click', closeShortcutsModal);
+  DOM.shortcutsBackdrop.addEventListener('click', closeShortcutsModal);
+  if (DOM.openShortcutsBtn) {
+    DOM.openShortcutsBtn.addEventListener('click', () => {
+      DOM.settingsPanel.classList.remove('active');
+      openShortcutsModal();
+    });
+  }
 
   // --- 16. Boot Initialization ---
   initPlayerLists();

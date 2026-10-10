@@ -2331,42 +2331,350 @@ textarea.admin-input {
   }
 }
 
-/* --- Shortcuts Modal --- */
-.shortcuts-content {
-  max-width: 500px;
+/* --- Shortcuts Modal Overhaul --- */
+.shortcuts-modal {
+  z-index: 150; /* Above detail modal if active */
+}
+
+.shortcuts-modal .modal-backdrop {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background-color: rgba(43, 34, 28, 0.45);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark-theme .shortcuts-modal .modal-backdrop {
+  background-color: rgba(12, 10, 9, 0.72);
+}
+
+.shortcuts-card {
+  position: relative;
+  width: 92%;
+  max-width: 530px;
+  max-height: 86vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: linear-gradient(155deg, rgba(254, 250, 244, 0.97) 0%, rgba(246, 239, 230, 0.95) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(176, 137, 104, 0.32);
+  border-radius: 22px;
+  box-shadow: 0 24px 64px rgba(58, 46, 37, 0.22),
+              0 4px 16px rgba(58, 46, 37, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  padding: 26px 26px 20px 26px;
+  transform: scale(0.93) translateY(18px);
+  opacity: 0;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-light) transparent;
+}
+
+.dark-theme .shortcuts-card {
+  background: linear-gradient(155deg, rgba(36, 31, 27, 0.98) 0%, rgba(25, 21, 19, 0.96) 100%);
+  border: 1px solid rgba(197, 157, 111, 0.26);
+  box-shadow: 0 28px 72px rgba(0, 0, 0, 0.7),
+              0 6px 20px rgba(0, 0, 0, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.shortcuts-modal.active .shortcuts-card {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Close Button */
+.shortcuts-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(176, 137, 104, 0.1);
+  border: 1px solid rgba(176, 137, 104, 0.22);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 5;
+}
+
+.shortcuts-close-btn:hover {
+  background: var(--accent-color);
+  color: var(--bg-color);
+  border-color: var(--accent-color);
+  transform: rotate(90deg) scale(1.05);
+}
+
+/* Header */
+.shortcuts-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.shortcuts-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(176, 137, 104, 0.18) 0%, rgba(176, 137, 104, 0.06) 100%);
+  border: 1px solid rgba(176, 137, 104, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(176, 137, 104, 0.12);
+}
+
+.dark-theme .shortcuts-icon-box {
+  background: linear-gradient(135deg, rgba(197, 157, 111, 0.2) 0%, rgba(197, 157, 111, 0.06) 100%);
+  border: 1px solid rgba(197, 157, 111, 0.3);
+}
+
+.shortcuts-title-wrap {
+  display: flex;
+  flex-direction: column;
 }
 
 .shortcuts-title {
   font-family: var(--font-ui);
-  text-align: center;
-  margin-bottom: 24px;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
 }
 
-.shortcuts-list {
-  list-style: none;
+.shortcuts-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 2px 0 0;
+  font-weight: 500;
+  opacity: 0.88;
+}
+
+/* Body & Groups */
+.shortcuts-body {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.shortcuts-list li {
+.shortcut-group {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shortcut-group-header {
+  display: flex;
   align-items: center;
-  font-size: 0.95rem;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-color);
+  padding: 0 4px;
+}
+
+.shortcut-group-header svg {
+  color: var(--accent-color);
+  opacity: 0.9;
+}
+
+.shortcut-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shortcut-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: rgba(176, 137, 104, 0.05);
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.dark-theme .shortcut-item {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.shortcut-item:hover {
+  background: var(--accent-light);
+  border-color: rgba(176, 137, 104, 0.2);
+  transform: translateX(3px);
+}
+
+.dark-theme .shortcut-item:hover {
+  border-color: rgba(197, 157, 111, 0.24);
+}
+
+.shortcut-desc {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.shortcut-keys {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Tactile Keycaps (kbd) styling */
+.shortcuts-card kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: linear-gradient(180deg, #FFFFFF 0%, #EDE4D8 100%);
+  border: 1px solid rgba(176, 137, 104, 0.35);
+  border-bottom: 2.5px solid rgba(176, 137, 104, 0.55);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(58, 46, 37, 0.08), inset 0 1px 0 #FFFFFF;
+  letter-spacing: 0.02em;
+  user-select: none;
+  transition: transform 0.12s ease, border-color var(--transition-fast);
+}
+
+.dark-theme .shortcuts-card kbd {
+  background: linear-gradient(180deg, #3E362F 0%, #2A2420 100%);
+  border: 1px solid rgba(197, 157, 111, 0.32);
+  border-bottom: 2.5px solid rgba(197, 157, 111, 0.65);
+  color: #F2ECE6;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.shortcuts-card kbd.kbd-wide {
+  min-width: 54px;
+  padding: 0 10px;
+}
+
+.shortcut-item:hover .shortcuts-card kbd,
+.shortcut-item:hover kbd {
+  border-color: var(--accent-color);
+}
+
+.key-plus, .key-sep {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  opacity: 0.8;
+  margin: 0 1px;
+}
+
+/* Footer Pro-Tip */
+.shortcuts-footer {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.shortcuts-tip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.79rem;
   color: var(--text-secondary);
 }
 
-kbd {
-  background-color: var(--surface-color);
+.tip-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: var(--accent-color);
+  color: var(--bg-color);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.kbd-mini {
+  display: inline-block;
+  padding: 1px 5px;
+  font-size: 0.72rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  border-radius: 4px;
   border: 1px solid var(--glass-border);
-  border-radius: 6px;
-  padding: 4px 8px;
-  font-family: monospace;
-  font-size: 0.9rem;
-  color: var(--accent-color);
-  box-shadow: 0 2px 0 var(--glass-border);
+  background: var(--surface-color);
+  color: var(--text-primary);
+}
+
+/* Settings button for shortcuts */
+.settings-shortcuts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(176, 137, 104, 0.12);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.settings-shortcuts-btn:hover {
+  background: var(--accent-color);
+  color: var(--bg-color);
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(176, 137, 104, 0.25);
+}
+
+.settings-shortcuts-btn .inline-kbd {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.74rem;
+  border: 1px solid rgba(176, 137, 104, 0.2);
+}
+
+.settings-shortcuts-btn:hover .inline-kbd {
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--bg-color);
+  border-color: transparent;
+}
+
+@media (max-width: 600px) {
+  .shortcuts-card {
+    padding: 20px 16px 16px;
+  }
+  .shortcut-item {
+    padding: 6px 8px;
+  }
+  .shortcut-desc {
+    font-size: 0.82rem;
+  }
+  .shortcuts-title {
+    font-size: 1.15rem;
+  }
 }
 
 /* --- Surprise Me Button --- */

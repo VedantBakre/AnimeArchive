@@ -140,7 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
     shortcutsModal: document.getElementById('shortcuts-modal'),
     shortcutsBackdrop: document.getElementById('shortcuts-backdrop'),
     shortcutsCloseBtn: document.getElementById('shortcuts-close-btn'),
-    quoteSelect: document.getElementById('quote-select')
+    quoteSelectTrigger: document.getElementById('quote-select-trigger'),
+    quoteSelectLabel: document.getElementById('quote-select-label'),
+    quoteSelectDropdown: document.getElementById('quote-select-dropdown')
   };
 
   // Dynamically populate quotes from watched anime
@@ -189,43 +191,93 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Populate Select Quote Dropdown
-  if (DOM.quoteSelect) {
+  // Populate Custom Select Quote Dropdown
+  if (DOM.quoteSelectTrigger && DOM.quoteSelectDropdown) {
     quotes.forEach((q, index) => {
-      const option = document.createElement('option');
-      option.value = index;
-      let shortText = q.text.substring(0, 30) + (q.text.length > 30 ? '...' : '');
-      option.textContent = `${q.anime}: ${shortText}`;
-      DOM.quoteSelect.appendChild(option);
+      const li = document.createElement('li');
+      li.className = 'custom-select-option';
+      li.dataset.value = index;
+      li.setAttribute('role', 'option');
+      
+      const title = document.createElement('span');
+      title.className = 'option-title';
+      title.textContent = q.anime;
+      
+      const sub = document.createElement('span');
+      sub.className = 'option-subtitle';
+      let shortText = q.text.substring(0, 45) + (q.text.length > 45 ? '...' : '');
+      sub.textContent = shortText;
+      
+      li.appendChild(title);
+      li.appendChild(sub);
+      DOM.quoteSelectDropdown.appendChild(li);
     });
+
+    const options = DOM.quoteSelectDropdown.querySelectorAll('.custom-select-option');
+    
+    function setQuoteSelection(val, isInit = false) {
+      options.forEach(opt => opt.classList.remove('selected'));
+      const selectedOpt = Array.from(options).find(opt => opt.dataset.value == val);
+      if (selectedOpt) selectedOpt.classList.add('selected');
+      
+      if (val === 'slideshow') {
+        DOM.quoteSelectLabel.textContent = 'Slideshow (AutoPlay)';
+        if (!isInit) startQuoteRotation();
+      } else {
+        const qIndex = parseInt(val, 10);
+        if (quotes[qIndex]) {
+          DOM.quoteSelectLabel.textContent = quotes[qIndex].anime;
+          if (!isInit) {
+            stopQuoteRotation();
+            currentQuoteIndex = qIndex;
+            DOM.heroQuote.style.opacity = 0;
+            setTimeout(() => {
+              updateQuoteUI();
+              DOM.heroQuote.style.opacity = 1;
+            }, 300);
+          }
+        }
+      }
+      localStorage.setItem('selectedQuoteIndex', val);
+    }
 
     const savedQuote = localStorage.getItem('selectedQuoteIndex');
     if (savedQuote && savedQuote !== 'slideshow' && quotes[savedQuote]) {
-      DOM.quoteSelect.value = savedQuote;
+      setQuoteSelection(savedQuote, true);
       currentQuoteIndex = parseInt(savedQuote, 10);
       updateQuoteUI();
       // Do not start rotation
     } else {
-      DOM.quoteSelect.value = 'slideshow';
+      setQuoteSelection('slideshow', true);
       updateQuoteUI(); // Set first quote immediately
       startQuoteRotation();
     }
 
-    DOM.quoteSelect.addEventListener('change', (e) => {
-      const val = e.target.value;
-      localStorage.setItem('selectedQuoteIndex', val);
-      if (val === 'slideshow') {
-        startQuoteRotation();
-      } else {
-        stopQuoteRotation();
-        currentQuoteIndex = parseInt(val, 10);
-        DOM.heroQuote.style.opacity = 0;
-        setTimeout(() => {
-          updateQuoteUI();
-          DOM.heroQuote.style.opacity = 1;
-        }, 300);
+    // Toggle Dropdown
+    DOM.quoteSelectTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isActive = DOM.quoteSelectDropdown.classList.contains('active');
+      DOM.quoteSelectDropdown.classList.toggle('active');
+      DOM.quoteSelectTrigger.setAttribute('aria-expanded', !isActive);
+    });
+
+    // Handle Option Click
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        setQuoteSelection(opt.dataset.value);
+        DOM.quoteSelectDropdown.classList.remove('active');
+        DOM.quoteSelectTrigger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!DOM.quoteSelectTrigger.contains(e.target) && !DOM.quoteSelectDropdown.contains(e.target)) {
+        DOM.quoteSelectDropdown.classList.remove('active');
+        DOM.quoteSelectTrigger.setAttribute('aria-expanded', 'false');
       }
     });
+
   } else {
     // Fallback if UI doesn't have it
     updateQuoteUI();

@@ -394,10 +394,17 @@
       </div>
       <div class="setting-row">
         <label for="quote-select">Select Quote</label>
-        <select id="quote-select" class="theme-select">
-          <option value="slideshow">Slideshow (AutoPlay)</option>
-          <!-- Options dynamically injected -->
-        </select>
+        <div class="custom-select-wrapper" id="quote-custom-select">
+          <button class="theme-select custom-select-trigger" id="quote-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span id="quote-select-label">Slideshow (AutoPlay)</span>
+          </button>
+          <ul class="custom-select-dropdown" id="quote-select-dropdown" role="listbox" tabindex="-1">
+            <li class="custom-select-option selected" role="option" data-value="slideshow">
+              <span class="option-title">Slideshow (AutoPlay)</span>
+            </li>
+            <!-- Options dynamically injected -->
+          </ul>
+        </div>
       </div>
     </div>
 

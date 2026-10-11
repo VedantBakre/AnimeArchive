@@ -32,7 +32,7 @@ const allQuotes = [
   },
   {
     "id": 6,
-    "text": "I told one single lie... I said that Kaori Miyazono liked Ryota Watari.",
+    "text": "I told one single lie... Kaori liked Ryota Watari.",
     "character": "Kaori Miyazono",
     "anime": "Your Lie in April"
   },
@@ -110,7 +110,7 @@ const allQuotes = [
   },
   {
     "id": 19,
-    "text": "Even if there were 100 worlds, and 100 parallel lives... I would still choose you.",
+    "text": "Let's say there were 100 worlds with 100 of me and 100 of you. I'm sure the 100 me's would love the 100 you's.",
     "character": "Koyomi Takasaki",
     "anime": "To Every You I've Loved Before"
   }

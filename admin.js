@@ -43,12 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPat = sessionStorage.getItem('adminPAT') || '';
   // Track the currently displayed entry ID to avoid redundant input population
   let lastPopulatedEntryId = null;
+  let modalObserver = null;
 
   if (isAdmin) {
     enableAdminMode();
   }
 
-  // Keyboard shortcut Ctrl+Alt+A
+  // Keyboard shortcut Ctrl+Alt+A (Toggle Login / Exit)
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.altKey && e.key.toLowerCase() === 'a') {
       e.preventDefault();
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginModal.classList.add('active');
         pinInput.focus();
       } else {
-        showToast("Already logged in as Admin.");
+        disableAdminMode();
       }
     }
   });
@@ -99,14 +100,32 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function enableAdminMode() {
-    // 1. Add Badge to header
+    // 1. Add Interactive Badge Container to header with Exit button
     const headerLeft = document.querySelector('.header-left');
-    if (!document.getElementById('admin-badge')) {
-      const badge = document.createElement('span');
-      badge.id = 'admin-badge';
-      badge.className = 'admin-badge';
-      badge.textContent = 'Admin Mode';
-      headerLeft.appendChild(badge);
+    if (headerLeft && !document.getElementById('admin-badge-container')) {
+      const badgeContainer = document.createElement('div');
+      badgeContainer.id = 'admin-badge-container';
+      badgeContainer.className = 'admin-badge-container';
+      badgeContainer.innerHTML = `
+        <span class="admin-badge-status">
+          <span class="admin-pulse-dot"></span>
+          Admin Mode
+        </span>
+        <button id="admin-exit-btn" class="admin-exit-btn" type="button" title="Exit Admin Mode (or Ctrl+Alt+A)" aria-label="Exit Admin Mode">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Exit</span>
+        </button>
+      `;
+      headerLeft.appendChild(badgeContainer);
+
+      const exitBtn = document.getElementById('admin-exit-btn');
+      if (exitBtn) {
+        exitBtn.addEventListener('click', disableAdminMode);
+      }
     }
 
     // 2. Inject Edit UI into Detail Modal if not already there
@@ -117,7 +136,17 @@ document.addEventListener('DOMContentLoaded', () => {
       editSection.className = 'admin-edit-section';
       editSection.innerHTML = `
         <hr class="footer-divider" style="margin: 20px 0;">
-        <h3 class="thoughts-title">Admin Edit</h3>
+        <div class="admin-edit-header">
+          <h3 class="thoughts-title" style="margin: 0;">Admin Edit</h3>
+          <button id="admin-detail-exit-btn" class="admin-exit-btn" type="button" title="Exit Admin Mode">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Exit Admin</span>
+          </button>
+        </div>
         <div class="admin-edit-grid">
           <div class="admin-input-group">
             <label>My Rating (e.g. 9.5/10 or 11/10)</label>
@@ -140,10 +169,33 @@ document.addEventListener('DOMContentLoaded', () => {
       thoughtsSection.parentNode.insertBefore(editSection, thoughtsSection.nextSibling);
 
       document.getElementById('admin-save-entry-btn').addEventListener('click', saveAndCommitEntry);
+      document.getElementById('admin-detail-exit-btn').addEventListener('click', disableAdminMode);
     }
 
-    // 3. Set up event-driven input population (replaces the old 300ms polling)
+    // 3. Set up event-driven input population
     setupModalObserver();
+  }
+
+  function disableAdminMode() {
+    isAdmin = false;
+    currentPat = '';
+    sessionStorage.removeItem('adminPAT');
+    lastPopulatedEntryId = null;
+
+    if (modalObserver) {
+      modalObserver.disconnect();
+      modalObserver = null;
+    }
+
+    const badgeContainer = document.getElementById('admin-badge-container');
+    if (badgeContainer) badgeContainer.remove();
+    const legacyBadge = document.getElementById('admin-badge');
+    if (legacyBadge) legacyBadge.remove();
+
+    const editSection = document.getElementById('admin-edit-section');
+    if (editSection) editSection.remove();
+
+    showToast('Exited Admin Mode. Viewing as visitor.', 'info');
   }
 
   // --- Event-Driven Input Population ---
@@ -156,9 +208,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Populate inputs when the detail modal becomes active
     const detailModal = document.getElementById('detail-modal');
 
-    // Use MutationObserver to watch for class changes on the detail modal
-    // and text changes on the title (which change when navigating entries)
-    const observer = new MutationObserver(() => {
+    if (modalObserver) {
+      modalObserver.disconnect();
+    }
+
+    modalObserver = new MutationObserver(() => {
       if (isAdmin && detailModal.classList.contains('active')) {
         populateAdminInputs();
       } else {
@@ -167,10 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Observe the modal for activation (class changes)
-    observer.observe(detailModal, { attributes: true, attributeFilter: ['class'] });
+    modalObserver.observe(detailModal, { attributes: true, attributeFilter: ['class'] });
 
     // Observe the title for text content changes (entry navigation)
-    observer.observe(modalTitle, { childList: true, characterData: true, subtree: true });
+    modalObserver.observe(modalTitle, { childList: true, characterData: true, subtree: true });
   }
 
   function populateAdminInputs() {
@@ -247,12 +301,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function constructDataJs() {
     // Produce clean, readable JS matching the original compile_data.py format
     const comment = '// Auto-generated data file from anime.xlsx and asset directories\n';
+    const quotesBlock = (typeof allQuotes !== 'undefined' && Array.isArray(allQuotes))
+      ? `const allQuotes = ${JSON.stringify(allQuotes, null, 2)};\n\n`
+      : '';
     const animeBlock = `const animeList = ${JSON.stringify(animeList, null, 2)};\n`;
     const lofiBlock = `\nconst lofiPlaylist = ${JSON.stringify(lofiPlaylist, null, 2)};\n`;
     const ambienceBlock = `\nconst ambiencePlaylist = ${JSON.stringify(ambiencePlaylist, null, 2)};\n`;
     const atmosBlock = `\nconst atmospheres = ${JSON.stringify(atmospheres, null, 2)};\n`;
 
-    return comment + animeBlock + lofiBlock + ambienceBlock + atmosBlock;
+    return comment + quotesBlock + animeBlock + lofiBlock + ambienceBlock + atmosBlock;
   }
 
   async function commitToGitHub(content, message) {

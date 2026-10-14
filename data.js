@@ -315,7 +315,7 @@ const animeList = [
     "rating": 8.5,
     "myRating": "10/10",
     "feedback": "Top-tier Action",
-    "seasons": 4,
+    "seasons": 5,
     "episodes": 13,
     "year": 2019,
     "runtime": 24,
@@ -534,7 +534,7 @@ const animeList = [
     "rating": 8.82,
     "myRating": "11/10",
     "feedback": "Supernatural Drama",
-    "seasons": 1,
+    "seasons": 2,
     "episodes": 13,
     "year": 2018,
     "runtime": 24,
@@ -562,51 +562,51 @@ const animeList = [
     "watchGuide": [
       {
         "step": "1",
-        "title": "Season 1 (TV)",
-        "type": "TV Season",
-        "status": "Essential",
-        "duration": "13 Episodes",
-        "notes": "Covers Light Novel Vol 1–5 (Mai, Tomoe, Rio, Nodoka, and Kaede arcs)."
+        "title": "Rascal Does Not Dream of Bunny Girl Senpai",
+        "type": "TV Series",
+        "status": "Essential Canon",
+        "duration": "13 Episodes (2018)",
+        "notes": "Covers Light Novel Vol 1–5: High School Arc (Mai, Tomoe, Rio, Nodoka, and Kaede arcs)."
       },
       {
         "step": "2",
-        "title": "Dreaming Girl (Movie)",
+        "title": "Rascal Does Not Dream of a Dreaming Girl",
         "type": "Movie",
-        "status": "Essential",
-        "duration": "89 Mins",
-        "notes": "Direct continuation covering Vol 6–7. Emotional climax of Shoko Makinohara arc."
+        "status": "Essential Canon",
+        "duration": "89 Mins (2019)",
+        "notes": "Covers Light Novel Vol 6–7. Direct continuation and emotional climax of Shoko Makinohara arc."
       },
       {
         "step": "3",
-        "title": "Sister Venturing Out (Movie)",
+        "title": "Rascal Does Not Dream of a Sister Venturing Out",
         "type": "Movie",
-        "status": "Essential",
-        "duration": "73 Mins",
-        "notes": "Covers Vol 8. Focuses on Kaede's recovery and high school entrance exam."
+        "status": "Essential Canon",
+        "duration": "73 Mins (2023)",
+        "notes": "Covers Light Novel Vol 8. Focuses on Kaede's recovery and high school entrance exam."
       },
       {
         "step": "4",
-        "title": "Knapsack Kid (Movie)",
+        "title": "Rascal Does Not Dream of a Knapsack Kid",
         "type": "Movie",
-        "status": "Essential",
-        "duration": "75 Mins",
-        "notes": "Covers Vol 9. Concludes the High School Arc with Mai & young Shoko."
+        "status": "Essential Canon",
+        "duration": "75 Mins (2023)",
+        "notes": "Covers Light Novel Vol 9. Concludes the High School Arc with Mai & young Shoko, leading to graduation."
       },
       {
         "step": "5",
-        "title": "Season 2: University Arc (TV)",
-        "type": "TV Season",
-        "status": "Upcoming",
-        "duration": "TBA",
-        "notes": "Adapts the University Arc starting with Santa Claus (Vol 10+)."
+        "title": "Rascal Does Not Dream of Santa Claus",
+        "type": "TV Series",
+        "status": "Essential Canon",
+        "duration": "13 Episodes (2025)",
+        "notes": "Covers Light Novel Vol 10–12. Beginning of the University Arc (Touko Kirishima & Miniskirt Santa)."
       },
       {
         "step": "6",
-        "title": "Dear Friend (Movie)",
+        "title": "Rascal Does Not Dream of a Dear Friend",
         "type": "Movie",
-        "status": "Upcoming",
-        "duration": "TBA",
-        "notes": "Future theatrical movie covering later University arc volumes."
+        "status": "Upcoming Release",
+        "duration": "Upcoming 2026",
+        "notes": "Covers Light Novel Vol 13. Continuation of the University Arc."
       }
     ]
   },
@@ -1497,7 +1497,7 @@ const animeList = [
     "rating": 8.65,
     "myRating": "N/A",
     "feedback": null,
-    "seasons": 2,
+    "seasons": 3,
     "episodes": 24,
     "year": 2020,
     "runtime": 24,

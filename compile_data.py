@@ -278,6 +278,12 @@ for row_idx, r in enumerate(rows[1:], start=2):  # row_idx = Excel row number
     movies_count = sum(1 for item in anime_guide if item.get('type') == 'Movie')
     ovas_count = sum(1 for item in anime_guide if item.get('type') == 'OVA')
     specials_count = sum(1 for item in anime_guide if item.get('type') in ('Special', 'Recap'))
+    tv_count = sum(1 for item in anime_guide if item.get('type') in ('TV Series', 'TV Season'))
+    raw_seasons = entry.get('Seasons') if entry.get('Seasons') is not None else entry.get('No. of Seasons')
+    try:
+        final_seasons = max(int(raw_seasons), tv_count) if (raw_seasons is not None and tv_count > 0) else (raw_seasons if raw_seasons is not None else (tv_count if tv_count > 0 else 1))
+    except (ValueError, TypeError):
+        final_seasons = raw_seasons or (tv_count if tv_count > 0 else 1)
 
     anime_entries.append({
         "id": entry_id,
@@ -287,7 +293,7 @@ for row_idx, r in enumerate(rows[1:], start=2):  # row_idx = Excel row number
         "rating": entry.get('Rating'),
         "myRating": final_rating,
         "feedback": final_feedback,
-        "seasons": entry.get('Seasons') if entry.get('Seasons') is not None else entry.get('No. of Seasons'),
+        "seasons": final_seasons,
         "episodes": entry.get('Episodes') if entry.get('Episodes') is not None else entry.get('Avg No. of Episodes'),
         "year": entry.get('Year') if entry.get('Year') is not None else entry.get('Released Year'),
         "runtime": entry.get('Runtime'),

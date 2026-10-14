@@ -101,7 +101,7 @@ if not os.path.exists(xlsx_path):
     exit(1)
 
 wb = openpyxl.load_workbook(xlsx_path)
-sheet = wb.active
+sheet = wb['Anime Data'] if 'Anime Data' in wb.sheetnames else wb.active
 rows = list(sheet.iter_rows(values_only=True))
 
 headers = [cell for cell in rows[0] if cell is not None]
@@ -110,6 +110,38 @@ headers = [cell for cell in rows[0] if cell is not None]
 HEADER_TO_COL = {}
 for i, h in enumerate(headers):
     HEADER_TO_COL[h] = i + 1  # openpyxl uses 1-based column indices
+
+# --- Parse WatchGuides sheet ---
+watch_guides_by_anime = {}
+if 'WatchGuides' in wb.sheetnames:
+    wg_sheet = wb['WatchGuides']
+    wg_rows = list(wg_sheet.iter_rows(values_only=True))
+    if len(wg_rows) > 1:
+        wg_headers = [c for c in wg_rows[0] if c is not None]
+        WG_HEADER_TO_COL = {str(h).strip(): i for i, h in enumerate(wg_headers)}
+        for row in wg_rows[1:]:
+            if not row or not row[0]:
+                continue
+            anime_title = str(row[WG_HEADER_TO_COL.get('Anime Name', 0)]).strip()
+            step_val = str(row[WG_HEADER_TO_COL.get('Step', 1)]).strip() if row[WG_HEADER_TO_COL.get('Step', 1)] is not None else ''
+            title_val = str(row[WG_HEADER_TO_COL.get('Title', 2)]).strip() if row[WG_HEADER_TO_COL.get('Title', 2)] is not None else ''
+            type_val = str(row[WG_HEADER_TO_COL.get('Type', 3)]).strip() if row[WG_HEADER_TO_COL.get('Type', 3)] is not None else 'TV Season'
+            status_val = str(row[WG_HEADER_TO_COL.get('Status', 4)]).strip() if row[WG_HEADER_TO_COL.get('Status', 4)] is not None else 'Essential'
+            duration_val = str(row[WG_HEADER_TO_COL.get('Duration', 5)]).strip() if row[WG_HEADER_TO_COL.get('Duration', 5)] is not None else ''
+            notes_val = str(row[WG_HEADER_TO_COL.get('Notes', 6)]).strip() if row[WG_HEADER_TO_COL.get('Notes', 6)] is not None else ''
+
+            if anime_title not in watch_guides_by_anime:
+                watch_guides_by_anime[anime_title] = []
+
+            watch_guides_by_anime[anime_title].append({
+                "step": step_val,
+                "title": title_val,
+                "type": type_val,
+                "status": status_val,
+                "duration": duration_val,
+                "notes": notes_val
+            })
+    print(f"[Info] Loaded watch guides for {len(watch_guides_by_anime)} anime franchises.")
 
 # Track which Excel cells need to be updated (row_number → {field: value})
 excel_writebacks = {}
@@ -242,6 +274,11 @@ for row_idx, r in enumerate(rows[1:], start=2):  # row_idx = Excel row number
             'feedback': norm(final_feedback) if final_feedback else None,
         }
 
+    anime_guide = watch_guides_by_anime.get(name, [])
+    movies_count = sum(1 for item in anime_guide if item.get('type') == 'Movie')
+    ovas_count = sum(1 for item in anime_guide if item.get('type') == 'OVA')
+    specials_count = sum(1 for item in anime_guide if item.get('type') in ('Special', 'Recap'))
+
     anime_entries.append({
         "id": entry_id,
         "name": name,
@@ -261,7 +298,11 @@ for row_idx, r in enumerate(rows[1:], start=2):  # row_idx = Excel row number
         "folderName": folder_name,
         "posters": posters,
         "status": final_status,
-        "fav": fav
+        "fav": fav,
+        "moviesCount": movies_count if movies_count > 0 else None,
+        "ovasCount": ovas_count if ovas_count > 0 else None,
+        "specialsCount": specials_count if specials_count > 0 else None,
+        "watchGuide": anime_guide if len(anime_guide) > 0 else None
     })
 
 # --- Step 4: Write admin changes back to Excel ---
@@ -370,6 +411,11 @@ if orphan_entries_from_js:
                     if os.path.isfile(pf_full) and pf.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.avif')):
                         posters.append(f"assets/posters/{folder_name}/{pf}")
         
+        anime_guide = watch_guides_by_anime.get(name, orphan.get('watchGuide', []))
+        movies_count = sum(1 for item in anime_guide if item.get('type') == 'Movie') if anime_guide else orphan.get('moviesCount')
+        ovas_count = sum(1 for item in anime_guide if item.get('type') == 'OVA') if anime_guide else orphan.get('ovasCount')
+        specials_count = sum(1 for item in anime_guide if item.get('type') in ('Special', 'Recap')) if anime_guide else orphan.get('specialsCount')
+
         anime_entries.append({
             "id": orphan.get('id'),
             "name": name,
@@ -389,7 +435,11 @@ if orphan_entries_from_js:
             "folderName": folder_name,
             "posters": posters if posters else orphan.get('posters', []),
             "status": orphan.get('status'),
-            "fav": orphan.get('fav', False)
+            "fav": orphan.get('fav', False),
+            "moviesCount": movies_count if movies_count and movies_count > 0 else None,
+            "ovasCount": ovas_count if ovas_count and ovas_count > 0 else None,
+            "specialsCount": specials_count if specials_count and specials_count > 0 else None,
+            "watchGuide": anime_guide if anime_guide and len(anime_guide) > 0 else None
         })
         
         # Add to snapshot

@@ -83,7 +83,15 @@ document.addEventListener('DOMContentLoaded', () => {
     modalGenresContainer: document.getElementById('modal-genres-container'),
     modalThoughtsText: document.getElementById('modal-thoughts-text'),
     modalReadDescBtn: document.getElementById('modal-read-desc-btn'),
+    modalWatchGuideBtn: document.getElementById('modal-watch-guide-btn'),
+    modalGuideBadge: document.getElementById('modal-guide-badge'),
     modalDescPanel: document.getElementById('modal-desc-panel'),
+    tabBtnSynopsis: document.getElementById('tab-btn-synopsis'),
+    tabBtnGuide: document.getElementById('tab-btn-guide'),
+    tabContentSynopsis: document.getElementById('tab-content-synopsis'),
+    tabContentGuide: document.getElementById('tab-content-guide'),
+    watchGuideSummary: document.getElementById('watch-guide-summary'),
+    watchGuideTimeline: document.getElementById('watch-guide-timeline'),
     descCloseBtn: document.getElementById('desc-close-btn'),
     modalDescText: document.getElementById('modal-desc-text'),
     
@@ -648,6 +656,156 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.body.style.overflow = '';
   }
 
+  // Helper to escape HTML safely in dynamic templates
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // Maps watch guide statuses to CSS badge modifiers
+  function getStatusClass(status) {
+    const s = (status || '').toLowerCase();
+    if (s.includes('canon') || s.includes('essential')) return 'status-essential';
+    if (s.includes('recommended')) return 'status-recommended';
+    if (s.includes('alternative') || s.includes('duplicate')) return 'status-alternative';
+    if (s.includes('skip') || s.includes('recap')) return 'status-skip';
+    if (s.includes('optional') || s.includes('side-story')) return 'status-optional';
+    if (s.includes('upcoming')) return 'status-upcoming';
+    return 'status-essential';
+  }
+
+  // Returns SVG icon for entry types (TV, Movie, OVA/Special)
+  function getTypeIcon(type) {
+    const t = (type || '').toLowerCase();
+    if (t.includes('movie')) {
+      return `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>`;
+    }
+    if (t.includes('ova') || t.includes('special')) {
+      return `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+    }
+    return `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>`;
+  }
+
+  // Switch between Synopsis and Watch Guide tabs in companion panel
+  function switchCompanionTab(tabName) {
+    if (tabName === 'synopsis') {
+      if (DOM.tabBtnSynopsis) DOM.tabBtnSynopsis.classList.add('active');
+      if (DOM.tabBtnGuide) DOM.tabBtnGuide.classList.remove('active');
+      if (DOM.tabContentSynopsis) DOM.tabContentSynopsis.classList.add('active');
+      if (DOM.tabContentGuide) DOM.tabContentGuide.classList.remove('active');
+    } else if (tabName === 'guide') {
+      if (DOM.tabBtnGuide) DOM.tabBtnGuide.classList.add('active');
+      if (DOM.tabBtnSynopsis) DOM.tabBtnSynopsis.classList.remove('active');
+      if (DOM.tabContentGuide) DOM.tabContentGuide.classList.add('active');
+      if (DOM.tabContentSynopsis) DOM.tabContentSynopsis.classList.remove('active');
+    }
+  }
+
+  // Render Subway Line Watch Order Timeline
+  function renderWatchGuideTimeline(anime) {
+    if (!DOM.watchGuideTimeline || !DOM.watchGuideSummary) return;
+
+    DOM.watchGuideTimeline.innerHTML = '';
+    DOM.watchGuideSummary.innerHTML = '';
+
+    if (!anime.watchGuide || anime.watchGuide.length === 0) {
+      DOM.watchGuideTimeline.innerHTML = '<p class="timeline-empty" style="color:var(--text-muted);font-size:0.88rem;text-align:center;padding:24px 0;">No watch order guide available for this title.</p>';
+      return;
+    }
+
+    // Summary statistics chips
+    const totalSteps = anime.watchGuide.length;
+    const seasons = anime.seasons || 1;
+    const movies = anime.moviesCount || 0;
+    const ovas = (anime.ovasCount || 0) + (anime.specialsCount || 0);
+
+    const summaryFrag = document.createDocumentFragment();
+
+    const totalChip = document.createElement('span');
+    totalChip.className = 'guide-summary-chip count-chip';
+    totalChip.textContent = `📍 ${totalSteps} Roadmap Steps`;
+    summaryFrag.appendChild(totalChip);
+
+    if (seasons) {
+      const sChip = document.createElement('span');
+      sChip.className = 'guide-summary-chip';
+      sChip.textContent = `📺 ${seasons} ${seasons === 1 ? 'Season' : 'Seasons'}`;
+      summaryFrag.appendChild(sChip);
+    }
+
+    if (movies > 0) {
+      const mChip = document.createElement('span');
+      mChip.className = 'guide-summary-chip';
+      mChip.textContent = `🎬 ${movies} ${movies === 1 ? 'Movie' : 'Movies'}`;
+      summaryFrag.appendChild(mChip);
+    }
+
+    if (ovas > 0) {
+      const oChip = document.createElement('span');
+      oChip.className = 'guide-summary-chip';
+      oChip.textContent = `✨ ${ovas} OVA/Special${ovas === 1 ? '' : 's'}`;
+      summaryFrag.appendChild(oChip);
+    }
+
+    DOM.watchGuideSummary.appendChild(summaryFrag);
+
+    // Subway Line Stations
+    const listFrag = document.createDocumentFragment();
+
+    anime.watchGuide.forEach((step, index) => {
+      const stepItem = document.createElement('div');
+      stepItem.className = 'timeline-step-item';
+
+      const statusClass = getStatusClass(step.status);
+      const typeIcon = getTypeIcon(step.type);
+      const isLast = index === anime.watchGuide.length - 1;
+
+      const notesHtml = step.notes ? `
+        <div class="timeline-notes-box">
+          <svg class="notes-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span class="notes-text">${escapeHtml(step.notes)}</span>
+        </div>
+      ` : '';
+
+      const durationHtml = step.duration ? `
+        <span class="timeline-duration">
+          ⏱ ${escapeHtml(step.duration)}
+        </span>
+      ` : '';
+
+      stepItem.innerHTML = `
+        <div class="timeline-station">
+          <div class="station-node">
+            <span class="station-number">${escapeHtml(step.step || (index + 1))}</span>
+          </div>
+          ${!isLast ? '<div class="station-track"></div>' : ''}
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-type-row">
+            <span class="badge-type">${typeIcon} ${escapeHtml(step.type || 'Anime')}</span>
+            <span class="badge-status ${statusClass}">${escapeHtml(step.status || 'Essential')}</span>
+            ${durationHtml}
+          </div>
+          <h4 class="timeline-step-title">${escapeHtml(step.title || '')}</h4>
+          ${notesHtml}
+        </div>
+      `;
+
+      listFrag.appendChild(stepItem);
+    });
+
+    DOM.watchGuideTimeline.appendChild(listFrag);
+  }
+
   function updateDetailModal() {
     const anime = filteredAnimeList[state.selectedAnimeIndex];
     if (!anime) return;
@@ -668,18 +826,52 @@ document.addEventListener('DOMContentLoaded', () => {
     DOM.modalMetaYear.textContent = anime.year || '-';
     DOM.modalMetaRating.textContent = anime.rating ? `${anime.rating}/10` : '-';
     DOM.modalMetaMyRating.textContent = anime.myRating || '-';
-    DOM.modalMetaSeasons.textContent = anime.seasons || '-';
+
+    // Dynamic Franchise Breakdown: [ Seasons ] [ Movies ] [ OVAs ]
+    const seasonsCount = anime.seasons || 1;
+    const moviesCount = anime.moviesCount || 0;
+    const ovasCount = (anime.ovasCount || 0) + (anime.specialsCount || 0);
+
+    if (moviesCount > 0 || ovasCount > 0) {
+      let pillHtml = `<span class="meta-pill season-pill">${seasonsCount} ${seasonsCount === 1 ? 'Season' : 'Seasons'}</span>`;
+      if (moviesCount > 0) {
+        pillHtml += ` <span class="meta-pill movie-pill">${moviesCount} ${moviesCount === 1 ? 'Movie' : 'Movies'}</span>`;
+      }
+      if (ovasCount > 0) {
+        pillHtml += ` <span class="meta-pill ova-pill">${ovasCount} ${ovasCount === 1 ? 'OVA' : 'OVAs'}</span>`;
+      }
+      DOM.modalMetaSeasons.innerHTML = pillHtml;
+    } else {
+      DOM.modalMetaSeasons.textContent = anime.seasons ? `${anime.seasons} ${anime.seasons === 1 ? 'Season' : 'Seasons'}` : '-';
+    }
+
     DOM.modalMetaEpisodes.textContent = anime.episodes || '-';
     DOM.modalMetaRuntime.textContent = anime.runtime ? `${anime.runtime} mins` : '-';
     DOM.modalMetaStudio.textContent = anime.studio || '-';
     DOM.modalMetaDirector.textContent = anime.director || '-';
 
+    // Synopsis
     if (anime.description) {
       DOM.modalDescText.textContent = anime.description;
       DOM.modalReadDescBtn.classList.remove('hidden');
+      if (DOM.tabBtnSynopsis) DOM.tabBtnSynopsis.classList.remove('hidden');
     } else {
       DOM.modalDescText.textContent = "No description available.";
       DOM.modalReadDescBtn.classList.add('hidden');
+      if (DOM.tabBtnSynopsis) DOM.tabBtnSynopsis.classList.add('hidden');
+    }
+
+    // Franchise Watch Order Guide
+    const hasWatchGuide = Array.isArray(anime.watchGuide) && anime.watchGuide.length > 0;
+    if (hasWatchGuide) {
+      if (DOM.modalWatchGuideBtn) DOM.modalWatchGuideBtn.classList.remove('hidden');
+      if (DOM.modalGuideBadge) DOM.modalGuideBadge.textContent = anime.watchGuide.length;
+      if (DOM.tabBtnGuide) DOM.tabBtnGuide.classList.remove('hidden');
+      renderWatchGuideTimeline(anime);
+    } else {
+      if (DOM.modalWatchGuideBtn) DOM.modalWatchGuideBtn.classList.add('hidden');
+      if (DOM.tabBtnGuide) DOM.tabBtnGuide.classList.add('hidden');
+      switchCompanionTab('synopsis');
     }
 
     // Genres (Clickable chips)
@@ -877,8 +1069,36 @@ document.addEventListener('DOMContentLoaded', () => {
   DOM.modalBackdrop.addEventListener('click', closeDetailModal);
   
   DOM.modalReadDescBtn.addEventListener('click', () => {
-    DOM.modalDescPanel.classList.toggle('open');
+    const isOpen = DOM.modalDescPanel.classList.contains('open');
+    const isSynopsisActive = DOM.tabContentSynopsis && DOM.tabContentSynopsis.classList.contains('active');
+    if (isOpen && isSynopsisActive) {
+      DOM.modalDescPanel.classList.remove('open');
+    } else {
+      switchCompanionTab('synopsis');
+      DOM.modalDescPanel.classList.add('open');
+    }
   });
+
+  if (DOM.modalWatchGuideBtn) {
+    DOM.modalWatchGuideBtn.addEventListener('click', () => {
+      const isOpen = DOM.modalDescPanel.classList.contains('open');
+      const isGuideActive = DOM.tabContentGuide && DOM.tabContentGuide.classList.contains('active');
+      if (isOpen && isGuideActive) {
+        DOM.modalDescPanel.classList.remove('open');
+      } else {
+        switchCompanionTab('guide');
+        DOM.modalDescPanel.classList.add('open');
+      }
+    });
+  }
+
+  if (DOM.tabBtnSynopsis) {
+    DOM.tabBtnSynopsis.addEventListener('click', () => switchCompanionTab('synopsis'));
+  }
+  if (DOM.tabBtnGuide) {
+    DOM.tabBtnGuide.addEventListener('click', () => switchCompanionTab('guide'));
+  }
+
   DOM.descCloseBtn.addEventListener('click', () => {
     DOM.modalDescPanel.classList.remove('open');
   });

@@ -144,7 +144,11 @@ const animeList = [
       "assets/posters/your-name/3.jpg"
     ],
     "status": "Watched",
-    "fav": true
+    "fav": true,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 2,
@@ -172,7 +176,11 @@ const animeList = [
       "assets/posters/suzume/2.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 3,
@@ -199,7 +207,11 @@ const animeList = [
       "assets/posters/i-want-to-eat-your-pancreas/2.webp"
     ],
     "status": "Watched",
-    "fav": true
+    "fav": true,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 4,
@@ -227,7 +239,11 @@ const animeList = [
       "assets/posters/weathering-with-you/2.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 5,
@@ -253,7 +269,11 @@ const animeList = [
       "assets/posters/garden-of-words/1.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 6,
@@ -281,7 +301,11 @@ const animeList = [
       "assets/posters/horimiya/2.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 7,
@@ -313,7 +337,68 @@ const animeList = [
       "assets/posters/demon-slayer/7.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": 2,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": [
+      {
+        "step": "1",
+        "title": "Season 1: Tanjiro Kamado Arc",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "26 Episodes",
+        "notes": "Beginning of Tanjiro's journey, Final Selection & Mount Natagumo battle."
+      },
+      {
+        "step": "2",
+        "title": "Mugen Train (Movie)",
+        "type": "Movie",
+        "status": "Recommended",
+        "duration": "117 Mins",
+        "notes": "Direct canon continuation covering Rengoku & Enmu. Choose Movie OR S2 TV Arc Part 1."
+      },
+      {
+        "step": "2b",
+        "title": "Mugen Train Arc (TV Version)",
+        "type": "TV Season",
+        "status": "Alternative",
+        "duration": "7 Episodes",
+        "notes": "TV cut of the movie. Ep 1 is an exclusive Rengoku backstory; Eps 2–7 match movie."
+      },
+      {
+        "step": "3",
+        "title": "Season 2: Entertainment District Arc",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "11 Episodes",
+        "notes": "Sound Hashira Tengen Uzui & battle against Upper Rank 6 Daki and Gyutaro."
+      },
+      {
+        "step": "4",
+        "title": "Season 3: Swordsmith Village Arc",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "11 Episodes",
+        "notes": "Mist Hashira Muichiro & Love Hashira Mitsuri in the hidden village."
+      },
+      {
+        "step": "5",
+        "title": "Season 4: Hashira Training Arc",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "8 Episodes",
+        "notes": "Intensive Hashira training arc leading straight into the finale."
+      },
+      {
+        "step": "6",
+        "title": "Infinity Castle Arc (Movie Trilogy)",
+        "type": "Movie",
+        "status": "Upcoming",
+        "duration": "3 Movies",
+        "notes": "The grand theatrical trilogy finale covering the final battle with Muzan."
+      }
+    ]
   },
   {
     "id": 8,
@@ -342,7 +427,11 @@ const animeList = [
       "assets/posters/your-lie-in-april/3.webp"
     ],
     "status": "Watched",
-    "fav": true
+    "fav": true,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 9,
@@ -370,7 +459,11 @@ const animeList = [
       "assets/posters/tunnel-to-the-summer/2.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 10,
@@ -397,7 +490,11 @@ const animeList = [
       "assets/posters/ride-your-wave/1.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 11,
@@ -423,7 +520,11 @@ const animeList = [
       "assets/posters/5cm-per-sec/1.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 12,
@@ -454,7 +555,60 @@ const animeList = [
       "assets/posters/bunny-girl-senpai/5.webp"
     ],
     "status": "Watched",
-    "fav": true
+    "fav": true,
+    "moviesCount": 4,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": [
+      {
+        "step": "1",
+        "title": "Season 1 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "13 Episodes",
+        "notes": "Covers Light Novel Vol 1–5 (Mai, Tomoe, Rio, Nodoka, and Kaede arcs)."
+      },
+      {
+        "step": "2",
+        "title": "Dreaming Girl (Movie)",
+        "type": "Movie",
+        "status": "Essential",
+        "duration": "89 Mins",
+        "notes": "Direct continuation covering Vol 6–7. Emotional climax of Shoko Makinohara arc."
+      },
+      {
+        "step": "3",
+        "title": "Sister Venturing Out (Movie)",
+        "type": "Movie",
+        "status": "Essential",
+        "duration": "73 Mins",
+        "notes": "Covers Vol 8. Focuses on Kaede's recovery and high school entrance exam."
+      },
+      {
+        "step": "4",
+        "title": "Knapsack Kid (Movie)",
+        "type": "Movie",
+        "status": "Essential",
+        "duration": "75 Mins",
+        "notes": "Covers Vol 9. Concludes the High School Arc with Mai & young Shoko."
+      },
+      {
+        "step": "5",
+        "title": "Season 2: University Arc (TV)",
+        "type": "TV Season",
+        "status": "Upcoming",
+        "duration": "TBA",
+        "notes": "Adapts the University Arc starting with Santa Claus (Vol 10+)."
+      },
+      {
+        "step": "6",
+        "title": "Dear Friend (Movie)",
+        "type": "Movie",
+        "status": "Upcoming",
+        "duration": "TBA",
+        "notes": "Future theatrical movie covering later University arc volumes."
+      }
+    ]
   },
   {
     "id": 13,
@@ -482,7 +636,11 @@ const animeList = [
       "assets/posters/dress-up-darling/2.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 14,
@@ -509,7 +667,11 @@ const animeList = [
       "assets/posters/forest-of-fireflies/1.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 15,
@@ -538,7 +700,11 @@ const animeList = [
       "assets/posters/dandadan/2.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 16,
@@ -566,7 +732,11 @@ const animeList = [
       "assets/posters/cosmic-princess-kaguya/2.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 17,
@@ -592,7 +762,11 @@ const animeList = [
       "assets/posters/to-every-you-ive-loved-before/1.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 18,
@@ -618,7 +792,11 @@ const animeList = [
       "assets/posters/to-me-the-one-who-loved-you/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 19,
@@ -647,7 +825,11 @@ const animeList = [
       "assets/posters/cyberpunk-edgerunners/3.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 20,
@@ -677,7 +859,11 @@ const animeList = [
       "assets/posters/arcane/2.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 21,
@@ -704,7 +890,11 @@ const animeList = [
       "assets/posters/silent-voice/2.webp"
     ],
     "status": "Watched",
-    "fav": true
+    "fav": true,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 22,
@@ -729,7 +919,11 @@ const animeList = [
       "assets/posters/graves-of-the-fireflies/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 23,
@@ -756,7 +950,11 @@ const animeList = [
       "assets/posters/anthem-of-the-heart/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 24,
@@ -784,7 +982,68 @@ const animeList = [
       "assets/posters/attack-on-titan/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": 2,
+    "specialsCount": 1,
+    "watchGuide": [
+      {
+        "step": "1",
+        "title": "Season 1 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "25 Episodes",
+        "notes": "Fall of Shiganshina, Battle of Trost, and Female Titan arc."
+      },
+      {
+        "step": "1b",
+        "title": "Ilse's Notebook (OVA)",
+        "type": "OVA",
+        "status": "Recommended",
+        "duration": "1 Episode",
+        "notes": "Canon backstory revealing talking Titans, best watched right after Season 1."
+      },
+      {
+        "step": "2",
+        "title": "Season 2 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "12 Episodes",
+        "notes": "Clash of the Titans arc & Beast Titan debut."
+      },
+      {
+        "step": "2b",
+        "title": "No Regrets (OVA Parts 1 & 2)",
+        "type": "OVA",
+        "status": "Recommended",
+        "duration": "2 Episodes",
+        "notes": "Levi Ackerman's canon underground backstory and Scout recruitment."
+      },
+      {
+        "step": "3",
+        "title": "Season 3 Parts 1 & 2 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "22 Episodes",
+        "notes": "Uprising Arc and the Return to Shiganshina / Basement reveal."
+      },
+      {
+        "step": "4",
+        "title": "The Final Season Parts 1 & 2",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "28 Episodes",
+        "notes": "Marley Arc & War for Paradis."
+      },
+      {
+        "step": "5",
+        "title": "The Final Chapters (Specials 1 & 2)",
+        "type": "Special",
+        "status": "Essential",
+        "duration": "2 Specials (145 mins)",
+        "notes": "The Rumbling & epic series conclusion."
+      }
+    ]
   },
   {
     "id": 25,
@@ -811,7 +1070,11 @@ const animeList = [
       "assets/posters/lull-in-the-sea/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 26,
@@ -838,7 +1101,11 @@ const animeList = [
       "assets/posters/hyouka/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 27,
@@ -866,7 +1133,11 @@ const animeList = [
       "assets/posters/darling-in-the-franxx/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 28,
@@ -893,7 +1164,52 @@ const animeList = [
       "assets/posters/re-zero/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": 2,
+    "specialsCount": null,
+    "watchGuide": [
+      {
+        "step": "1",
+        "title": "Season 1 (TV / Director's Cut)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "25 Episodes",
+        "notes": "Subaru's arrival in Lugunica and Return by Death introduction."
+      },
+      {
+        "step": "1b",
+        "title": "Memory Snow (OVA)",
+        "type": "OVA",
+        "status": "Optional",
+        "duration": "68 Mins",
+        "notes": "Cozy canon slice-of-life side story set between Episode 11 and 12 of Season 1."
+      },
+      {
+        "step": "1c",
+        "title": "The Frozen Bond (OVA)",
+        "type": "OVA",
+        "status": "Recommended",
+        "duration": "76 Mins",
+        "notes": "Emilia and Puck's canon prequel backstory before meeting Subaru."
+      },
+      {
+        "step": "2",
+        "title": "Season 2 Parts 1 & 2 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "25 Episodes",
+        "notes": "The Sanctuary arc and the Witches of Sin."
+      },
+      {
+        "step": "3",
+        "title": "Season 3: Attack Arc & Counterattack Arc",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "16 Episodes",
+        "notes": "Water City Priestella and Sin Archbishops invasion."
+      }
+    ]
   },
   {
     "id": 29,
@@ -920,7 +1236,11 @@ const animeList = [
       "assets/posters/fireworks/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 30,
@@ -947,7 +1267,11 @@ const animeList = [
       "assets/posters/hello-world/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 31,
@@ -973,7 +1297,11 @@ const animeList = [
       "assets/posters/summer-ghost/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 32,
@@ -999,7 +1327,11 @@ const animeList = [
       "assets/posters/look-back/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 33,
@@ -1027,7 +1359,11 @@ const animeList = [
       "assets/posters/vinland-saga/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 34,
@@ -1053,7 +1389,11 @@ const animeList = [
       "assets/posters/death-note/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 35,
@@ -1081,7 +1421,11 @@ const animeList = [
       "assets/posters/clannad/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 36,
@@ -1107,7 +1451,11 @@ const animeList = [
       "assets/posters/insomniacs-after-school/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 37,
@@ -1135,7 +1483,11 @@ const animeList = [
       "assets/posters/the-apothecary-diaries/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 38,
@@ -1161,7 +1513,44 @@ const animeList = [
       "assets/posters/jujutsu-kaisen/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": 1,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": [
+      {
+        "step": "1",
+        "title": "Jujutsu Kaisen 0 (Movie)",
+        "type": "Movie",
+        "status": "Recommended",
+        "duration": "105 Mins",
+        "notes": "Canon prequel film focusing on Yuta Okkotsu and Suguru Geto. Watch before S1 or between S1 and S2."
+      },
+      {
+        "step": "2",
+        "title": "Season 1 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "24 Episodes",
+        "notes": "Yuji Itadori, Sukuna's fingers, and Kyoto Goodwill Event."
+      },
+      {
+        "step": "3",
+        "title": "Season 2: Hidden Inventory & Shibuya Incident",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "23 Episodes",
+        "notes": "Gojo & Geto's past (Eps 1–5), followed by the Shibuya Incident arc."
+      },
+      {
+        "step": "4",
+        "title": "The Culling Game Arc",
+        "type": "TV Season",
+        "status": "Upcoming",
+        "duration": "TBA",
+        "notes": "Announced sequel following the catastrophic aftermath of Shibuya."
+      }
+    ]
   },
   {
     "id": 39,
@@ -1187,7 +1576,11 @@ const animeList = [
       "assets/posters/anohana/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 40,
@@ -1213,7 +1606,11 @@ const animeList = [
       "assets/posters/days-to-the-wedding/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 41,
@@ -1240,7 +1637,11 @@ const animeList = [
       "assets/posters/blue-box/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 42,
@@ -1267,7 +1668,11 @@ const animeList = [
       "assets/posters/the-angel-next-door-spoils-me-rotten/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 43,
@@ -1293,7 +1698,11 @@ const animeList = [
       "assets/posters/the-dangers-in-my-heart/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 44,
@@ -1319,7 +1728,11 @@ const animeList = [
       "assets/posters/more-than-a-married-couple-but-not-lovers/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 45,
@@ -1346,7 +1759,52 @@ const animeList = [
       "assets/posters/kaguya-sama-love-is-war/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": 1,
+    "ovasCount": 1,
+    "specialsCount": null,
+    "watchGuide": [
+      {
+        "step": "1",
+        "title": "Season 1 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "12 Episodes",
+        "notes": "Introduction to the Student Council psychological warfare."
+      },
+      {
+        "step": "2",
+        "title": "Season 2 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "12 Episodes",
+        "notes": "Student council re-election and sports festival arc."
+      },
+      {
+        "step": "2b",
+        "title": "Kaguya-sama OVA",
+        "type": "OVA",
+        "status": "Optional",
+        "duration": "1 Episode (3 segments)",
+        "notes": "Fanservice and comedy chapters; skip if only following romance progression."
+      },
+      {
+        "step": "3",
+        "title": "Season 3: Ultra Romantic (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "13 Episodes",
+        "notes": "The cultural festival and dual confession climax."
+      },
+      {
+        "step": "4",
+        "title": "The First Kiss That Never Ends",
+        "type": "Movie",
+        "status": "Essential",
+        "duration": "96 Mins / 4 Eps",
+        "notes": "Direct canon continuation exploring Kaguya and Miyuki's relationship post-festival."
+      }
+    ]
   },
   {
     "id": 46,
@@ -1373,7 +1831,11 @@ const animeList = [
       "assets/posters/toradora/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 47,
@@ -1400,7 +1862,11 @@ const animeList = [
       "assets/posters/erased/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 48,
@@ -1426,7 +1892,11 @@ const animeList = [
       "assets/posters/classroom-of-the-elite/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 49,
@@ -1452,7 +1922,11 @@ const animeList = [
       "assets/posters/spy-family/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 50,
@@ -1478,7 +1952,11 @@ const animeList = [
       "assets/posters/alya-sometimes-hides-her-feelings-in-russian/1.webp"
     ],
     "status": "Watched",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 51,
@@ -1504,7 +1982,11 @@ const animeList = [
       "assets/posters/the-fragrant-flower-blooms-with-dignity/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 52,
@@ -1532,7 +2014,11 @@ const animeList = [
       "assets/posters/howl's-moving-castle/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 53,
@@ -1559,7 +2045,36 @@ const animeList = [
       "assets/posters/chainsaw-man/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": 1,
+    "ovasCount": null,
+    "specialsCount": 1,
+    "watchGuide": [
+      {
+        "step": "1",
+        "title": "Season 1 (TV)",
+        "type": "TV Season",
+        "status": "Essential",
+        "duration": "12 Episodes",
+        "notes": "Covers Introduction up through the Katana Man Arc (Manga Ch. 1–38)."
+      },
+      {
+        "step": "1b",
+        "title": "Compilation Arc Parts 1 & 2",
+        "type": "Recap",
+        "status": "Skip",
+        "duration": "2 Parts",
+        "notes": "Recap of Season 1 with zero new story content. Safe to skip completely."
+      },
+      {
+        "step": "2",
+        "title": "Reze Arc (Movie)",
+        "type": "Movie",
+        "status": "Essential",
+        "duration": "Upcoming",
+        "notes": "Canon continuation covering the Bomb Girl (Reze) Arc (Manga Ch. 39–52)."
+      }
+    ]
   },
   {
     "id": 54,
@@ -1585,7 +2100,11 @@ const animeList = [
       "assets/posters/too-many-losing-heroines/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 55,
@@ -1611,7 +2130,11 @@ const animeList = [
       "assets/posters/josee-the-tiger-and-the-fish/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 56,
@@ -1639,7 +2162,11 @@ const animeList = [
       "assets/posters/takopi's-original-sin/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 57,
@@ -1665,7 +2192,11 @@ const animeList = [
       "assets/posters/love-unseen-beneath-the-clear-night-sky/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 58,
@@ -1692,7 +2223,11 @@ const animeList = [
       "assets/posters/oh-boy-was-i-wrong-about-her/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 59,
@@ -1719,7 +2254,11 @@ const animeList = [
       "assets/posters/i-want-to-love-you-till-your-dying-day/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 60,
@@ -1745,7 +2284,11 @@ const animeList = [
       "assets/posters/i-want-to-end-this-love-game/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 61,
@@ -1771,7 +2314,11 @@ const animeList = [
       "assets/posters/lycoris-recoil/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 62,
@@ -1797,7 +2344,11 @@ const animeList = [
       "assets/posters/wind-breaker/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 63,
@@ -1824,7 +2375,11 @@ const animeList = [
       "assets/posters/colorful/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 64,
@@ -1851,7 +2406,11 @@ const animeList = [
       "assets/posters/86-eighty-six/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 65,
@@ -1879,7 +2438,11 @@ const animeList = [
       "assets/posters/fruits-basket-2019/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 66,
@@ -1906,7 +2469,11 @@ const animeList = [
       "assets/posters/golden-time/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 67,
@@ -1933,7 +2500,11 @@ const animeList = [
       "assets/posters/spirited-away/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 68,
@@ -1960,7 +2531,11 @@ const animeList = [
       "assets/posters/hells-paradise/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 69,
@@ -1987,7 +2562,11 @@ const animeList = [
       "assets/posters/wolf-children/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 70,
@@ -2014,7 +2593,11 @@ const animeList = [
       "assets/posters/tokyo-ghoul/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 71,
@@ -2041,7 +2624,11 @@ const animeList = [
       "assets/posters/one-punch-man/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 72,
@@ -2068,7 +2655,11 @@ const animeList = [
       "assets/posters/solo-leveling/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 73,
@@ -2095,7 +2686,11 @@ const animeList = [
       "assets/posters/hunter-x-hunter/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 74,
@@ -2123,7 +2718,11 @@ const animeList = [
       "assets/posters/fullmetal-alchemist-brotherhood/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 75,
@@ -2150,7 +2749,11 @@ const animeList = [
       "assets/posters/frieren/dqZENchTd7lp5zht7BdlqM7RBhD.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 76,
@@ -2175,7 +2778,11 @@ const animeList = [
       "assets/posters/haikyuu/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 77,
@@ -2201,7 +2808,11 @@ const animeList = [
       "assets/posters/shikimoris-not-just-a-cutie/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 78,
@@ -2227,7 +2838,11 @@ const animeList = [
       "assets/posters/saekano/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 79,
@@ -2254,7 +2869,11 @@ const animeList = [
       "assets/posters/date-a-live/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 80,
@@ -2282,7 +2901,11 @@ const animeList = [
       "assets/posters/the-daily-life-of-the-immortal-king/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 81,
@@ -2309,7 +2932,11 @@ const animeList = [
       "assets/posters/food-for-the-soul/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 82,
@@ -2335,7 +2962,11 @@ const animeList = [
       "assets/posters/can-a-boy-girl-friendship-survive/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 83,
@@ -2362,7 +2993,11 @@ const animeList = [
       "assets/posters/botan-kamiina-fully-blossoms-when-drunk/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 84,
@@ -2388,7 +3023,11 @@ const animeList = [
       "assets/posters/pseudo-harem/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 85,
@@ -2415,7 +3054,11 @@ const animeList = [
       "assets/posters/love-chunibyo-and-other-delusions/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 86,
@@ -2441,7 +3084,11 @@ const animeList = [
       "assets/posters/i-made-friends-with-the-second-prettiest-girl/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 87,
@@ -2467,7 +3114,11 @@ const animeList = [
       "assets/posters/young-ladies-dont-play-fighting-games/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 88,
@@ -2493,7 +3144,11 @@ const animeList = [
       "assets/posters/nisekoi/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 89,
@@ -2520,7 +3175,11 @@ const animeList = [
       "assets/posters/her-blue-sky/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 90,
@@ -2547,7 +3206,11 @@ const animeList = [
       "assets/posters/the-place-promised-in-our-early-days/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 91,
@@ -2574,7 +3237,11 @@ const animeList = [
       "assets/posters/relife/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 92,
@@ -2600,7 +3267,11 @@ const animeList = [
       "assets/posters/whisper-of-the-heart/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 93,
@@ -2628,7 +3299,11 @@ const animeList = [
       "assets/posters/girl-who-leapt-through-time/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 94,
@@ -2654,7 +3329,11 @@ const animeList = [
       "assets/posters/akame-ga-kill/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 95,
@@ -2680,7 +3359,11 @@ const animeList = [
       "assets/posters/eldlive/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 96,
@@ -2708,7 +3391,11 @@ const animeList = [
       "assets/posters/kizumonogatari/2.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 97,
@@ -2735,7 +3422,11 @@ const animeList = [
       "assets/posters/beyond-the-boundary/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 98,
@@ -2761,7 +3452,11 @@ const animeList = [
       "assets/posters/k-on/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 99,
@@ -2787,7 +3482,11 @@ const animeList = [
       "assets/posters/kimi-ni-todoke/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 100,
@@ -2814,7 +3513,11 @@ const animeList = [
       "assets/posters/your-letter/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 101,
@@ -2840,7 +3543,11 @@ const animeList = [
       "assets/posters/sakura-quest/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 102,
@@ -2866,7 +3573,11 @@ const animeList = [
       "assets/posters/we-never-learn/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 103,
@@ -2893,7 +3604,11 @@ const animeList = [
       "assets/posters/angel-beats/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 104,
@@ -2920,7 +3635,11 @@ const animeList = [
       "assets/posters/to-your-eternity/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 105,
@@ -2946,7 +3665,11 @@ const animeList = [
       "assets/posters/you-fireworks-and-our-promise/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   },
   {
     "id": 106,
@@ -2972,7 +3695,11 @@ const animeList = [
       "assets/posters/the-dreaming-boy-is-a-realist/1.webp"
     ],
     "status": "Pending",
-    "fav": false
+    "fav": false,
+    "moviesCount": null,
+    "ovasCount": null,
+    "specialsCount": null,
+    "watchGuide": null
   }
 ];
 
